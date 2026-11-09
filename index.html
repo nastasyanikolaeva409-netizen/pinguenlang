@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>пингвинёнок — учите языки по 15 минут в день</title>
+  <meta name="description" content="пингвинёнок — бесплатные тренажёры, живые собеседники и подготовка к ЕГЭ и IELTS. Учите языки по 15 минут в день.">
+  <meta name="theme-color" content="#0EA5E9">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="пингвинёнок — учите языки по 15 минут в день">
+  <meta property="og:description" content="Бесплатные тренажёры, живые собеседники и подготовка к ЕГЭ и IELTS.">
+  <meta property="og:image" content="images/penguin-mascot.png">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+  <link rel="preload" as="image" href="images/penguin-mascot.png" fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<svg class="svg-sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M3 12h18"/>
+    <path d="M12 3a14.5 14.5 0 0 1 0 18 14.5 14.5 0 0 1 0-18Z"/>
+  </symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m6 9 6 6 6-6"/>
+  </symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+    <path d="M18 6 6 18M6 6l12 12"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 6 9 17l-5-5"/>
+  </symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+  </symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 12H5M11 18l-6-6 6-6"/>
+  </symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22a7 7 0 0 0 7-7c0-4-3-6.5-4.5-9-.5 2-1.5 3-3 4 0-1.5-.5-3.5-1.5-5 .5 3-2 4.5-3 6.5C6 13.2 5 14 5 15a7 7 0 0 0 7 7Z"/>
+    <path d="M12 18a2.5 2.5 0 0 0 2.5-2.5c0-1.4-1-2.4-1.8-3.4-.5 1.2-1.7 1.6-2.4 2.6-.5.7-.8 1.2-.8 1.8A2.5 2.5 0 0 0 12 18Z"/>
+  </symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor">
+    <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/>
+  </symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 10 12 5 2 10l10 5 10-5Z"/>
+    <path d="M6 12.5V17c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/>
+    <path d="M22 10v6"/>
+  </symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>
+  </symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+  </symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="9" cy="8" r="4"/>
+    <path d="M2 21v-1a6 6 0 0 1 12 0v1"/>
+    <path d="M17.5 4.5a4 4 0 0 1 0 7"/>
+    <path d="M22 21v-1a5.5 5.5 0 0 0-3.5-5"/>
+  </symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="2" width="6" height="12" rx="3"/>
+    <path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4M8 22h8"/>
+  </symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 6.5C10.5 5 8 4 4 4v14c4 0 6.5 1 8 2.5"/>
+    <path d="M12 6.5C13.5 5 16 4 20 4v14c-4 0-6.5 1-8 2.5"/>
+    <path d="M12 6.5v14"/>
+  </symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/>
+    <circle cx="12" cy="12" r="5"/>
+    <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"/>
+    <path d="M19 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/>
+  </symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M12 7v5l3 2"/>
+  </symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8Z"/>
+  </symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M6 6h5v7H6c0 2.2 1 3.4 3.2 3.7V19C5.6 18.8 3 16 3 12.2V6Zm9 0h5v7h-5c0 2.2 1 3.4 3.2 3.7V19c-3.6-.2-6.2-3-6.2-6.8V6Z"/>
+  </symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.8l-10-6.5A1 1 0 0 0 8 5.5Z"/>
+  </symbol>
+
+  <symbol id="flag-gb" viewBox="0 0 60 40">
+    <rect width="60" height="40" fill="#012169"/>
+    <path d="M0 0 60 40M60 0 0 40" stroke="#fff" stroke-width="8"/>
+    <path d="M0 0 60 40M60 0 0 40" stroke="#C8102E" stroke-width="3.4"/>
+    <path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="13"/>
+    <path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="7"/>
+  </symbol>
+  <symbol id="flag-fr" viewBox="0 0 60 40">
+    <rect width="20" height="40" fill="#0055A4"/>
+    <rect x="20" width="20" height="40" fill="#fff"/>
+    <rect x="40" width="20" height="40" fill="#EF4135"/>
+  </symbol>
+  <symbol id="flag-de" viewBox="0 0 60 40">
+    <rect width="60" height="13.34" fill="#151515"/>
+    <rect y="13.33" width="60" height="13.34" fill="#DD0000"/>
+    <rect y="26.66" width="60" height="13.34" fill="#FFCE00"/>
+  </symbol>
+  <symbol id="flag-es" viewBox="0 0 60 40">
+    <rect width="60" height="40" fill="#AA151B"/>
+    <rect y="10" width="60" height="20" fill="#F1BF00"/>
+    <rect x="12" y="16" width="7" height="10" rx="1.5" fill="#AA151B"/>
+    <circle cx="15.5" cy="21" r="2.2" fill="#F1BF00"/>
+  </symbol>
+  <symbol id="flag-it" viewBox="0 0 60 40">
+    <rect width="20" height="40" fill="#009246"/>
+    <rect x="20" width="20" height="40" fill="#fff"/>
+    <rect x="40" width="20" height="40" fill="#CE2B37"/>
+  </symbol>
+  <symbol id="flag-cn" viewBox="0 0 60 40">
+    <rect width="60" height="40" fill="#DE2910"/>
+    <path fill="#FFDE00" d="M12 5l1.65 4.73 5.01.11-3.99 3.03 1.45 4.79L12 14.8l-4.12 2.86 1.45-4.79-3.99-3.03 5.01-.11L12 5Z"/>
+    <path fill="#FFDE00" d="M24 5l.8 2.3 2.44.05-1.94 1.47.7 2.33-2-1.39-2 1.39.7-2.33-1.94-1.47 2.44-.05L24 5Z"/>
+    <path fill="#FFDE00" d="M27 11l.8 2.3 2.44.05-1.94 1.47.7 2.33-2-1.39-2 1.39.7-2.33-1.94-1.47 2.44-.05L27 11Z"/>
+    <path fill="#FFDE00" d="M27 18l.8 2.3 2.44.05-1.94 1.47.7 2.33-2-1.39-2 1.39.7-2.33-1.94-1.47 2.44-.05L27 18Z"/>
+    <path fill="#FFDE00" d="M24 24l.8 2.3 2.44.05-1.94 1.47.7 2.33-2-1.39-2 1.39.7-2.33-1.94-1.47 2.44-.05L24 24Z"/>
+  </symbol>
+</svg>
+
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+<header class="site-header" data-header>
+  <div class="container header__inner">
+    <a class="logo" href="#top" aria-label="пингвинёнок — на главную">
+      <span class="logo__icon"><img src="images/penguin-icon.png" alt="" width="48" height="48"></span>
+      <span class="logo__text"><span class="logo__text-dark">пингвин</span><span class="logo__text-blue">ёнок</span></span>
+    </a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="#languages" data-i18n="nav.languages">Языки</a></li>
+        <li><a class="nav__link" href="#method" data-i18n="nav.how">Как это работает</a></li>
+        <li><a class="nav__link" href="#exams" data-i18n="nav.exams">Экзамены</a></li>
+        <li><a class="nav__link" href="#audience" data-i18n="nav.audience">Для кого</a></li>
+        <li><a class="nav__link" href="#reviews" data-i18n="nav.reviews">Отзывы</a></li>
+        <li><a class="nav__link" href="#faq" data-i18n="nav.faq">Вопросы</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__right">
+      <div class="lang-switcher" data-lang-switcher>
+        <button class="lang-switcher__toggle" type="button" data-lang-toggle aria-expanded="false" aria-haspopup="listbox" aria-label="Выбрать язык сайта">
+          <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg>
+          <span class="lang-switcher__label"><span data-i18n="lang.label">Язык сайта</span>: <span class="lang-switcher__current" data-lang-current>Русский</span></span>
+          <svg class="icon lang-switcher__chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
+        <ul class="lang-menu" role="listbox" aria-label="Язык сайта" data-lang-menu hidden>
+          <li><button class="lang-menu__option" type="button" role="option" data-set-lang="ru" aria-selected="true">Русский<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
+          <li><button class="lang-menu__option" type="button" role="option" data-set-lang="en" aria-selected="false">English<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
+          <li><button class="lang-menu__option" type="button" role="option" data-set-lang="de" aria-selected="false">Deutsch<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
+          <li><button class="lang-menu__option" type="button" role="option" data-set-lang="fr" aria-selected="false">Français<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
+          <li><button class="lang-menu__option" type="button" role="option" data-set-lang="es" aria-selected="false">Español<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
+          <li><button class="lang-menu__option" type="button" role="option" data-set-lang="zh" aria-selected="false">中文<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
+        </ul>
+      </div>
+
+      <button class="burger" type="button" data-menu-open aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="burger__line"></span>
+        <span class="burger__line"></span>
+        <span class="burger__line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-overlay" data-drawer-overlay aria-hidden="true"></div>
+
+<aside class="drawer" id="mobile-menu" aria-label="Мобильное меню" aria-hidden="true">
+  <div class="drawer__head">
+    <a class="logo logo--drawer" href="#top" data-drawer-link>
+      <span class="logo__icon"><img src="images/penguin-icon.png" alt="" width="48" height="48"></span>
+      <span class="logo__text"><span class="logo__text-dark">пингвин</span><span class="logo__text-blue">ёнок</span></span>
+    </a>
+    <button class="drawer__close" type="button" data-menu-close aria-label="Закрыть меню">
+      <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+  </div>
+
+  <nav class="drawer__nav" aria-label="Мобильная навигация">
+    <a href="#languages" data-drawer-link data-i18n="nav.languages">Языки</a>
+    <a href="#method" data-drawer-link data-i18n="nav.how">Как это работает</a>
+    <a href="#exams" data-drawer-link data-i18n="nav.exams">Экзамены</a>
+    <a href="#audience" data-drawer-link data-i18n="nav.audience">Для кого</a>
+    <a href="#reviews" data-drawer-link data-i18n="nav.reviews">Отзывы</a>
+    <a href="#faq" data-drawer-link data-i18n="nav.faq">Вопросы</a>
+  </nav>
+
+  <div class="drawer__lang">
+    <p class="drawer__lang-label" data-i18n="lang.label">Язык сайта</p>
+    <div class="drawer__lang-grid">
+      <button type="button" data-set-lang="ru" aria-pressed="true">Русский</button>
+      <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+      <button type="button" data-set-lang="de" aria-pressed="false">Deutsch</button>
+      <button type="button" data-set-lang="fr" aria-pressed="false">Français</button>
+      <button type="button" data-set-lang="es" aria-pressed="false">Español</button>
+      <button type="button" data-set-lang="zh" aria-pressed="false">中文</button>
+    </div>
+  </div>
+
+  <a class="btn btn--primary drawer__cta" href="#cta" data-drawer-link data-i18n="btn.start">Начать бесплатно</a>
+</aside>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="hero__stage">
+      <div class="snow" data-snow aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <div class="hero__media">
+          <div class="hero__mascot-wrap">
+            <img class="hero__mascot" src="images/penguin-mascot.png" alt="Пингвинёнок в синей шапке читает книгу" width="930" height="1200" fetchpriority="high">
+          </div>
+
+          <div class="bubbles" aria-hidden="true">
+            <span class="bubble bubble--hello" lang="en">Hello!</span>
+            <span class="bubble bubble--bonjour" lang="fr">Bonjour</span>
+            <span class="bubble bubble--nihao" lang="zh">你好</span>
+            <span class="bubble bubble--heart">
+              <svg class="bubble__heart" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="hero__content">
+          <h1 class="hero__title">
+            <span class="hero__title-line" data-i18n="hero.line1">Учите языки</span>
+            <span class="hero__title-line"><span data-i18n="hero.line2pre">с </span><span class="hero__accent" data-i18n="hero.accent">пингвинёнком</span><span data-i18n="hero.line2post"> —</span></span>
+            <span class="hero__title-line" data-i18n="hero.line3">по 15 минут в день</span>
+          </h1>
+
+          <p class="hero__subtitle" data-i18n="hero.subtitle">Бесплатные тренажёры, живые собеседники и подготовка к ЕГЭ и IELTS.</p>
+
+          <ul class="hero__pills">
+            <li class="pill"><span class="pill__emoji" aria-hidden="true">🌍</span><span data-i18n="hero.pill1">6 языков</span></li>
+            <li class="pill"><span class="pill__emoji" aria-hidden="true">🔥</span><span data-i18n="hero.pill2">Серии каждый день</span></li>
+            <li class="pill"><span class="pill__emoji" aria-hidden="true">🎓</span><span data-i18n="hero.pill3">ЕГЭ · IELTS</span></li>
+          </ul>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#cta" data-i18n="btn.start">Начать бесплатно</a>
+            <a class="btn btn--secondary" href="#method" data-i18n="btn.account">У меня уже есть аккаунт</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__waves" aria-hidden="true">
+        <svg class="wave wave--back" viewBox="0 0 1440 140" preserveAspectRatio="none"><path d="M0 52c180-40 330 30 540 22s300-52 500-34 280 42 400 28v72H0Z"/></svg>
+        <svg class="wave wave--front" viewBox="0 0 1440 140" preserveAspectRatio="none"><path d="M0 82c200-44 360 10 580 6s300-34 480-22 260 34 380 26v48H0Z"/></svg>
+      </div>
+    </div>
+
+    <div class="flags-strip">
+      <ul class="flags-strip__list">
+        <li class="flags-strip__item"><svg class="flag" aria-hidden="true"><use href="#flag-gb"/></svg><span data-i18n="flag.en">Английский</span></li>
+        <li class="flags-strip__item"><svg class="flag" aria-hidden="true"><use href="#flag-fr"/></svg><span data-i18n="flag.fr">Французский</span></li>
+        <li class="flags-strip__item"><svg class="flag" aria-hidden="true"><use href="#flag-de"/></svg><span data-i18n="flag.de">Немецкий</span></li>
+        <li class="flags-strip__item"><svg class="flag" aria-hidden="true"><use href="#flag-es"/></svg><span data-i18n="flag.es">Испанский</span></li>
+        <li class="flags-strip__item"><svg class="flag" aria-hidden="true"><use href="#flag-it"/></svg><span data-i18n="flag.it">Итальянский</span></li>
+        <li class="flags-strip__item"><svg class="flag" aria-hidden="true"><use href="#flag-cn"/></svg><span data-i18n="flag.cn">Китайский</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="languages" aria-labelledby="languages-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Выберите язык</span>
+        <h2 class="section__title" id="languages-title">Какой язык откроет вам новые двери?</h2>
+        <p class="section__lead">Курсы с нуля и до свободного уровня. Выберите язык — первый урок займёт пару минут.</p>
+      </div>
+
+      <div class="language-grid">
+        <a class="language-card reveal" href="#cta">
+          <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-gb"/></svg></span>
+          <span class="language-card__body"><span class="language-card__name">Английский</span><span class="language-card__meta">12,4 млн учеников</span></span>
+          <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+        <a class="language-card reveal" href="#cta">
+          <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-fr"/></svg></span>
+          <span class="language-card__body"><span class="language-card__name">Французский</span><span class="language-card__meta">3,1 млн учеников</span></span>
+          <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+        <a class="language-card reveal" href="#cta">
+          <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-de"/></svg></span>
+          <span class="language-card__body"><span class="language-card__name">Немецкий</span><span class="language-card__meta">2,7 млн учеников</span></span>
+          <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+        <a class="language-card reveal" href="#cta">
+          <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-es"/></svg></span>
+          <span class="language-card__body"><span class="language-card__name">Испанский</span><span class="language-card__meta">4,2 млн учеников</span></span>
+          <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+        <a class="language-card reveal" href="#cta">
+          <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-it"/></svg></span>
+          <span class="language-card__body"><span class="language-card__name">Итальянский</span><span class="language-card__meta">1,5 млн учеников</span></span>
+          <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+        <a class="language-card reveal" href="#cta">
+          <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-cn"/></svg></span>
+          <span class="language-card__body"><span class="language-card__name">Китайский</span><span class="language-card__meta">980 тыс. учеников</span></span>
+          <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tinted" id="method" aria-labelledby="method-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Упражнения и тренажёры</span>
+        <h2 class="section__title" id="method-title">Весело, быстро и по науке</h2>
+        <p class="section__lead">Каждый урок похож на маленькую игру. Попробуйте прямо здесь — соберите перевод из слов.</p>
+      </div>
+
+      <div class="method-grid">
+        <ul class="feature-list">
+          <li class="feature reveal">
+            <span class="feature__icon"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span>
+            <div class="feature__body">
+              <h3>Короткие упражнения</h3>
+              <p>Уроки по 3–5 минут: перевод, аудирование, произношение и сборка фраз. Учиться можно в метро и в очереди.</p>
+            </div>
+          </li>
+          <li class="feature reveal">
+            <span class="feature__icon"><svg class="icon" aria-hidden="true"><use href="#i-target"/></svg></span>
+            <div class="feature__body">
+              <h3>Умные тренажёры</h3>
+              <p>Система запоминает ваши ошибки и возвращает сложные слова ровно тогда, когда вы начинаете их забывать.</p>
+            </div>
+          </li>
+          <li class="feature reveal">
+            <span class="feature__icon"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg></span>
+            <div class="feature__body">
+              <h3>Говорите вслух</h3>
+              <p>Тренажёр произношения слушает вас и подсказывает, какие звуки стоит подтянуть.</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="exercise-card reveal" data-exercise>
+          <div class="exercise-card__head">
+            <span class="exercise-card__label">Переведите фразу</span>
+            <span class="exercise-card__progress"><span data-exercise-count>0</span> / 4</span>
+          </div>
+          <p class="exercise-card__sentence" lang="ru">Я люблю путешествовать</p>
+          <div class="exercise-card__answer" data-exercise-answer aria-live="polite" aria-label="Собранный перевод"></div>
+          <div class="exercise-card__bank" data-exercise-bank></div>
+          <p class="exercise-card__feedback" data-exercise-feedback aria-live="polite"></p>
+          <div class="exercise-card__actions">
+            <button class="btn btn--primary btn--sm" type="button" data-exercise-check>Проверить</button>
+            <button class="btn-text" type="button" data-exercise-reset>Сбросить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="exams" aria-labelledby="exams-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Подготовка к экзаменам</span>
+        <h2 class="section__title" id="exams-title">Сдайте ЕГЭ и IELTS на тот балл, который нужен</h2>
+      </div>
+
+      <div class="exam-tabs reveal" role="tablist" aria-label="Тип экзамена">
+        <button class="exam-tab is-active" type="button" role="tab" id="exam-tab-ege" aria-selected="true" aria-controls="exam-panel" data-exam="ege">ЕГЭ</button>
+        <button class="exam-tab" type="button" role="tab" id="exam-tab-oge" aria-selected="false" aria-controls="exam-panel" data-exam="oge">ОГЭ</button>
+        <button class="exam-tab" type="button" role="tab" id="exam-tab-ielts" aria-selected="false" aria-controls="exam-panel" data-exam="ielts">IELTS</button>
+        <button class="exam-tab" type="button" role="tab" id="exam-tab-toefl" aria-selected="false" aria-controls="exam-panel" data-exam="toefl">TOEFL и др.</button>
+      </div>
+
+      <div class="exam-panel reveal" id="exam-panel" role="tabpanel" aria-labelledby="exam-tab-ege" data-exam-panel>
+        <div class="exam-panel__content">
+          <span class="exam-panel__tag" data-exam-tag>Английский, 11 класс</span>
+          <p class="exam-panel__score"><strong data-exam-score>+23</strong> <span data-exam-unit>балла</span></p>
+          <p class="exam-panel__score-note" data-exam-note>средний прирост за 3 месяца</p>
+          <p class="exam-panel__text" data-exam-text>Разбираем все 4 раздела: аудирование, чтение, грамматику и лексику, письмо. Задания в формате ФИПИ, автопроверка и разбор каждой ошибки.</p>
+          <ul class="check-list">
+            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>2 000+ заданий в формате экзамена</li>
+            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>Пробные варианты с таймером</li>
+            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>Шаблоны для письма и эссе</li>
+          </ul>
+          <a class="btn btn--primary" href="#cta">Пройти пробный тест</a>
+        </div>
+
+        <div class="exam-visual" aria-hidden="true">
+          <span class="exam-visual__blob exam-visual__blob--one"></span>
+          <span class="exam-visual__blob exam-visual__blob--two"></span>
+          <img class="exam-visual__mascot" src="images/penguin-mascot.png" alt="" width="930" height="1200" loading="lazy">
+          <div class="exam-badge exam-badge--score">
+            <span class="exam-badge__value">91</span>
+            <span class="exam-badge__label">из 100 на пробнике</span>
+          </div>
+          <div class="exam-badge exam-badge--check">
+            <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+            Готов к экзамену
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tinted" id="audience" aria-labelledby="audience-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Для кого</span>
+        <h2 class="section__title" id="audience-title">Учиться может каждый — в любом возрасте</h2>
+      </div>
+
+      <div class="audience reveal">
+        <div class="audience-tabs" role="tablist" aria-label="Кому подходит сервис">
+          <button class="audience-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="audience-panel" data-audience="adults">Взрослым</button>
+          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="school">Школьникам</button>
+          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="students">Студентам</button>
+          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="travellers">Путешественникам</button>
+          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="kids">Детям и родителям</button>
+        </div>
+
+        <div class="audience-panel" id="audience-panel" role="tabpanel" data-audience-panel>
+          <div class="audience-panel__body">
+            <h3 data-audience-title>Взрослым — для работы и карьеры</h3>
+            <p data-audience-text>Деловая переписка, созвоны, презентации и собеседования. Курсы по бизнес-лексике и тренажёр для переговоров.</p>
+            <ul class="check-list" data-audience-bullets>
+              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>Бизнес-английский</li>
+              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>Подготовка к собеседованию</li>
+              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>10 минут в обед</li>
+            </ul>
+          </div>
+          <div class="audience-panel__stat">
+            <span class="audience-panel__stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-clock" data-audience-icon-use/></svg></span>
+            <strong data-audience-stat-value>10 минут</strong>
+            <span data-audience-stat-label>в обеденный перерыв</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="motivation" aria-labelledby="motivation-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Мотивация</span>
+        <h2 class="section__title" id="motivation-title">Не бросите — потому что это затягивает</h2>
+        <p class="section__lead">Мы превратили учёбу в игру: очки опыта, серии, лиги и награды. 15 минут в день дают больше, чем час раз в неделю.</p>
+      </div>
+
+      <div class="motivation-grid">
+        <ul class="motivation-list">
+          <li class="motivation-item reveal">
+            <span class="motivation-item__icon"><svg class="icon" aria-hidden="true"><use href="#i-flame"/></svg></span>
+            <div>
+              <h3>Серии дней</h3>
+              <p>Занимайтесь каждый день и не прерывайте серию — привычка формируется сама.</p>
+            </div>
+          </li>
+          <li class="motivation-item reveal">
+            <span class="motivation-item__icon"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span>
+            <div>
+              <h3>Лиги и рейтинги</h3>
+              <p>Соревнуйтесь с учениками со всей страны и поднимайтесь в лигах.</p>
+            </div>
+          </li>
+          <li class="motivation-item reveal">
+            <span class="motivation-item__icon"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg></span>
+            <div>
+              <h3>Видимый прогресс</h3>
+              <p>Статистика слов, уровня и баллов — понятно, что уже получилось.</p>
+            </div>
+          </li>
+          <li class="motivation-item reveal">
+            <span class="motivation-item__icon"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></span>
+            <div>
+              <h3>Мягкие напоминания</h3>
+              <p>Подскажем в удобное время, чтобы не забыть про урок.</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="streak-card reveal" data-streak>
+          <div class="streak-card__head">
+            <span class="streak-card__label">Серия дней</span>
+            <span class="streak-card__flame" aria-hidden="true">🔥</span>
+          </div>
+          <p class="streak-card__count"><strong data-streak-count>4</strong> <span data-streak-word>дней подряд</span></p>
+          <ul class="streak-days" data-streak-days>
+            <li><span>Пн</span><span class="streak-day__dot"></span></li>
+            <li><span>Вт</span><span class="streak-day__dot"></span></li>
+            <li><span>Ср</span><span class="streak-day__dot"></span></li>
+            <li><span>Чт</span><span class="streak-day__dot"></span></li>
+            <li><span>Пт</span><span class="streak-day__dot"></span></li>
+            <li><span>Сб</span><span class="streak-day__dot"></span></li>
+            <li><span>Вс</span><span class="streak-day__dot"></span></li>
+          </ul>
+          <p class="streak-card__message" data-streak-message aria-live="polite">Отличный старт — не прерывайте серию!</p>
+          <div class="streak-card__actions">
+            <button class="btn btn--primary btn--sm" type="button" data-streak-done>Пройти урок сегодня</button>
+            <button class="btn-text" type="button" data-streak-reset>Сбросить демо</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tinted" id="reviews" aria-labelledby="reviews-title">
+    <div class="container">
+      <div class="reviews__head reveal">
+        <div>
+          <span class="eyebrow">Отзывы</span>
+          <h2 class="section__title" id="reviews-title">Нас любят ученики</h2>
+        </div>
+        <div class="reviews__meta">
+          <p class="reviews__rating"><span class="reviews__score">4,9</span><span class="reviews__stars" aria-label="Оценка 5 из 5">★★★★★</span></p>
+          <p class="reviews__count">120 000+ оценок</p>
+          <div class="reviews__nav">
+            <button class="carousel-btn" type="button" data-review-prev aria-label="Предыдущий отзыв"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+            <button class="carousel-btn" type="button" data-review-next aria-label="Следующий отзыв"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="reviews__viewport" data-reviews-viewport tabindex="0" aria-label="Лента отзывов учеников">
+        <ul class="reviews__track">
+          <li class="review-card">
+            <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p class="review-card__stars" aria-hidden="true">★★★★★</p>
+            <blockquote>Занималась по 15 минут в обед. Через полгода впервые провела созвон с зарубежными партнёрами без переводчика.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar">А</span><span class="review-card__who"><cite>Анна, 34</cite><span>Маркетолог</span></span></footer>
+          </li>
+          <li class="review-card">
+            <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p class="review-card__stars" aria-hidden="true">★★★★★</p>
+            <blockquote>Готовился к ЕГЭ по английскому в основном тут. Пробники с таймером реально спасли — сдал на 91.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar">М</span><span class="review-card__who"><cite>Миша, 17</cite><span>Выпускник</span></span></footer>
+          </li>
+          <li class="review-card">
+            <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p class="review-card__stars" aria-hidden="true">★★★★★</p>
+            <blockquote>Дочь сама просит позаниматься — для неё это игра. А я вижу её прогресс в родительском отчёте.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar">О</span><span class="review-card__who"><cite>Ольга, 41</cite><span>Мама Сони, 8 лет</span></span></footer>
+          </li>
+          <li class="review-card">
+            <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p class="review-card__stars" aria-hidden="true">★★★★★</p>
+            <blockquote>Готовился к IELTS для магистратуры. Оценка эссе по критериям помогла поднять Writing с 5.5 до 7.0.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar">Д</span><span class="review-card__who"><cite>Дмитрий, 22</cite><span>Студент</span></span></footer>
+          </li>
+          <li class="review-card">
+            <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p class="review-card__stars" aria-hidden="true">★★★★★</p>
+            <blockquote>Перед поездкой в Италию прошла курс-разговорник за две недели. В кафе и на вокзале чувствовала себя уверенно.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar">И</span><span class="review-card__who"><cite>Ирина, 52</cite><span>Путешественница</span></span></footer>
+          </li>
+          <li class="review-card">
+            <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
+            <p class="review-card__stars" aria-hidden="true">★★★★★</p>
+            <blockquote>Серии дней — это гениально. Уже 214 дней подряд, ни разу не пропустил. Немецкий подтянул до B1.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar">А</span><span class="review-card__who"><cite>Артём, 29</cite><span>Разработчик</span></span></footer>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Вопросы и ответы</span>
+        <h2 class="section__title" id="faq-title">Часто спрашивают</h2>
+      </div>
+
+      <div class="faq" data-faq>
+        <div class="faq__item">
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q1" aria-expanded="false" aria-controls="faq-a1"><span>Это правда бесплатно?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a1" role="region" aria-labelledby="faq-q1"><div class="faq__answer-inner"><p>Да. Все базовые курсы, упражнения и тренажёры бесплатны навсегда. Есть необязательная подписка Плюс — без рекламы, с безлимитными попытками и расширенными пробниками экзаменов.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q2" aria-expanded="false" aria-controls="faq-a2"><span>С какого уровня можно начать?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a2" role="region" aria-labelledby="faq-q2"><div class="faq__answer-inner"><p>С любого. Короткий тест за 3 минуты определит ваш уровень и подберёт программу — с нуля или с продолжения. Перейти на другой уровень можно в любой момент.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q3" aria-expanded="false" aria-controls="faq-a3"><span>Сколько времени нужно заниматься?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a3" role="region" aria-labelledby="faq-q3"><div class="faq__answer-inner"><p>Достаточно 15 минут в день. Уроки короткие, поэтому можно заниматься по 3–5 минут в метро или в очереди — серия дней при этом не прервётся.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q4" aria-expanded="false" aria-controls="faq-a4"><span>Поможет ли это сдать ЕГЭ или IELTS?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a4" role="region" aria-labelledby="faq-q4"><div class="faq__answer-inner"><p>Да. Задания собраны в формате ФИПИ и IELTS, есть пробные варианты с таймером, обратная связь по письму и разбор каждой ошибки. Средний прирост за 3 месяца — +23 балла.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q5" aria-expanded="false" aria-controls="faq-a5"><span>Подходит ли сервис для детей?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a5" role="region" aria-labelledby="faq-q5"><div class="faq__answer-inner"><p>Да, заниматься можно с 4 лет. В детском режиме — игровые задания и награды, а родителям приходит отчёт о прогрессе и рекомендации.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q6" aria-expanded="false" aria-controls="faq-a6"><span>Можно ли заниматься без интернета?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a6" role="region" aria-labelledby="faq-q6"><div class="faq__answer-inner"><p>Да. Уроки можно скачать в приложении и проходить офлайн — прогресс синхронизируется, как только появится сеть.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section" id="cta" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta-card reveal">
+        <div class="cta-card__bubbles" aria-hidden="true">
+          <span class="cta-bubble cta-bubble--1" lang="en">Hello!</span>
+          <span class="cta-bubble cta-bubble--2" lang="es">¡Hola!</span>
+          <span class="cta-bubble cta-bubble--3" lang="fr">Bonjour</span>
+          <span class="cta-bubble cta-bubble--4" lang="zh">你好</span>
+        </div>
+        <div class="cta-card__content">
+          <h2 class="cta-card__title" id="cta-title">Учите язык с пингвинёнком</h2>
+          <p class="cta-card__text">Первый урок — через минуту. Бесплатно, без карты и обязательств.</p>
+          <a class="btn btn--light" href="#top">Начать бесплатно</a>
+        </div>
+        <img class="cta-card__mascot" src="images/penguin-mascot.png" alt="" width="930" height="1200" loading="lazy">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="logo logo--footer" href="#top" aria-label="пингвинёнок — на главную">
+          <span class="logo__icon"><img src="images/penguin-icon.png" alt="" width="48" height="48"></span>
+          <span class="logo__text"><span class="logo__text-dark">пингвин</span><span class="logo__text-blue">ёнок</span></span>
+        </a>
+        <p>Упражнения, тренажёры и подготовка к экзаменам — для взрослых, детей и всех, кто любит языки.</p>
+      </div>
+
+      <nav class="footer__col" aria-label="Разделы">
+        <h2>Разделы</h2>
+        <ul>
+          <li><a href="#languages">Языки</a></li>
+          <li><a href="#method">Как это работает</a></li>
+          <li><a href="#exams">Экзамены</a></li>
+          <li><a href="#audience">Для кого</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+          <li><a href="#faq">Вопросы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer__col" aria-label="Курсы">
+        <h2>Курсы</h2>
+        <ul>
+          <li><a href="#languages">Английский</a></li>
+          <li><a href="#languages">Французский</a></li>
+          <li><a href="#languages">Немецкий</a></li>
+          <li><a href="#languages">Испанский</a></li>
+          <li><a href="#languages">Итальянский</a></li>
+          <li><a href="#languages">Китайский</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h2>Контакты</h2>
+        <ul>
+          <li><a href="mailto:hello@pinguinenok.ru">hello@pinguinenok.ru</a></li>
+          <li><a href="tel:+78000000000">8 800 000-00-00</a></li>
+          <li>Поддержка 24/7 в чате</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© <span data-year>2026</span> пингвинёнок. Все права защищены.</p>
+      <p class="footer__tagline">Учите язык с пингвинёнком</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js" defer></script>
+</body>
+</html>
