@@ -1,190 +1,28 @@
 /* ==========================================================================
    пингвинёнок — site behaviour
-   Vanilla JS: i18n, mobile menu, snow, tabs, exercise, streak, carousel, FAQ.
+   Vanilla JS: i18n engine (js/i18n.js), mobile menu, snow, tabs, exercise,
+   streak, carousel, FAQ.
    ========================================================================== */
 (function () {
   'use strict';
 
   /* ------------------------------------------------------------------
-     1. Translations (header + hero, per brief)
+     1. i18n helpers and state of dynamic blocks
      ------------------------------------------------------------------ */
-  var translations = {
-    ru: {
-      pageTitle: 'пингвинёнок — учите языки по 15 минут в день',
-      'nav.languages': 'Языки',
-      'nav.how': 'Как это работает',
-      'nav.exams': 'Экзамены',
-      'nav.audience': 'Для кого',
-      'nav.reviews': 'Отзывы',
-      'nav.faq': 'Вопросы',
-      'lang.label': 'Язык сайта',
-      'hero.line1': 'Учите языки',
-      'hero.line2pre': 'с ',
-      'hero.accent': 'пингвинёнком',
-      'hero.line2post': ' —',
-      'hero.line3': 'по 15 минут в день',
-      'hero.subtitle': 'Бесплатные тренажёры, живые собеседники и подготовка к ЕГЭ и IELTS.',
-      'hero.pill1': '6 языков',
-      'hero.pill2': 'Серии каждый день',
-      'hero.pill3': 'ЕГЭ · IELTS',
-      'btn.start': 'Начать бесплатно',
-      'btn.account': 'У меня уже есть аккаунт',
-      'flag.en': 'Английский',
-      'flag.fr': 'Французский',
-      'flag.de': 'Немецкий',
-      'flag.es': 'Испанский',
-      'flag.it': 'Итальянский',
-      'flag.cn': 'Китайский'
-    },
-    en: {
-      pageTitle: 'Penguin — learn languages in 15 minutes a day',
-      'nav.languages': 'Languages',
-      'nav.how': 'How it works',
-      'nav.exams': 'Exams',
-      'nav.audience': "Who it's for",
-      'nav.reviews': 'Reviews',
-      'nav.faq': 'FAQ',
-      'lang.label': 'Site language',
-      'hero.line1': 'Learn languages',
-      'hero.line2pre': 'with ',
-      'hero.accent': 'Penguin',
-      'hero.line2post': ' —',
-      'hero.line3': 'just 15 minutes a day',
-      'hero.subtitle': 'Free drills, live conversation partners and exam prep for IELTS and school exams.',
-      'hero.pill1': '6 languages',
-      'hero.pill2': 'Daily streaks',
-      'hero.pill3': 'Exams · IELTS',
-      'btn.start': 'Start for free',
-      'btn.account': 'I already have an account',
-      'flag.en': 'English',
-      'flag.fr': 'French',
-      'flag.de': 'German',
-      'flag.es': 'Spanish',
-      'flag.it': 'Italian',
-      'flag.cn': 'Chinese'
-    },
-    de: {
-      pageTitle: 'Pinguin — Sprachen lernen in 15 Minuten am Tag',
-      'nav.languages': 'Sprachen',
-      'nav.how': "So funktioniert's",
-      'nav.exams': 'Prüfungen',
-      'nav.audience': 'Für wen',
-      'nav.reviews': 'Bewertungen',
-      'nav.faq': 'FAQ',
-      'lang.label': 'Sprache der Website',
-      'hero.line1': 'Sprachen lernen',
-      'hero.line2pre': 'mit ',
-      'hero.accent': 'Pinguin',
-      'hero.line2post': ' —',
-      'hero.line3': 'nur 15 Minuten am Tag',
-      'hero.subtitle': 'Kostenlose Übungen, echte Gesprächspartner und Prüfungsvorbereitung für Abitur und IELTS.',
-      'hero.pill1': '6 Sprachen',
-      'hero.pill2': 'Tägliche Serien',
-      'hero.pill3': 'Prüfungen · IELTS',
-      'btn.start': 'Kostenlos starten',
-      'btn.account': 'Ich habe schon ein Konto',
-      'flag.en': 'Englisch',
-      'flag.fr': 'Französisch',
-      'flag.de': 'Deutsch',
-      'flag.es': 'Spanisch',
-      'flag.it': 'Italienisch',
-      'flag.cn': 'Chinesisch'
-    },
-    fr: {
-      pageTitle: 'Pingouin — apprenez les langues en 15 minutes par jour',
-      'nav.languages': 'Langues',
-      'nav.how': 'Comment ça marche',
-      'nav.exams': 'Examens',
-      'nav.audience': 'Pour qui',
-      'nav.reviews': 'Avis',
-      'nav.faq': 'FAQ',
-      'lang.label': 'Langue du site',
-      'hero.line1': 'Apprenez les langues',
-      'hero.line2pre': 'avec ',
-      'hero.accent': 'Pingouin',
-      'hero.line2post': ' —',
-      'hero.line3': '15 minutes par jour',
-      'hero.subtitle': "Des exercices gratuits, de vrais interlocuteurs et une préparation aux examens et à l'IELTS.",
-      'hero.pill1': '6 langues',
-      'hero.pill2': 'Séries quotidiennes',
-      'hero.pill3': 'Examens · IELTS',
-      'btn.start': 'Commencer gratuitement',
-      'btn.account': "J'ai déjà un compte",
-      'flag.en': 'Anglais',
-      'flag.fr': 'Français',
-      'flag.de': 'Allemand',
-      'flag.es': 'Espagnol',
-      'flag.it': 'Italien',
-      'flag.cn': 'Chinois'
-    },
-    es: {
-      pageTitle: 'Pingüino — aprende idiomas en 15 minutos al día',
-      'nav.languages': 'Idiomas',
-      'nav.how': 'Cómo funciona',
-      'nav.exams': 'Exámenes',
-      'nav.audience': 'Para quién',
-      'nav.reviews': 'Opiniones',
-      'nav.faq': 'Preguntas',
-      'lang.label': 'Idioma del sitio',
-      'hero.line1': 'Aprende idiomas',
-      'hero.line2pre': 'con ',
-      'hero.accent': 'Pingüino',
-      'hero.line2post': ' —',
-      'hero.line3': '15 minutos al día',
-      'hero.subtitle': 'Ejercicios gratuitos, conversaciones reales y preparación de exámenes e IELTS.',
-      'hero.pill1': '6 idiomas',
-      'hero.pill2': 'Rachas diarias',
-      'hero.pill3': 'Exámenes · IELTS',
-      'btn.start': 'Empezar gratis',
-      'btn.account': 'Ya tengo cuenta',
-      'flag.en': 'Inglés',
-      'flag.fr': 'Francés',
-      'flag.de': 'Alemán',
-      'flag.es': 'Español',
-      'flag.it': 'Italiano',
-      'flag.cn': 'Chino'
-    },
-    zh: {
-      pageTitle: '企鹅 — 每天 15 分钟学语言',
-      'nav.languages': '语言',
-      'nav.how': '学习方法',
-      'nav.exams': '考试',
-      'nav.audience': '适合人群',
-      'nav.reviews': '评价',
-      'nav.faq': '常见问题',
-      'lang.label': '网站语言',
-      'hero.line1': '学语言',
-      'hero.line2pre': '和',
-      'hero.accent': '企鹅',
-      'hero.line2post': '一起 —',
-      'hero.line3': '每天只需 15 分钟',
-      'hero.subtitle': '免费练习、真人语伴，以及考试和 IELTS 备考。',
-      'hero.pill1': '6 种语言',
-      'hero.pill2': '每日连练',
-      'hero.pill3': '考试 · IELTS',
-      'btn.start': '免费开始',
-      'btn.account': '我已有账户',
-      'flag.en': '英语',
-      'flag.fr': '法语',
-      'flag.de': '德语',
-      'flag.es': '西班牙语',
-      'flag.it': '意大利语',
-      'flag.cn': '中文'
+  var currentExam = 'ege';
+  var currentAudience = 'adults';
+
+  var renderExam = function () {};
+  var renderAudience = function () {};
+  var renderStreak = function () {};
+  var renderExercise = function () {};
+
+  function t(key, vars) {
+    if (window.I18N && typeof window.I18N.t === 'function') {
+      return window.I18N.t(key, vars);
     }
-  };
-
-  var LANGUAGE_NAMES = {
-    ru: 'Русский',
-    en: 'English',
-    de: 'Deutsch',
-    fr: 'Français',
-    es: 'Español',
-    zh: '中文'
-  };
-
-  var STORAGE_KEY = 'penguin-language';
-  var DEFAULT_LANG = 'ru';
-  var currentLang = DEFAULT_LANG;
+    return key;
+  }
 
   function safeGet(key) {
     try {
@@ -202,36 +40,25 @@
     }
   }
 
+  /* Endonyms: language names are intentionally not translated. */
+  var LANGUAGE_LABELS = {
+    ru: 'Русский',
+    en: 'English',
+    de: 'Deutsch',
+    fr: 'Français',
+    es: 'Español',
+    zh: '中文'
+  };
+
   var langCurrentEls = document.querySelectorAll('[data-lang-current]');
   var langOptionEls = document.querySelectorAll('[data-set-lang]');
 
-  function applyLanguage(lang) {
-    if (!translations[lang]) {
-      lang = DEFAULT_LANG;
-    }
-    currentLang = lang;
-    var dictionary = translations[lang];
-    var fallback = translations[DEFAULT_LANG];
-
-    document.querySelectorAll('[data-i18n]').forEach(function (element) {
-      var key = element.getAttribute('data-i18n');
-      var value = dictionary[key];
-      if (typeof value !== 'string') {
-        value = fallback[key];
-      }
-      if (typeof value === 'string') {
-        element.textContent = value;
-      }
-    });
-
-    document.documentElement.lang = lang;
-    document.title = dictionary.pageTitle || fallback.pageTitle;
-
+  function syncLanguageControls(lang) {
+    var label = LANGUAGE_LABELS[lang] || lang;
     langCurrentEls.forEach(function (element) {
-      element.textContent = LANGUAGE_NAMES[lang];
+      element.textContent = label;
       element.lang = lang;
     });
-
     langOptionEls.forEach(function (element) {
       var isActive = element.getAttribute('data-set-lang') === lang;
       if (element.getAttribute('role') === 'option') {
@@ -240,24 +67,34 @@
         element.setAttribute('aria-pressed', String(isActive));
       }
     });
-
-    safeSet(STORAGE_KEY, lang);
   }
 
-  function initLanguage() {
-    var saved = safeGet(STORAGE_KEY);
-    applyLanguage(translations[saved] ? saved : DEFAULT_LANG);
-
+  function initLanguageSwitcher() {
     langOptionEls.forEach(function (element) {
       element.lang = element.getAttribute('data-set-lang');
       element.addEventListener('click', function () {
-        applyLanguage(element.getAttribute('data-set-lang'));
-        closeLangMenu();
-        if (langToggle && !element.closest('.drawer')) {
-          langToggle.focus();
+        var lang = element.getAttribute('data-set-lang');
+        var afterChange = function () {
+          closeLangMenu();
+          if (langToggle && !element.closest('.drawer')) {
+            langToggle.focus();
+          }
+        };
+
+        if (window.I18N && typeof window.I18N.setLang === 'function') {
+          var change = window.I18N.setLang(lang);
+          if (change && typeof change.then === 'function') {
+            change.then(afterChange, afterChange);
+          } else {
+            afterChange();
+          }
+        } else {
+          afterChange();
         }
       });
     });
+
+    syncLanguageControls(window.I18N ? window.I18N.getLang() : 'ru');
   }
 
   /* ------------------------------------------------------------------
@@ -370,6 +207,14 @@
     );
   }
 
+  function syncDrawerLabel() {
+    if (!menuOpenBtn) {
+      return;
+    }
+    var isOpen = drawer && drawer.classList.contains('is-open');
+    menuOpenBtn.setAttribute('aria-label', t(isOpen ? 'a11y.menuClose' : 'a11y.menuOpen'));
+  }
+
   function openDrawer() {
     if (!drawer) {
       return;
@@ -384,8 +229,8 @@
     }
     if (menuOpenBtn) {
       menuOpenBtn.setAttribute('aria-expanded', 'true');
-      menuOpenBtn.setAttribute('aria-label', 'Закрыть меню');
     }
+    syncDrawerLabel();
     var focusable = getDrawerFocusable();
     if (focusable.length) {
       focusable[0].focus();
@@ -405,8 +250,8 @@
     }
     if (menuOpenBtn) {
       menuOpenBtn.setAttribute('aria-expanded', 'false');
-      menuOpenBtn.setAttribute('aria-label', 'Открыть меню');
     }
+    syncDrawerLabel();
     if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
       lastFocusedElement.focus();
     }
@@ -471,6 +316,8 @@
         closeDrawer();
       }
     });
+
+    syncDrawerLabel();
   }
 
   /* ------------------------------------------------------------------
@@ -601,6 +448,25 @@
       return false;
     });
     var selection = [];
+    var feedbackKey = '';
+    var feedbackState = null;
+
+    function renderFeedback() {
+      if (!feedbackEl) {
+        return;
+      }
+      feedbackEl.textContent = feedbackKey ? t(feedbackKey) : '';
+      feedbackEl.classList.remove('is-success', 'is-error');
+      if (feedbackState) {
+        feedbackEl.classList.add(feedbackState);
+      }
+    }
+
+    function setFeedback(key, state) {
+      feedbackKey = key || '';
+      feedbackState = state || null;
+      renderFeedback();
+    }
 
     function render() {
       bankEl.innerHTML = '';
@@ -610,7 +476,7 @@
         chip.className = 'word-chip' + (used[index] ? ' is-used' : '');
         chip.textContent = word;
         chip.setAttribute('data-bank-index', String(index));
-        chip.setAttribute('aria-label', 'Добавить слово «' + word + '»');
+        chip.setAttribute('aria-label', t('a11y.addWord', { word: word }));
         bankEl.appendChild(chip);
       });
 
@@ -621,7 +487,7 @@
         chip.className = 'word-chip';
         chip.textContent = words[bankIndex];
         chip.setAttribute('data-answer-pos', String(position));
-        chip.setAttribute('aria-label', 'Убрать слово «' + words[bankIndex] + '»');
+        chip.setAttribute('aria-label', t('a11y.removeWord', { word: words[bankIndex] }));
         answerEl.appendChild(chip);
       });
 
@@ -630,16 +496,12 @@
       }
     }
 
-    function setFeedback(message, state) {
-      if (!feedbackEl) {
-        return;
-      }
-      feedbackEl.textContent = message;
-      feedbackEl.classList.remove('is-success', 'is-error');
-      if (state) {
-        feedbackEl.classList.add(state);
-      }
+    function renderExerciseState() {
+      render();
+      renderFeedback();
     }
+
+    renderExercise = renderExerciseState;
 
     bankEl.addEventListener('click', function (event) {
       var chip = event.target.closest('[data-bank-index]');
@@ -674,7 +536,7 @@
     if (checkBtn) {
       checkBtn.addEventListener('click', function () {
         if (!selection.length) {
-          setFeedback('Сначала соберите перевод из слов.', 'is-error');
+          setFeedback('exercise.feedbackEmpty', 'is-error');
           return;
         }
         var attempt = selection.map(function (index) {
@@ -682,9 +544,9 @@
         }).join(' ');
         if (attempt === target) {
           root.classList.add('is-solved');
-          setFeedback('Верно! I love to travel — именно так.', 'is-success');
+          setFeedback('exercise.feedbackCorrect', 'is-success');
         } else {
-          setFeedback('Почти! Проверьте порядок слов и попробуйте снова.', 'is-error');
+          setFeedback('exercise.feedbackWrong', 'is-error');
         }
       });
     }
@@ -701,7 +563,7 @@
       });
     }
 
-    render();
+    renderExerciseState();
   }
 
   /* ------------------------------------------------------------------
@@ -716,67 +578,90 @@
 
     var data = {
       ege: {
-        tag: 'Английский, 11 класс',
-        score: '+23',
-        unit: 'балла',
-        text: 'Разбираем все 4 раздела: аудирование, чтение, грамматику и лексику, письмо. Задания в формате ФИПИ, автопроверка и разбор каждой ошибки.'
+        tag: 'exams.ege.tag',
+        score: 'exams.ege.score',
+        unit: 'exams.ege.unit',
+        note: 'exams.ege.note',
+        text: 'exams.ege.text'
       },
       oge: {
-        tag: 'Английский, 9 класс',
-        score: '+19',
-        unit: 'баллов',
-        text: 'Готовим к ОГЭ по всем разделам: аудирование, чтение, грамматика и письмо. Реальные форматы заданий, таймер и разбор каждой ошибки.'
+        tag: 'exams.oge.tag',
+        score: 'exams.oge.score',
+        unit: 'exams.oge.unit',
+        note: 'exams.oge.note',
+        text: 'exams.oge.text'
       },
       ielts: {
-        tag: 'Английский, 18+',
-        score: '+1,5',
-        unit: 'балла',
-        text: 'Тренируем все 4 модуля IELTS: Listening, Reading, Writing, Speaking. Эссе проверяются по критериям, Speaking — с обратной связью.'
+        tag: 'exams.ielts.tag',
+        score: 'exams.ielts.score',
+        unit: 'exams.ielts.unit',
+        note: 'exams.ielts.note',
+        text: 'exams.ielts.text'
       },
       toefl: {
-        tag: 'Английский, 18+',
-        score: '+22',
-        unit: 'балла',
-        text: 'Подготовка к TOEFL, Duolingo English Test и другим международным экзаменам: стратегии, пробники и работа над слабыми местами.'
+        tag: 'exams.toefl.tag',
+        score: 'exams.toefl.score',
+        unit: 'exams.toefl.unit',
+        note: 'exams.toefl.note',
+        text: 'exams.toefl.text'
       }
     };
 
     var tagEl = panel.querySelector('[data-exam-tag]');
     var scoreEl = panel.querySelector('[data-exam-score]');
     var unitEl = panel.querySelector('[data-exam-unit]');
+    var noteEl = panel.querySelector('[data-exam-note]');
     var textEl = panel.querySelector('[data-exam-text]');
 
-    function selectTab(tab) {
-      var key = tab.getAttribute('data-exam');
+    function renderExamState(key, animate) {
       var item = data[key];
       if (!item) {
         return;
       }
+      currentExam = key;
+
+      var activeTab = null;
       tabs.forEach(function (button) {
-        var active = button === tab;
+        var active = button.getAttribute('data-exam') === key;
+        if (active) {
+          activeTab = button;
+        }
         button.classList.toggle('is-active', active);
         button.setAttribute('aria-selected', String(active));
         button.setAttribute('tabindex', active ? '0' : '-1');
       });
+
       if (tagEl) {
-        tagEl.textContent = item.tag;
+        tagEl.textContent = t(item.tag);
       }
       if (scoreEl) {
-        scoreEl.textContent = item.score;
+        scoreEl.textContent = t(item.score);
       }
       if (unitEl) {
-        unitEl.textContent = item.unit;
+        unitEl.textContent = t(item.unit);
+      }
+      if (noteEl) {
+        noteEl.textContent = t(item.note);
       }
       if (textEl) {
-        textEl.textContent = item.text;
+        textEl.textContent = t(item.text);
       }
-      panel.setAttribute('aria-labelledby', tab.id);
-      if (!reduceMotion.matches && typeof panel.animate === 'function') {
+      if (activeTab) {
+        panel.setAttribute('aria-labelledby', activeTab.id);
+      }
+
+      if (animate && !reduceMotion.matches && typeof panel.animate === 'function') {
         panel.animate(
           [{ opacity: 0.35, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }],
           { duration: 320, easing: 'ease-out' }
         );
       }
+    }
+
+    renderExam = renderExamState;
+
+    function selectTab(tab) {
+      renderExamState(tab.getAttribute('data-exam'), true);
     }
 
     tabs.forEach(function (tab, index) {
@@ -803,6 +688,8 @@
         }
       });
     });
+
+    renderExamState(currentExam, false);
   }
 
   /* ------------------------------------------------------------------
@@ -817,44 +704,44 @@
 
     var data = {
       adults: {
-        title: 'Взрослым — для работы и карьеры',
-        text: 'Деловая переписка, созвоны, презентации и собеседования. Курсы по бизнес-лексике и тренажёр для переговоров.',
-        bullets: ['Бизнес-английский', 'Подготовка к собеседованию', '10 минут в обед'],
+        title: 'audience.adults.title',
+        text: 'audience.adults.text',
+        bullets: ['audience.adults.bullet1', 'audience.adults.bullet2', 'audience.adults.bullet3'],
         icon: 'i-clock',
-        value: '10 минут',
-        label: 'в обеденный перерыв'
+        value: 'audience.adults.value',
+        label: 'audience.adults.label'
       },
       school: {
-        title: 'Школьникам — оценки и экзамены',
-        text: 'Помогаем с домашкой, подтягиваем оценки и готовим к ОГЭ и ЕГЭ без зубрёжки — короткими заданиями.',
-        bullets: ['Программа 5–11 класса', 'Разбор домашних заданий', 'Подготовка к ОГЭ и ЕГЭ'],
+        title: 'audience.school.title',
+        text: 'audience.school.text',
+        bullets: ['audience.school.bullet1', 'audience.school.bullet2', 'audience.school.bullet3'],
         icon: 'i-cap',
-        value: '+23 балла',
-        label: 'средний прирост на ЕГЭ'
+        value: 'audience.school.value',
+        label: 'audience.school.label'
       },
       students: {
-        title: 'Студентам — учёба и стажировки',
-        text: 'Академический английский, лексика для лекций и стажировок, подготовка к IELTS и TOEFL для магистратуры.',
-        bullets: ['Академическая лексика', 'Эссе и презентации', 'IELTS и TOEFL'],
+        title: 'audience.students.title',
+        text: 'audience.students.text',
+        bullets: ['audience.students.bullet1', 'audience.students.bullet2', 'audience.students.bullet3'],
         icon: 'i-target',
-        value: '7.0',
-        label: 'целевой балл IELTS'
+        value: 'audience.students.value',
+        label: 'audience.students.label'
       },
       travellers: {
-        title: 'Путешественникам — язык в дорогу',
-        text: 'Разговорные курсы-разговорники: аэропорт, отель, кафе и вокзал. Учитесь перед поездкой за пару недель.',
-        bullets: ['Фразы для поездок', 'Аудирование на слух', 'Курс за 2 недели'],
+        title: 'audience.travellers.title',
+        text: 'audience.travellers.text',
+        bullets: ['audience.travellers.bullet1', 'audience.travellers.bullet2', 'audience.travellers.bullet3'],
         icon: 'i-globe',
-        value: '2 недели',
-        label: 'до уверенной поездки'
+        value: 'audience.travellers.value',
+        label: 'audience.travellers.label'
       },
       kids: {
-        title: 'Детям и родителям — от 4 лет',
-        text: 'Игровые уроки с пингвинёнком: ребёнок занимается сам, а родители видят прогресс в отчёте.',
-        bullets: ['Игровые задания', 'Награды и серии', 'Родительский отчёт'],
+        title: 'audience.kids.title',
+        text: 'audience.kids.text',
+        bullets: ['audience.kids.bullet1', 'audience.kids.bullet2', 'audience.kids.bullet3'],
         icon: 'i-heart',
-        value: 'с 4 лет',
-        label: 'весело и без давления'
+        value: 'audience.kids.value',
+        label: 'audience.kids.label'
       }
     };
 
@@ -865,34 +752,33 @@
     var valueEl = panel.querySelector('[data-audience-stat-value]');
     var labelEl = panel.querySelector('[data-audience-stat-label]');
 
-    tabs.forEach(function (tab, index) {
-      tab.id = tab.id || 'audience-tab-' + index;
-      tab.setAttribute('tabindex', index === 0 ? '0' : '-1');
-    });
-    panel.setAttribute('aria-labelledby', tabs[0].id);
-
-    function selectTab(tab) {
-      var key = tab.getAttribute('data-audience');
+    function renderAudienceState(key, animate) {
       var item = data[key];
       if (!item) {
         return;
       }
+      currentAudience = key;
+
+      var activeTab = null;
       tabs.forEach(function (button) {
-        var active = button === tab;
+        var active = button.getAttribute('data-audience') === key;
+        if (active) {
+          activeTab = button;
+        }
         button.classList.toggle('is-active', active);
         button.setAttribute('aria-selected', String(active));
         button.setAttribute('tabindex', active ? '0' : '-1');
       });
 
       if (titleEl) {
-        titleEl.textContent = item.title;
+        titleEl.textContent = t(item.title);
       }
       if (textEl) {
-        textEl.textContent = item.text;
+        textEl.textContent = t(item.text);
       }
       if (bulletsEl) {
         bulletsEl.innerHTML = '';
-        item.bullets.forEach(function (bullet) {
+        item.bullets.forEach(function (bulletKey) {
           var li = document.createElement('li');
           var svgNS = 'http://www.w3.org/2000/svg';
           var icon = document.createElementNS(svgNS, 'svg');
@@ -902,7 +788,7 @@
           use.setAttribute('href', '#i-check');
           icon.appendChild(use);
           li.appendChild(icon);
-          li.appendChild(document.createTextNode(bullet));
+          li.appendChild(document.createTextNode(t(bulletKey)));
           bulletsEl.appendChild(li);
         });
       }
@@ -910,19 +796,33 @@
         iconUse.setAttribute('href', '#' + item.icon);
       }
       if (valueEl) {
-        valueEl.textContent = item.value;
+        valueEl.textContent = t(item.value);
       }
       if (labelEl) {
-        labelEl.textContent = item.label;
+        labelEl.textContent = t(item.label);
       }
-      panel.setAttribute('aria-labelledby', tab.id);
+      if (activeTab) {
+        panel.setAttribute('aria-labelledby', activeTab.id);
+      }
 
-      if (!reduceMotion.matches && typeof panel.animate === 'function') {
+      if (animate && !reduceMotion.matches && typeof panel.animate === 'function') {
         panel.animate(
           [{ opacity: 0.4, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }],
           { duration: 300, easing: 'ease-out' }
         );
       }
+    }
+
+    renderAudience = renderAudienceState;
+
+    tabs.forEach(function (tab, index) {
+      tab.id = tab.id || 'audience-tab-' + index;
+      tab.setAttribute('tabindex', index === 0 ? '0' : '-1');
+    });
+    panel.setAttribute('aria-labelledby', tabs[0].id);
+
+    function selectTab(tab) {
+      renderAudienceState(tab.getAttribute('data-audience'), true);
     }
 
     tabs.forEach(function (tab) {
@@ -948,6 +848,8 @@
         }
       });
     });
+
+    renderAudienceState(currentAudience, false);
   }
 
   /* ------------------------------------------------------------------
@@ -976,24 +878,12 @@
       }
     }
 
-    function plural(n, one, few, many) {
-      var mod10 = n % 10;
-      var mod100 = n % 100;
-      if (mod10 === 1 && mod100 !== 11) {
-        return one;
-      }
-      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) {
-        return few;
-      }
-      return many;
-    }
-
-    function render() {
+    function renderStreakState() {
       if (countEl) {
         countEl.textContent = String(streak);
       }
       if (wordEl) {
-        wordEl.textContent = plural(streak, 'день', 'дня', 'дней') + ' подряд';
+        wordEl.textContent = t('streak.days', { n: streak });
       }
       if (daysEl) {
         Array.prototype.forEach.call(daysEl.children, function (day, index) {
@@ -1002,20 +892,22 @@
       }
       if (messageEl) {
         if (streak === 0) {
-          messageEl.textContent = 'Начните серию — один урок сегодня, и день засчитан.';
+          messageEl.textContent = t('streak.messageStart');
         } else if (streak >= maxDays) {
-          messageEl.textContent = 'Целая неделя подряд! Так держать и не останавливайтесь.';
+          messageEl.textContent = t('streak.messageWeek');
         } else {
-          messageEl.textContent = 'Отличный старт — не прерывайте серию!';
+          messageEl.textContent = t('streak.messageKeep');
         }
       }
     }
+
+    renderStreak = renderStreakState;
 
     if (doneBtn) {
       doneBtn.addEventListener('click', function () {
         streak = Math.min(streak + 1, maxDays);
         safeSet(streakKey, String(streak));
-        render();
+        renderStreakState();
         if (!reduceMotion.matches && typeof countEl.animate === 'function') {
           countEl.animate(
             [{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(1)' }],
@@ -1029,11 +921,11 @@
       resetBtn.addEventListener('click', function () {
         streak = 0;
         safeSet(streakKey, '0');
-        render();
+        renderStreakState();
       });
     }
 
-    render();
+    renderStreakState();
   }
 
   /* ------------------------------------------------------------------
@@ -1144,30 +1036,60 @@
      Boot
      ------------------------------------------------------------------ */
   function init() {
-    var initializers = [
-      initLanguage,
-      initLangMenu,
-      initDrawer,
-      initHeader,
-      initReveal,
-      initSnow,
-      initExercise,
-      initExamTabs,
-      initAudienceTabs,
-      initStreak,
-      initReviews,
-      initFaq,
-      initYear
-    ];
-    initializers.forEach(function (initializer) {
-      try {
-        initializer();
-      } catch (error) {
-        if (window.console && typeof window.console.error === 'function') {
-          window.console.error('[пингвинёнок] init failed:', error);
+    var run = function () {
+      var initializers = [
+        initLanguageSwitcher,
+        initLangMenu,
+        initDrawer,
+        initHeader,
+        initReveal,
+        initSnow,
+        initExercise,
+        initExamTabs,
+        initAudienceTabs,
+        initStreak,
+        initReviews,
+        initFaq,
+        initYear
+      ];
+      initializers.forEach(function (initializer) {
+        try {
+          initializer();
+        } catch (error) {
+          if (window.console && typeof window.console.error === 'function') {
+            window.console.error('[пингвинёнок] init failed:', error);
+          }
         }
+      });
+
+      if (window.I18N && typeof window.I18N.onChange === 'function') {
+        window.I18N.onChange(function () {
+          syncLanguageControls(window.I18N.getLang());
+          syncDrawerLabel();
+          renderExam(currentExam, false);
+          renderAudience(currentAudience, false);
+          renderStreak();
+          renderExercise();
+        });
       }
-    });
+    };
+
+    var onInitError = function (error) {
+      if (window.console && typeof window.console.error === 'function') {
+        window.console.error('[пингвинёнок] i18n init failed:', error);
+      }
+      run();
+    };
+
+    if (window.I18N && typeof window.I18N.init === 'function') {
+      try {
+        window.I18N.init().then(run, onInitError);
+      } catch (error) {
+        onInitError(error);
+      }
+    } else {
+      run();
+    }
   }
 
   if (document.readyState === 'loading') {
