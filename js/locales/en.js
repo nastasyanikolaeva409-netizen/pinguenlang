@@ -102,6 +102,8 @@
       eyebrow: 'Choose a language',
       title: 'Which language will open new doors for you?',
       lead: 'Courses from beginner to fluent. Pick a language — your first lesson takes just a couple of minutes.',
+      /* {count} is filled by Intl.NumberFormat(notation: 'compact'). */
+      studentsTemplate: '{count} learners',
       cards: {
         en: { name: 'English', students: '12.4M learners' },
         fr: { name: 'French', students: '3.1M learners' },
@@ -297,6 +299,8 @@
       title: 'Students love us',
       rating: '4.9',
       count: '120,000+ ratings',
+      /* {count} is filled by Intl.NumberFormat(lang). */
+      countTemplate: '{count}+ ratings',
       items: {
         anna: {
           avatar: 'A',

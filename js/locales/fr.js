@@ -54,6 +54,12 @@
       es: 'Espagnol',
       it: 'Italien',
       cn: 'Chinois'
+    },
+    languages: {
+      studentsTemplate: '{count} apprenants'
+    },
+    reviews: {
+      countTemplate: '{count}+ avis'
     }
   };
 })(window);

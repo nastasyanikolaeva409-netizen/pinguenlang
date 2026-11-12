@@ -16,12 +16,45 @@
   var renderAudience = function () {};
   var renderStreak = function () {};
   var renderExercise = function () {};
+  var renderNumbers = function () {};
+  var renderWeekdays = function () {};
 
   function t(key, vars) {
     if (window.I18N && typeof window.I18N.t === 'function') {
       return window.I18N.t(key, vars);
     }
     return key;
+  }
+
+  function getLang() {
+    if (window.I18N && typeof window.I18N.getLang === 'function') {
+      return window.I18N.getLang();
+    }
+    return 'ru';
+  }
+
+  function formatNumber(value, options) {
+    try {
+      return new Intl.NumberFormat(getLang(), options).format(value);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function formatCompact(value) {
+    return formatNumber(value, { notation: 'compact', maximumFractionDigits: 1 });
+  }
+
+  function formatSigned(value) {
+    var formatted = formatNumber(value, { signDisplay: 'always', maximumFractionDigits: 1 });
+    if (formatted == null) {
+      return null;
+    }
+    var first = formatted.charAt(0);
+    if (first !== '+' && first !== '-' && first !== '\u2212') {
+      formatted = '+' + formatted;
+    }
+    return formatted;
   }
 
   function safeGet(key) {
@@ -579,28 +612,28 @@
     var data = {
       ege: {
         tag: 'exams.ege.tag',
-        score: 'exams.ege.score',
+        score: 23,
         unit: 'exams.ege.unit',
         note: 'exams.ege.note',
         text: 'exams.ege.text'
       },
       oge: {
         tag: 'exams.oge.tag',
-        score: 'exams.oge.score',
+        score: 19,
         unit: 'exams.oge.unit',
         note: 'exams.oge.note',
         text: 'exams.oge.text'
       },
       ielts: {
         tag: 'exams.ielts.tag',
-        score: 'exams.ielts.score',
+        score: 1.5,
         unit: 'exams.ielts.unit',
         note: 'exams.ielts.note',
         text: 'exams.ielts.text'
       },
       toefl: {
         tag: 'exams.toefl.tag',
-        score: 'exams.toefl.score',
+        score: 22,
         unit: 'exams.toefl.unit',
         note: 'exams.toefl.note',
         text: 'exams.toefl.text'
@@ -635,7 +668,8 @@
         tagEl.textContent = t(item.tag);
       }
       if (scoreEl) {
-        scoreEl.textContent = t(item.score);
+        var formattedScore = formatSigned(item.score);
+        scoreEl.textContent = formattedScore != null ? formattedScore : t('exams.' + key + '.score');
       }
       if (unitEl) {
         unitEl.textContent = t(item.unit);
@@ -1033,6 +1067,109 @@
   }
 
   /* ------------------------------------------------------------------
+     14. Intl: numbers and weekday labels
+     ------------------------------------------------------------------ */
+  function initNumbers() {
+    var ratingEl = document.querySelector('.reviews__score');
+    var countEl = document.querySelector('.reviews__count');
+    var studentMetaEls = document.querySelectorAll('.language-card__meta');
+    var studentCounts = {
+      en: 12400000,
+      fr: 3100000,
+      de: 2700000,
+      es: 4200000,
+      it: 1500000,
+      cn: 980000
+    };
+
+    function render() {
+      if (ratingEl) {
+        var rating = formatNumber(4.9, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+        if (rating != null) {
+          ratingEl.textContent = rating;
+        }
+      }
+
+      if (countEl) {
+        var count = formatNumber(120000);
+        if (count != null) {
+          countEl.textContent = t('reviews.countTemplate', { count: count });
+        }
+      }
+
+      studentMetaEls.forEach(function (element) {
+        var key = element.getAttribute('data-i18n') || '';
+        var match = key.match(/^languages\.cards\.([a-z]+)\.students$/);
+        if (!match) {
+          return;
+        }
+        var code = match[1];
+        var value = studentCounts[code];
+        if (value == null) {
+          return;
+        }
+        var compact = formatCompact(value);
+        if (compact != null) {
+          element.textContent = t('languages.studentsTemplate', { count: compact });
+        }
+      });
+    }
+
+    renderNumbers = render;
+    render();
+  }
+
+  var WEEKDAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+  function initWeekdays() {
+    var root = document.querySelector('[data-streak-days]');
+    if (!root) {
+      return;
+    }
+
+    var labels = Array.prototype.slice.call(root.children).map(function (day) {
+      return day.querySelector('span');
+    });
+
+    function render() {
+      var formatter = null;
+      try {
+        formatter = new Intl.DateTimeFormat(getLang(), { weekday: 'short' });
+      } catch (error) {
+        formatter = null;
+      }
+
+      labels.forEach(function (element, index) {
+        if (!element) {
+          return;
+        }
+
+        var label = '';
+        if (formatter) {
+          try {
+            /* 1 января 2024 — понедельник; полдень защищает от сдвига даты. */
+            label = formatter.format(new Date(2024, 0, 1 + index, 12));
+          } catch (error) {
+            label = '';
+          }
+        }
+
+        if (!label) {
+          label = t('weekdays.' + WEEKDAY_KEYS[index]);
+        } else {
+          label = label.replace(/\.$/, '').trim();
+          label = label.charAt(0).toUpperCase() + label.slice(1);
+        }
+
+        element.textContent = label;
+      });
+    }
+
+    renderWeekdays = render;
+    render();
+  }
+
+  /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
   function init() {
@@ -1050,7 +1187,9 @@
         initStreak,
         initReviews,
         initFaq,
-        initYear
+        initYear,
+        initNumbers,
+        initWeekdays
       ];
       initializers.forEach(function (initializer) {
         try {
@@ -1070,6 +1209,8 @@
           renderAudience(currentAudience, false);
           renderStreak();
           renderExercise();
+          renderNumbers();
+          renderWeekdays();
         });
       }
     };

@@ -101,7 +101,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: var(--text-main);
@@ -1292,7 +1292,7 @@ body.menu-open {
 }
 
 .exercise-card__answer:empty::before {
-  content: "Нажмите на слова ниже";
+  content: attr(data-hint);
   padding: 6px 4px;
   font-size: 0.85rem;
   font-weight: 700;

@@ -54,6 +54,12 @@
       es: '西班牙语',
       it: '意大利语',
       cn: '中文'
+    },
+    languages: {
+      studentsTemplate: '{count}名学习者'
+    },
+    reviews: {
+      countTemplate: '{count}+ 条评价'
     }
   };
 })(window);

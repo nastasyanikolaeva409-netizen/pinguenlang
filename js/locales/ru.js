@@ -102,6 +102,8 @@
       eyebrow: 'Выберите язык',
       title: 'Какой язык откроет вам новые двери?',
       lead: 'Курсы с нуля и до свободного уровня. Выберите язык — первый урок займёт пару минут.',
+      /* {count} подставляется через Intl.NumberFormat(notation: 'compact'). */
+      studentsTemplate: '{count} учеников',
       cards: {
         en: { name: 'Английский', students: '12,4 млн учеников' },
         fr: { name: 'Французский', students: '3,1 млн учеников' },
@@ -299,6 +301,8 @@
       title: 'Нас любят ученики',
       rating: '4,9',
       count: '120 000+ оценок',
+      /* {count} подставляется через Intl.NumberFormat(lang). */
+      countTemplate: '{count}+ оценок',
       items: {
         anna: {
           avatar: 'А',
