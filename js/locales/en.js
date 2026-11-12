@@ -53,6 +53,9 @@
 
     brand: {
       name: 'Penguin',
+      /* Logo is split into two parts to keep the two-tone wordmark. */
+      logoPrimary: 'Peng',
+      logoAccent: 'uin',
       tagline: 'Learn a language with Penguin'
     },
 
@@ -376,7 +379,9 @@
       coursesTitle: 'Courses',
       contactsTitle: 'Contacts',
       support: '24/7 chat support',
-      copyright: '© {year} Penguin. All rights reserved.'
+      copyright: '© {year} Penguin. All rights reserved.',
+      /* For markup where the year is rendered in a separate <span data-year>. */
+      copyrightSuffix: 'Penguin. All rights reserved.'
     }
   };
 })(window);

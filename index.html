@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>пингвинёнок — учите языки по 15 минут в день</title>
-  <meta name="description" content="пингвинёнок — бесплатные тренажёры, живые собеседники и подготовка к ЕГЭ и IELTS. Учите языки по 15 минут в день.">
+  <title data-i18n="meta.title">пингвинёнок — учите языки по 15 минут в день</title>
+  <meta name="description" content="пингвинёнок — бесплатные тренажёры, живые собеседники и подготовка к ЕГЭ и IELTS. Учите языки по 15 минут в день." data-i18n-attr="content:meta.description">
   <meta name="theme-color" content="#0EA5E9">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="пингвинёнок — учите языки по 15 минут в день">
-  <meta property="og:description" content="Бесплатные тренажёры, живые собеседники и подготовка к ЕГЭ и IELTS.">
+  <meta property="og:title" content="пингвинёнок — учите языки по 15 минут в день" data-i18n-attr="content:meta.ogTitle">
+  <meta property="og:description" content="Бесплатные тренажёры, живые собеседники и подготовка к ЕГЭ и IELTS." data-i18n-attr="content:meta.ogDescription">
+  <meta property="og:locale" content="ru_RU" data-i18n-attr="content:meta.ogLocale">
   <meta property="og:image" content="images/penguin-mascot.png">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/favicon.png">
   <link rel="preload" as="image" href="images/penguin-mascot.png" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -136,16 +137,16 @@
   </symbol>
 </svg>
 
-<a class="skip-link" href="#main">Перейти к содержимому</a>
+<a class="skip-link" href="#main" data-i18n="skip.link">Перейти к содержимому</a>
 
 <header class="site-header" data-header>
   <div class="container header__inner">
-    <a class="logo" href="#top" aria-label="пингвинёнок — на главную">
+    <a class="logo" href="#top" aria-label="пингвинёнок — на главную" data-i18n-attr="aria-label:a11y.logoHome">
       <span class="logo__icon"><img src="images/penguin-icon.png" alt="" width="48" height="48"></span>
-      <span class="logo__text"><span class="logo__text-dark">пингвин</span><span class="logo__text-blue">ёнок</span></span>
+      <span class="logo__text"><span class="logo__text-dark" data-i18n="brand.logoPrimary">пингвин</span><span class="logo__text-blue" data-i18n="brand.logoAccent">ёнок</span></span>
     </a>
 
-    <nav class="nav" aria-label="Основная навигация">
+    <nav class="nav" aria-label="Основная навигация" data-i18n-attr="aria-label:a11y.primaryNav">
       <ul class="nav__list">
         <li><a class="nav__link" href="#languages" data-i18n="nav.languages">Языки</a></li>
         <li><a class="nav__link" href="#method" data-i18n="nav.how">Как это работает</a></li>
@@ -158,12 +159,12 @@
 
     <div class="header__right">
       <div class="lang-switcher" data-lang-switcher>
-        <button class="lang-switcher__toggle" type="button" data-lang-toggle aria-expanded="false" aria-haspopup="listbox" aria-label="Выбрать язык сайта">
+        <button class="lang-switcher__toggle" type="button" data-lang-toggle aria-expanded="false" aria-haspopup="listbox" aria-label="Выбрать язык сайта" data-i18n-attr="aria-label:a11y.langToggle">
           <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg>
           <span class="lang-switcher__label"><span data-i18n="lang.label">Язык сайта</span>: <span class="lang-switcher__current" data-lang-current>Русский</span></span>
           <svg class="icon lang-switcher__chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
         </button>
-        <ul class="lang-menu" role="listbox" aria-label="Язык сайта" data-lang-menu hidden>
+        <ul class="lang-menu" role="listbox" aria-label="Язык сайта" data-lang-menu hidden data-i18n-attr="aria-label:a11y.langMenu">
           <li><button class="lang-menu__option" type="button" role="option" data-set-lang="ru" aria-selected="true">Русский<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
           <li><button class="lang-menu__option" type="button" role="option" data-set-lang="en" aria-selected="false">English<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
           <li><button class="lang-menu__option" type="button" role="option" data-set-lang="de" aria-selected="false">Deutsch<svg class="icon lang-menu__check" aria-hidden="true"><use href="#i-check"/></svg></button></li>
@@ -173,7 +174,7 @@
         </ul>
       </div>
 
-      <button class="burger" type="button" data-menu-open aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
+      <button class="burger" type="button" data-menu-open aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu" data-i18n-attr="aria-label:a11y.menuOpen">
         <span class="burger__line"></span>
         <span class="burger__line"></span>
         <span class="burger__line"></span>
@@ -184,18 +185,18 @@
 
 <div class="drawer-overlay" data-drawer-overlay aria-hidden="true"></div>
 
-<aside class="drawer" id="mobile-menu" aria-label="Мобильное меню" aria-hidden="true">
+<aside class="drawer" id="mobile-menu" aria-label="Мобильное меню" aria-hidden="true" data-i18n-attr="aria-label:a11y.mobileMenu">
   <div class="drawer__head">
-    <a class="logo logo--drawer" href="#top" data-drawer-link>
+    <a class="logo logo--drawer" href="#top" data-drawer-link aria-label="пингвинёнок — на главную" data-i18n-attr="aria-label:a11y.logoHome">
       <span class="logo__icon"><img src="images/penguin-icon.png" alt="" width="48" height="48"></span>
-      <span class="logo__text"><span class="logo__text-dark">пингвин</span><span class="logo__text-blue">ёнок</span></span>
+      <span class="logo__text"><span class="logo__text-dark" data-i18n="brand.logoPrimary">пингвин</span><span class="logo__text-blue" data-i18n="brand.logoAccent">ёнок</span></span>
     </a>
-    <button class="drawer__close" type="button" data-menu-close aria-label="Закрыть меню">
+    <button class="drawer__close" type="button" data-menu-close aria-label="Закрыть меню" data-i18n-attr="aria-label:a11y.menuClose">
       <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
     </button>
   </div>
 
-  <nav class="drawer__nav" aria-label="Мобильная навигация">
+  <nav class="drawer__nav" aria-label="Мобильная навигация" data-i18n-attr="aria-label:a11y.mobileNav">
     <a href="#languages" data-drawer-link data-i18n="nav.languages">Языки</a>
     <a href="#method" data-drawer-link data-i18n="nav.how">Как это работает</a>
     <a href="#exams" data-drawer-link data-i18n="nav.exams">Экзамены</a>
@@ -227,7 +228,7 @@
       <div class="container hero__inner">
         <div class="hero__media">
           <div class="hero__mascot-wrap">
-            <img class="hero__mascot" src="images/penguin-mascot.png" alt="Пингвинёнок в синей шапке читает книгу" width="930" height="1200" fetchpriority="high">
+            <img class="hero__mascot" src="images/penguin-mascot.png" alt="Пингвинёнок в синей шапке читает книгу" width="930" height="1200" fetchpriority="high" data-i18n-attr="alt:a11y.heroMascot">
           </div>
 
           <div class="bubbles" aria-hidden="true">
@@ -283,40 +284,40 @@
   <section class="section" id="languages" aria-labelledby="languages-title">
     <div class="container">
       <div class="section__head reveal">
-        <span class="eyebrow">Выберите язык</span>
-        <h2 class="section__title" id="languages-title">Какой язык откроет вам новые двери?</h2>
-        <p class="section__lead">Курсы с нуля и до свободного уровня. Выберите язык — первый урок займёт пару минут.</p>
+        <span class="eyebrow" data-i18n="languages.eyebrow">Выберите язык</span>
+        <h2 class="section__title" id="languages-title" data-i18n="languages.title">Какой язык откроет вам новые двери?</h2>
+        <p class="section__lead" data-i18n="languages.lead">Курсы с нуля и до свободного уровня. Выберите язык — первый урок займёт пару минут.</p>
       </div>
 
       <div class="language-grid">
         <a class="language-card reveal" href="#cta">
           <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-gb"/></svg></span>
-          <span class="language-card__body"><span class="language-card__name">Английский</span><span class="language-card__meta">12,4 млн учеников</span></span>
+          <span class="language-card__body"><span class="language-card__name" data-i18n="languages.cards.en.name">Английский</span><span class="language-card__meta" data-i18n="languages.cards.en.students">12,4 млн учеников</span></span>
           <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
         <a class="language-card reveal" href="#cta">
           <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-fr"/></svg></span>
-          <span class="language-card__body"><span class="language-card__name">Французский</span><span class="language-card__meta">3,1 млн учеников</span></span>
+          <span class="language-card__body"><span class="language-card__name" data-i18n="languages.cards.fr.name">Французский</span><span class="language-card__meta" data-i18n="languages.cards.fr.students">3,1 млн учеников</span></span>
           <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
         <a class="language-card reveal" href="#cta">
           <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-de"/></svg></span>
-          <span class="language-card__body"><span class="language-card__name">Немецкий</span><span class="language-card__meta">2,7 млн учеников</span></span>
+          <span class="language-card__body"><span class="language-card__name" data-i18n="languages.cards.de.name">Немецкий</span><span class="language-card__meta" data-i18n="languages.cards.de.students">2,7 млн учеников</span></span>
           <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
         <a class="language-card reveal" href="#cta">
           <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-es"/></svg></span>
-          <span class="language-card__body"><span class="language-card__name">Испанский</span><span class="language-card__meta">4,2 млн учеников</span></span>
+          <span class="language-card__body"><span class="language-card__name" data-i18n="languages.cards.es.name">Испанский</span><span class="language-card__meta" data-i18n="languages.cards.es.students">4,2 млн учеников</span></span>
           <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
         <a class="language-card reveal" href="#cta">
           <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-it"/></svg></span>
-          <span class="language-card__body"><span class="language-card__name">Итальянский</span><span class="language-card__meta">1,5 млн учеников</span></span>
+          <span class="language-card__body"><span class="language-card__name" data-i18n="languages.cards.it.name">Итальянский</span><span class="language-card__meta" data-i18n="languages.cards.it.students">1,5 млн учеников</span></span>
           <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
         <a class="language-card reveal" href="#cta">
           <span class="language-card__flag"><svg class="flag" aria-hidden="true"><use href="#flag-cn"/></svg></span>
-          <span class="language-card__body"><span class="language-card__name">Китайский</span><span class="language-card__meta">980 тыс. учеников</span></span>
+          <span class="language-card__body"><span class="language-card__name" data-i18n="languages.cards.cn.name">Китайский</span><span class="language-card__meta" data-i18n="languages.cards.cn.students">980 тыс. учеников</span></span>
           <svg class="icon language-card__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
       </div>
@@ -326,9 +327,9 @@
   <section class="section section--tinted" id="method" aria-labelledby="method-title">
     <div class="container">
       <div class="section__head reveal">
-        <span class="eyebrow">Упражнения и тренажёры</span>
-        <h2 class="section__title" id="method-title">Весело, быстро и по науке</h2>
-        <p class="section__lead">Каждый урок похож на маленькую игру. Попробуйте прямо здесь — соберите перевод из слов.</p>
+        <span class="eyebrow" data-i18n="method.eyebrow">Упражнения и тренажёры</span>
+        <h2 class="section__title" id="method-title" data-i18n="method.title">Весело, быстро и по науке</h2>
+        <p class="section__lead" data-i18n="method.lead">Каждый урок похож на маленькую игру. Попробуйте прямо здесь — соберите перевод из слов.</p>
       </div>
 
       <div class="method-grid">
@@ -336,38 +337,38 @@
           <li class="feature reveal">
             <span class="feature__icon"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span>
             <div class="feature__body">
-              <h3>Короткие упражнения</h3>
-              <p>Уроки по 3–5 минут: перевод, аудирование, произношение и сборка фраз. Учиться можно в метро и в очереди.</p>
+              <h3 data-i18n="method.features.short.title">Короткие упражнения</h3>
+              <p data-i18n="method.features.short.text">Уроки по 3–5 минут: перевод, аудирование, произношение и сборка фраз. Учиться можно в метро и в очереди.</p>
             </div>
           </li>
           <li class="feature reveal">
             <span class="feature__icon"><svg class="icon" aria-hidden="true"><use href="#i-target"/></svg></span>
             <div class="feature__body">
-              <h3>Умные тренажёры</h3>
-              <p>Система запоминает ваши ошибки и возвращает сложные слова ровно тогда, когда вы начинаете их забывать.</p>
+              <h3 data-i18n="method.features.smart.title">Умные тренажёры</h3>
+              <p data-i18n="method.features.smart.text">Система запоминает ваши ошибки и возвращает сложные слова ровно тогда, когда вы начинаете их забывать.</p>
             </div>
           </li>
           <li class="feature reveal">
             <span class="feature__icon"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg></span>
             <div class="feature__body">
-              <h3>Говорите вслух</h3>
-              <p>Тренажёр произношения слушает вас и подсказывает, какие звуки стоит подтянуть.</p>
+              <h3 data-i18n="method.features.speaking.title">Говорите вслух</h3>
+              <p data-i18n="method.features.speaking.text">Тренажёр произношения слушает вас и подсказывает, какие звуки стоит подтянуть.</p>
             </div>
           </li>
         </ul>
 
         <div class="exercise-card reveal" data-exercise>
           <div class="exercise-card__head">
-            <span class="exercise-card__label">Переведите фразу</span>
+            <span class="exercise-card__label" data-i18n="exercise.label">Переведите фразу</span>
             <span class="exercise-card__progress"><span data-exercise-count>0</span> / 4</span>
           </div>
           <p class="exercise-card__sentence" lang="ru">Я люблю путешествовать</p>
-          <div class="exercise-card__answer" data-exercise-answer aria-live="polite" aria-label="Собранный перевод"></div>
+          <div class="exercise-card__answer" data-exercise-answer aria-live="polite" aria-label="Собранный перевод" data-hint="Нажмите на слова ниже" data-i18n-attr="aria-label:a11y.exerciseAnswer;data-hint:exercise.hint"></div>
           <div class="exercise-card__bank" data-exercise-bank></div>
           <p class="exercise-card__feedback" data-exercise-feedback aria-live="polite"></p>
           <div class="exercise-card__actions">
-            <button class="btn btn--primary btn--sm" type="button" data-exercise-check>Проверить</button>
-            <button class="btn-text" type="button" data-exercise-reset>Сбросить</button>
+            <button class="btn btn--primary btn--sm" type="button" data-exercise-check data-i18n="exercise.check">Проверить</button>
+            <button class="btn-text" type="button" data-exercise-reset data-i18n="exercise.reset">Сбросить</button>
           </div>
         </div>
       </div>
@@ -377,29 +378,29 @@
   <section class="section" id="exams" aria-labelledby="exams-title">
     <div class="container">
       <div class="section__head reveal">
-        <span class="eyebrow">Подготовка к экзаменам</span>
-        <h2 class="section__title" id="exams-title">Сдайте ЕГЭ и IELTS на тот балл, который нужен</h2>
+        <span class="eyebrow" data-i18n="exams.eyebrow">Подготовка к экзаменам</span>
+        <h2 class="section__title" id="exams-title" data-i18n="exams.title">Сдайте ЕГЭ и IELTS на тот балл, который нужен</h2>
       </div>
 
-      <div class="exam-tabs reveal" role="tablist" aria-label="Тип экзамена">
-        <button class="exam-tab is-active" type="button" role="tab" id="exam-tab-ege" aria-selected="true" aria-controls="exam-panel" data-exam="ege">ЕГЭ</button>
-        <button class="exam-tab" type="button" role="tab" id="exam-tab-oge" aria-selected="false" aria-controls="exam-panel" data-exam="oge">ОГЭ</button>
-        <button class="exam-tab" type="button" role="tab" id="exam-tab-ielts" aria-selected="false" aria-controls="exam-panel" data-exam="ielts">IELTS</button>
-        <button class="exam-tab" type="button" role="tab" id="exam-tab-toefl" aria-selected="false" aria-controls="exam-panel" data-exam="toefl">TOEFL и др.</button>
+      <div class="exam-tabs reveal" role="tablist" aria-label="Тип экзамена" data-i18n-attr="aria-label:a11y.examTabs">
+        <button class="exam-tab is-active" type="button" role="tab" id="exam-tab-ege" aria-selected="true" aria-controls="exam-panel" data-exam="ege" data-i18n="exams.tabs.ege">ЕГЭ</button>
+        <button class="exam-tab" type="button" role="tab" id="exam-tab-oge" aria-selected="false" aria-controls="exam-panel" data-exam="oge" data-i18n="exams.tabs.oge">ОГЭ</button>
+        <button class="exam-tab" type="button" role="tab" id="exam-tab-ielts" aria-selected="false" aria-controls="exam-panel" data-exam="ielts" data-i18n="exams.tabs.ielts">IELTS</button>
+        <button class="exam-tab" type="button" role="tab" id="exam-tab-toefl" aria-selected="false" aria-controls="exam-panel" data-exam="toefl" data-i18n="exams.tabs.toefl">TOEFL и др.</button>
       </div>
 
       <div class="exam-panel reveal" id="exam-panel" role="tabpanel" aria-labelledby="exam-tab-ege" data-exam-panel>
         <div class="exam-panel__content">
-          <span class="exam-panel__tag" data-exam-tag>Английский, 11 класс</span>
-          <p class="exam-panel__score"><strong data-exam-score>+23</strong> <span data-exam-unit>балла</span></p>
-          <p class="exam-panel__score-note" data-exam-note>средний прирост за 3 месяца</p>
-          <p class="exam-panel__text" data-exam-text>Разбираем все 4 раздела: аудирование, чтение, грамматику и лексику, письмо. Задания в формате ФИПИ, автопроверка и разбор каждой ошибки.</p>
+          <span class="exam-panel__tag" data-exam-tag data-i18n="exams.ege.tag">Английский, 11 класс</span>
+          <p class="exam-panel__score"><strong data-exam-score>+23</strong> <span data-exam-unit data-i18n="exams.ege.unit">балла</span></p>
+          <p class="exam-panel__score-note" data-exam-note data-i18n="exams.ege.note">средний прирост за 3 месяца</p>
+          <p class="exam-panel__text" data-exam-text data-i18n="exams.ege.text">Разбираем все 4 раздела: аудирование, чтение, грамматику и лексику, письмо. Задания в формате ФИПИ, автопроверка и разбор каждой ошибки.</p>
           <ul class="check-list">
-            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>2 000+ заданий в формате экзамена</li>
-            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>Пробные варианты с таймером</li>
-            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>Шаблоны для письма и эссе</li>
+            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="exams.bullet1">2 000+ заданий в формате экзамена</span></li>
+            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="exams.bullet2">Пробные варианты с таймером</span></li>
+            <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="exams.bullet3">Шаблоны для письма и эссе</span></li>
           </ul>
-          <a class="btn btn--primary" href="#cta">Пройти пробный тест</a>
+          <a class="btn btn--primary" href="#cta" data-i18n="exams.cta">Пройти пробный тест</a>
         </div>
 
         <div class="exam-visual" aria-hidden="true">
@@ -408,11 +409,11 @@
           <img class="exam-visual__mascot" src="images/penguin-mascot.png" alt="" width="930" height="1200" loading="lazy">
           <div class="exam-badge exam-badge--score">
             <span class="exam-badge__value">91</span>
-            <span class="exam-badge__label">из 100 на пробнике</span>
+            <span class="exam-badge__label" data-i18n="exams.badgeScore">из 100 на пробнике</span>
           </div>
           <div class="exam-badge exam-badge--check">
             <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
-            Готов к экзамену
+            <span data-i18n="exams.badgeReady">Готов к экзамену</span>
           </div>
         </div>
       </div>
@@ -422,33 +423,33 @@
   <section class="section section--tinted" id="audience" aria-labelledby="audience-title">
     <div class="container">
       <div class="section__head reveal">
-        <span class="eyebrow">Для кого</span>
-        <h2 class="section__title" id="audience-title">Учиться может каждый — в любом возрасте</h2>
+        <span class="eyebrow" data-i18n="audience.eyebrow">Для кого</span>
+        <h2 class="section__title" id="audience-title" data-i18n="audience.title">Учиться может каждый — в любом возрасте</h2>
       </div>
 
       <div class="audience reveal">
-        <div class="audience-tabs" role="tablist" aria-label="Кому подходит сервис">
-          <button class="audience-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="audience-panel" data-audience="adults">Взрослым</button>
-          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="school">Школьникам</button>
-          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="students">Студентам</button>
-          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="travellers">Путешественникам</button>
-          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="kids">Детям и родителям</button>
+        <div class="audience-tabs" role="tablist" aria-label="Кому подходит сервис" data-i18n-attr="aria-label:a11y.audienceTabs">
+          <button class="audience-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="audience-panel" data-audience="adults" data-i18n="audience.tabs.adults">Взрослым</button>
+          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="school" data-i18n="audience.tabs.school">Школьникам</button>
+          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="students" data-i18n="audience.tabs.students">Студентам</button>
+          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="travellers" data-i18n="audience.tabs.travellers">Путешественникам</button>
+          <button class="audience-tab" type="button" role="tab" aria-selected="false" aria-controls="audience-panel" data-audience="kids" data-i18n="audience.tabs.kids">Детям и родителям</button>
         </div>
 
         <div class="audience-panel" id="audience-panel" role="tabpanel" data-audience-panel>
           <div class="audience-panel__body">
-            <h3 data-audience-title>Взрослым — для работы и карьеры</h3>
-            <p data-audience-text>Деловая переписка, созвоны, презентации и собеседования. Курсы по бизнес-лексике и тренажёр для переговоров.</p>
+            <h3 data-audience-title data-i18n="audience.adults.title">Взрослым — для работы и карьеры</h3>
+            <p data-audience-text data-i18n="audience.adults.text">Деловая переписка, созвоны, презентации и собеседования. Курсы по бизнес-лексике и тренажёр для переговоров.</p>
             <ul class="check-list" data-audience-bullets>
-              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>Бизнес-английский</li>
-              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>Подготовка к собеседованию</li>
-              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg>10 минут в обед</li>
+              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="audience.adults.bullet1">Бизнес-английский</span></li>
+              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="audience.adults.bullet2">Подготовка к собеседованию</span></li>
+              <li><svg class="icon check-list__icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="audience.adults.bullet3">10 минут в обед</span></li>
             </ul>
           </div>
           <div class="audience-panel__stat">
             <span class="audience-panel__stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-clock" data-audience-icon-use/></svg></span>
-            <strong data-audience-stat-value>10 минут</strong>
-            <span data-audience-stat-label>в обеденный перерыв</span>
+            <strong data-audience-stat-value data-i18n="audience.adults.value">10 минут</strong>
+            <span data-audience-stat-label data-i18n="audience.adults.label">в обеденный перерыв</span>
           </div>
         </div>
       </div>
@@ -458,9 +459,9 @@
   <section class="section" id="motivation" aria-labelledby="motivation-title">
     <div class="container">
       <div class="section__head reveal">
-        <span class="eyebrow">Мотивация</span>
-        <h2 class="section__title" id="motivation-title">Не бросите — потому что это затягивает</h2>
-        <p class="section__lead">Мы превратили учёбу в игру: очки опыта, серии, лиги и награды. 15 минут в день дают больше, чем час раз в неделю.</p>
+        <span class="eyebrow" data-i18n="motivation.eyebrow">Мотивация</span>
+        <h2 class="section__title" id="motivation-title" data-i18n="motivation.title">Не бросите — потому что это затягивает</h2>
+        <p class="section__lead" data-i18n="motivation.lead">Мы превратили учёбу в игру: очки опыта, серии, лиги и награды. 15 минут в день дают больше, чем час раз в неделю.</p>
       </div>
 
       <div class="motivation-grid">
@@ -468,52 +469,52 @@
           <li class="motivation-item reveal">
             <span class="motivation-item__icon"><svg class="icon" aria-hidden="true"><use href="#i-flame"/></svg></span>
             <div>
-              <h3>Серии дней</h3>
-              <p>Занимайтесь каждый день и не прерывайте серию — привычка формируется сама.</p>
+              <h3 data-i18n="motivation.items.streaks.title">Серии дней</h3>
+              <p data-i18n="motivation.items.streaks.text">Занимайтесь каждый день и не прерывайте серию — привычка формируется сама.</p>
             </div>
           </li>
           <li class="motivation-item reveal">
             <span class="motivation-item__icon"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span>
             <div>
-              <h3>Лиги и рейтинги</h3>
-              <p>Соревнуйтесь с учениками со всей страны и поднимайтесь в лигах.</p>
+              <h3 data-i18n="motivation.items.leagues.title">Лиги и рейтинги</h3>
+              <p data-i18n="motivation.items.leagues.text">Соревнуйтесь с учениками со всей страны и поднимайтесь в лигах.</p>
             </div>
           </li>
           <li class="motivation-item reveal">
             <span class="motivation-item__icon"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg></span>
             <div>
-              <h3>Видимый прогресс</h3>
-              <p>Статистика слов, уровня и баллов — понятно, что уже получилось.</p>
+              <h3 data-i18n="motivation.items.progress.title">Видимый прогресс</h3>
+              <p data-i18n="motivation.items.progress.text">Статистика слов, уровня и баллов — понятно, что уже получилось.</p>
             </div>
           </li>
           <li class="motivation-item reveal">
             <span class="motivation-item__icon"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></span>
             <div>
-              <h3>Мягкие напоминания</h3>
-              <p>Подскажем в удобное время, чтобы не забыть про урок.</p>
+              <h3 data-i18n="motivation.items.reminders.title">Мягкие напоминания</h3>
+              <p data-i18n="motivation.items.reminders.text">Подскажем в удобное время, чтобы не забыть про урок.</p>
             </div>
           </li>
         </ul>
 
         <div class="streak-card reveal" data-streak>
           <div class="streak-card__head">
-            <span class="streak-card__label">Серия дней</span>
+            <span class="streak-card__label" data-i18n="streak.label">Серия дней</span>
             <span class="streak-card__flame" aria-hidden="true">🔥</span>
           </div>
-          <p class="streak-card__count"><strong data-streak-count>4</strong> <span data-streak-word>дней подряд</span></p>
+          <p class="streak-card__count"><strong data-streak-count>4</strong> <span data-streak-word data-i18n="streak.days">дней подряд</span></p>
           <ul class="streak-days" data-streak-days>
-            <li><span>Пн</span><span class="streak-day__dot"></span></li>
-            <li><span>Вт</span><span class="streak-day__dot"></span></li>
-            <li><span>Ср</span><span class="streak-day__dot"></span></li>
-            <li><span>Чт</span><span class="streak-day__dot"></span></li>
-            <li><span>Пт</span><span class="streak-day__dot"></span></li>
-            <li><span>Сб</span><span class="streak-day__dot"></span></li>
-            <li><span>Вс</span><span class="streak-day__dot"></span></li>
+            <li><span data-i18n="weekdays.mon">Пн</span><span class="streak-day__dot"></span></li>
+            <li><span data-i18n="weekdays.tue">Вт</span><span class="streak-day__dot"></span></li>
+            <li><span data-i18n="weekdays.wed">Ср</span><span class="streak-day__dot"></span></li>
+            <li><span data-i18n="weekdays.thu">Чт</span><span class="streak-day__dot"></span></li>
+            <li><span data-i18n="weekdays.fri">Пт</span><span class="streak-day__dot"></span></li>
+            <li><span data-i18n="weekdays.sat">Сб</span><span class="streak-day__dot"></span></li>
+            <li><span data-i18n="weekdays.sun">Вс</span><span class="streak-day__dot"></span></li>
           </ul>
-          <p class="streak-card__message" data-streak-message aria-live="polite">Отличный старт — не прерывайте серию!</p>
+          <p class="streak-card__message" data-streak-message aria-live="polite" data-i18n="streak.messageKeep">Отличный старт — не прерывайте серию!</p>
           <div class="streak-card__actions">
-            <button class="btn btn--primary btn--sm" type="button" data-streak-done>Пройти урок сегодня</button>
-            <button class="btn-text" type="button" data-streak-reset>Сбросить демо</button>
+            <button class="btn btn--primary btn--sm" type="button" data-streak-done data-i18n="streak.done">Пройти урок сегодня</button>
+            <button class="btn-text" type="button" data-streak-reset data-i18n="streak.reset">Сбросить демо</button>
           </div>
         </div>
       </div>
@@ -524,56 +525,56 @@
     <div class="container">
       <div class="reviews__head reveal">
         <div>
-          <span class="eyebrow">Отзывы</span>
-          <h2 class="section__title" id="reviews-title">Нас любят ученики</h2>
+          <span class="eyebrow" data-i18n="reviews.eyebrow">Отзывы</span>
+          <h2 class="section__title" id="reviews-title" data-i18n="reviews.title">Нас любят ученики</h2>
         </div>
         <div class="reviews__meta">
-          <p class="reviews__rating"><span class="reviews__score">4,9</span><span class="reviews__stars" aria-label="Оценка 5 из 5">★★★★★</span></p>
-          <p class="reviews__count">120 000+ оценок</p>
+          <p class="reviews__rating"><span class="reviews__score" data-i18n="reviews.rating">4,9</span><span class="reviews__stars" aria-label="Оценка 5 из 5" data-i18n-attr="aria-label:a11y.rating">★★★★★</span></p>
+          <p class="reviews__count" data-i18n="reviews.count">120 000+ оценок</p>
           <div class="reviews__nav">
-            <button class="carousel-btn" type="button" data-review-prev aria-label="Предыдущий отзыв"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
-            <button class="carousel-btn" type="button" data-review-next aria-label="Следующий отзыв"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+            <button class="carousel-btn" type="button" data-review-prev aria-label="Предыдущий отзыв" data-i18n-attr="aria-label:a11y.reviewPrev"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+            <button class="carousel-btn" type="button" data-review-next aria-label="Следующий отзыв" data-i18n-attr="aria-label:a11y.reviewNext"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
           </div>
         </div>
       </div>
 
-      <div class="reviews__viewport" data-reviews-viewport tabindex="0" aria-label="Лента отзывов учеников">
+      <div class="reviews__viewport" data-reviews-viewport tabindex="0" aria-label="Лента отзывов учеников" data-i18n-attr="aria-label:a11y.reviewsViewport">
         <ul class="reviews__track">
           <li class="review-card">
             <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
             <p class="review-card__stars" aria-hidden="true">★★★★★</p>
-            <blockquote>Занималась по 15 минут в обед. Через полгода впервые провела созвон с зарубежными партнёрами без переводчика.</blockquote>
-            <footer class="review-card__author"><span class="review-card__avatar">А</span><span class="review-card__who"><cite>Анна, 34</cite><span>Маркетолог</span></span></footer>
+            <blockquote data-i18n="reviews.items.anna.quote">Занималась по 15 минут в обед. Через полгода впервые провела созвон с зарубежными партнёрами без переводчика.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar" data-i18n="reviews.items.anna.avatar">А</span><span class="review-card__who"><cite data-i18n="reviews.items.anna.name">Анна, 34</cite><span data-i18n="reviews.items.anna.role">Маркетолог</span></span></footer>
           </li>
           <li class="review-card">
             <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
             <p class="review-card__stars" aria-hidden="true">★★★★★</p>
-            <blockquote>Готовился к ЕГЭ по английскому в основном тут. Пробники с таймером реально спасли — сдал на 91.</blockquote>
-            <footer class="review-card__author"><span class="review-card__avatar">М</span><span class="review-card__who"><cite>Миша, 17</cite><span>Выпускник</span></span></footer>
+            <blockquote data-i18n="reviews.items.misha.quote">Готовился к ЕГЭ по английскому в основном тут. Пробники с таймером реально спасли — сдал на 91.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar" data-i18n="reviews.items.misha.avatar">М</span><span class="review-card__who"><cite data-i18n="reviews.items.misha.name">Миша, 17</cite><span data-i18n="reviews.items.misha.role">Выпускник</span></span></footer>
           </li>
           <li class="review-card">
             <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
             <p class="review-card__stars" aria-hidden="true">★★★★★</p>
-            <blockquote>Дочь сама просит позаниматься — для неё это игра. А я вижу её прогресс в родительском отчёте.</blockquote>
-            <footer class="review-card__author"><span class="review-card__avatar">О</span><span class="review-card__who"><cite>Ольга, 41</cite><span>Мама Сони, 8 лет</span></span></footer>
+            <blockquote data-i18n="reviews.items.olga.quote">Дочь сама просит позаниматься — для неё это игра. А я вижу её прогресс в родительском отчёте.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar" data-i18n="reviews.items.olga.avatar">О</span><span class="review-card__who"><cite data-i18n="reviews.items.olga.name">Ольга, 41</cite><span data-i18n="reviews.items.olga.role">Мама Сони, 8 лет</span></span></footer>
           </li>
           <li class="review-card">
             <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
             <p class="review-card__stars" aria-hidden="true">★★★★★</p>
-            <blockquote>Готовился к IELTS для магистратуры. Оценка эссе по критериям помогла поднять Writing с 5.5 до 7.0.</blockquote>
-            <footer class="review-card__author"><span class="review-card__avatar">Д</span><span class="review-card__who"><cite>Дмитрий, 22</cite><span>Студент</span></span></footer>
+            <blockquote data-i18n="reviews.items.dmitry.quote">Готовился к IELTS для магистратуры. Оценка эссе по критериям помогла поднять Writing с 5.5 до 7.0.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar" data-i18n="reviews.items.dmitry.avatar">Д</span><span class="review-card__who"><cite data-i18n="reviews.items.dmitry.name">Дмитрий, 22</cite><span data-i18n="reviews.items.dmitry.role">Студент</span></span></footer>
           </li>
           <li class="review-card">
             <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
             <p class="review-card__stars" aria-hidden="true">★★★★★</p>
-            <blockquote>Перед поездкой в Италию прошла курс-разговорник за две недели. В кафе и на вокзале чувствовала себя уверенно.</blockquote>
-            <footer class="review-card__author"><span class="review-card__avatar">И</span><span class="review-card__who"><cite>Ирина, 52</cite><span>Путешественница</span></span></footer>
+            <blockquote data-i18n="reviews.items.irina.quote">Перед поездкой в Италию прошла курс-разговорник за две недели. В кафе и на вокзале чувствовала себя уверенно.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar" data-i18n="reviews.items.irina.avatar">И</span><span class="review-card__who"><cite data-i18n="reviews.items.irina.name">Ирина, 52</cite><span data-i18n="reviews.items.irina.role">Путешественница</span></span></footer>
           </li>
           <li class="review-card">
             <svg class="review-card__quote" aria-hidden="true"><use href="#i-quote"/></svg>
             <p class="review-card__stars" aria-hidden="true">★★★★★</p>
-            <blockquote>Серии дней — это гениально. Уже 214 дней подряд, ни разу не пропустил. Немецкий подтянул до B1.</blockquote>
-            <footer class="review-card__author"><span class="review-card__avatar">А</span><span class="review-card__who"><cite>Артём, 29</cite><span>Разработчик</span></span></footer>
+            <blockquote data-i18n="reviews.items.artem.quote">Серии дней — это гениально. Уже 214 дней подряд, ни разу не пропустил. Немецкий подтянул до B1.</blockquote>
+            <footer class="review-card__author"><span class="review-card__avatar" data-i18n="reviews.items.artem.avatar">А</span><span class="review-card__who"><cite data-i18n="reviews.items.artem.name">Артём, 29</cite><span data-i18n="reviews.items.artem.role">Разработчик</span></span></footer>
           </li>
         </ul>
       </div>
@@ -583,34 +584,34 @@
   <section class="section" id="faq" aria-labelledby="faq-title">
     <div class="container">
       <div class="section__head reveal">
-        <span class="eyebrow">Вопросы и ответы</span>
-        <h2 class="section__title" id="faq-title">Часто спрашивают</h2>
+        <span class="eyebrow" data-i18n="faq.eyebrow">Вопросы и ответы</span>
+        <h2 class="section__title" id="faq-title" data-i18n="faq.title">Часто спрашивают</h2>
       </div>
 
       <div class="faq" data-faq>
         <div class="faq__item">
-          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q1" aria-expanded="false" aria-controls="faq-a1"><span>Это правда бесплатно?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
-          <div class="faq__answer" aria-hidden="true" id="faq-a1" role="region" aria-labelledby="faq-q1"><div class="faq__answer-inner"><p>Да. Все базовые курсы, упражнения и тренажёры бесплатны навсегда. Есть необязательная подписка Плюс — без рекламы, с безлимитными попытками и расширенными пробниками экзаменов.</p></div></div>
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q1" aria-expanded="false" aria-controls="faq-a1"><span data-i18n="faq.items.free.question">Это правда бесплатно?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a1" role="region" aria-labelledby="faq-q1"><div class="faq__answer-inner"><p data-i18n="faq.items.free.answer">Да. Все базовые курсы, упражнения и тренажёры бесплатны навсегда. Есть необязательная подписка Плюс — без рекламы, с безлимитными попытками и расширенными пробниками экзаменов.</p></div></div>
         </div>
         <div class="faq__item">
-          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q2" aria-expanded="false" aria-controls="faq-a2"><span>С какого уровня можно начать?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
-          <div class="faq__answer" aria-hidden="true" id="faq-a2" role="region" aria-labelledby="faq-q2"><div class="faq__answer-inner"><p>С любого. Короткий тест за 3 минуты определит ваш уровень и подберёт программу — с нуля или с продолжения. Перейти на другой уровень можно в любой момент.</p></div></div>
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q2" aria-expanded="false" aria-controls="faq-a2"><span data-i18n="faq.items.level.question">С какого уровня можно начать?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a2" role="region" aria-labelledby="faq-q2"><div class="faq__answer-inner"><p data-i18n="faq.items.level.answer">С любого. Короткий тест за 3 минуты определит ваш уровень и подберёт программу — с нуля или с продолжения. Перейти на другой уровень можно в любой момент.</p></div></div>
         </div>
         <div class="faq__item">
-          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q3" aria-expanded="false" aria-controls="faq-a3"><span>Сколько времени нужно заниматься?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
-          <div class="faq__answer" aria-hidden="true" id="faq-a3" role="region" aria-labelledby="faq-q3"><div class="faq__answer-inner"><p>Достаточно 15 минут в день. Уроки короткие, поэтому можно заниматься по 3–5 минут в метро или в очереди — серия дней при этом не прервётся.</p></div></div>
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q3" aria-expanded="false" aria-controls="faq-a3"><span data-i18n="faq.items.time.question">Сколько времени нужно заниматься?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a3" role="region" aria-labelledby="faq-q3"><div class="faq__answer-inner"><p data-i18n="faq.items.time.answer">Достаточно 15 минут в день. Уроки короткие, поэтому можно заниматься по 3–5 минут в метро или в очереди — серия дней при этом не прервётся.</p></div></div>
         </div>
         <div class="faq__item">
-          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q4" aria-expanded="false" aria-controls="faq-a4"><span>Поможет ли это сдать ЕГЭ или IELTS?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
-          <div class="faq__answer" aria-hidden="true" id="faq-a4" role="region" aria-labelledby="faq-q4"><div class="faq__answer-inner"><p>Да. Задания собраны в формате ФИПИ и IELTS, есть пробные варианты с таймером, обратная связь по письму и разбор каждой ошибки. Средний прирост за 3 месяца — +23 балла.</p></div></div>
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q4" aria-expanded="false" aria-controls="faq-a4"><span data-i18n="faq.items.exams.question">Поможет ли это сдать ЕГЭ или IELTS?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a4" role="region" aria-labelledby="faq-q4"><div class="faq__answer-inner"><p data-i18n="faq.items.exams.answer">Да. Задания собраны в формате ФИПИ и IELTS, есть пробные варианты с таймером, обратная связь по письму и разбор каждой ошибки. Средний прирост за 3 месяца — +23 балла.</p></div></div>
         </div>
         <div class="faq__item">
-          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q5" aria-expanded="false" aria-controls="faq-a5"><span>Подходит ли сервис для детей?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
-          <div class="faq__answer" aria-hidden="true" id="faq-a5" role="region" aria-labelledby="faq-q5"><div class="faq__answer-inner"><p>Да, заниматься можно с 4 лет. В детском режиме — игровые задания и награды, а родителям приходит отчёт о прогрессе и рекомендации.</p></div></div>
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q5" aria-expanded="false" aria-controls="faq-a5"><span data-i18n="faq.items.kids.question">Подходит ли сервис для детей?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a5" role="region" aria-labelledby="faq-q5"><div class="faq__answer-inner"><p data-i18n="faq.items.kids.answer">Да, заниматься можно с 4 лет. В детском режиме — игровые задания и награды, а родителям приходит отчёт о прогрессе и рекомендации.</p></div></div>
         </div>
         <div class="faq__item">
-          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q6" aria-expanded="false" aria-controls="faq-a6"><span>Можно ли заниматься без интернета?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
-          <div class="faq__answer" aria-hidden="true" id="faq-a6" role="region" aria-labelledby="faq-q6"><div class="faq__answer-inner"><p>Да. Уроки можно скачать в приложении и проходить офлайн — прогресс синхронизируется, как только появится сеть.</p></div></div>
+          <h3 class="faq__heading"><button class="faq__question" type="button" id="faq-q6" aria-expanded="false" aria-controls="faq-a6"><span data-i18n="faq.items.offline.question">Можно ли заниматься без интернета?</span><span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__answer" aria-hidden="true" id="faq-a6" role="region" aria-labelledby="faq-q6"><div class="faq__answer-inner"><p data-i18n="faq.items.offline.answer">Да. Уроки можно скачать в приложении и проходить офлайн — прогресс синхронизируется, как только появится сеть.</p></div></div>
         </div>
       </div>
     </div>
@@ -626,9 +627,9 @@
           <span class="cta-bubble cta-bubble--4" lang="zh">你好</span>
         </div>
         <div class="cta-card__content">
-          <h2 class="cta-card__title" id="cta-title">Учите язык с пингвинёнком</h2>
-          <p class="cta-card__text">Первый урок — через минуту. Бесплатно, без карты и обязательств.</p>
-          <a class="btn btn--light" href="#top">Начать бесплатно</a>
+          <h2 class="cta-card__title" id="cta-title" data-i18n="cta.title">Учите язык с пингвинёнком</h2>
+          <p class="cta-card__text" data-i18n="cta.text">Первый урок — через минуту. Бесплатно, без карты и обязательств.</p>
+          <a class="btn btn--light" href="#top" data-i18n="btn.start">Начать бесплатно</a>
         </div>
         <img class="cta-card__mascot" src="images/penguin-mascot.png" alt="" width="930" height="1200" loading="lazy">
       </div>
@@ -640,50 +641,50 @@
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <a class="logo logo--footer" href="#top" aria-label="пингвинёнок — на главную">
+        <a class="logo logo--footer" href="#top" aria-label="пингвинёнок — на главную" data-i18n-attr="aria-label:a11y.logoHome">
           <span class="logo__icon"><img src="images/penguin-icon.png" alt="" width="48" height="48"></span>
-          <span class="logo__text"><span class="logo__text-dark">пингвин</span><span class="logo__text-blue">ёнок</span></span>
+          <span class="logo__text"><span class="logo__text-dark" data-i18n="brand.logoPrimary">пингвин</span><span class="logo__text-blue" data-i18n="brand.logoAccent">ёнок</span></span>
         </a>
-        <p>Упражнения, тренажёры и подготовка к экзаменам — для взрослых, детей и всех, кто любит языки.</p>
+        <p data-i18n="footer.brandText">Упражнения, тренажёры и подготовка к экзаменам — для взрослых, детей и всех, кто любит языки.</p>
       </div>
 
-      <nav class="footer__col" aria-label="Разделы">
-        <h2>Разделы</h2>
+      <nav class="footer__col" aria-label="Разделы" data-i18n-attr="aria-label:a11y.footerSections">
+        <h2 data-i18n="footer.sectionsTitle">Разделы</h2>
         <ul>
-          <li><a href="#languages">Языки</a></li>
-          <li><a href="#method">Как это работает</a></li>
-          <li><a href="#exams">Экзамены</a></li>
-          <li><a href="#audience">Для кого</a></li>
-          <li><a href="#reviews">Отзывы</a></li>
-          <li><a href="#faq">Вопросы</a></li>
+          <li><a href="#languages" data-i18n="nav.languages">Языки</a></li>
+          <li><a href="#method" data-i18n="nav.how">Как это работает</a></li>
+          <li><a href="#exams" data-i18n="nav.exams">Экзамены</a></li>
+          <li><a href="#audience" data-i18n="nav.audience">Для кого</a></li>
+          <li><a href="#reviews" data-i18n="nav.reviews">Отзывы</a></li>
+          <li><a href="#faq" data-i18n="nav.faq">Вопросы</a></li>
         </ul>
       </nav>
 
-      <nav class="footer__col" aria-label="Курсы">
-        <h2>Курсы</h2>
+      <nav class="footer__col" aria-label="Курсы" data-i18n-attr="aria-label:a11y.footerCourses">
+        <h2 data-i18n="footer.coursesTitle">Курсы</h2>
         <ul>
-          <li><a href="#languages">Английский</a></li>
-          <li><a href="#languages">Французский</a></li>
-          <li><a href="#languages">Немецкий</a></li>
-          <li><a href="#languages">Испанский</a></li>
-          <li><a href="#languages">Итальянский</a></li>
-          <li><a href="#languages">Китайский</a></li>
+          <li><a href="#languages" data-i18n="flag.en">Английский</a></li>
+          <li><a href="#languages" data-i18n="flag.fr">Французский</a></li>
+          <li><a href="#languages" data-i18n="flag.de">Немецкий</a></li>
+          <li><a href="#languages" data-i18n="flag.es">Испанский</a></li>
+          <li><a href="#languages" data-i18n="flag.it">Итальянский</a></li>
+          <li><a href="#languages" data-i18n="flag.cn">Китайский</a></li>
         </ul>
       </nav>
 
       <div class="footer__col">
-        <h2>Контакты</h2>
+        <h2 data-i18n="footer.contactsTitle">Контакты</h2>
         <ul>
           <li><a href="mailto:hello@pinguinenok.ru">hello@pinguinenok.ru</a></li>
           <li><a href="tel:+78000000000">8 800 000-00-00</a></li>
-          <li>Поддержка 24/7 в чате</li>
+          <li data-i18n="footer.support">Поддержка 24/7 в чате</li>
         </ul>
       </div>
     </div>
 
     <div class="footer__bottom">
-      <p>© <span data-year>2026</span> пингвинёнок. Все права защищены.</p>
-      <p class="footer__tagline">Учите язык с пингвинёнком</p>
+      <p>© <span data-year>2026</span> <span data-i18n="footer.copyrightSuffix">пингвинёнок. Все права защищены.</span></p>
+      <p class="footer__tagline" data-i18n="brand.tagline">Учите язык с пингвинёнком</p>
     </div>
   </div>
 </footer>
