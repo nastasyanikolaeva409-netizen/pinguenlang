@@ -1,0 +1,33 @@
+{
+  "id": 1,
+  "title": "Alphabet",
+  "type": "alphabet",
+  "theory": "В английском алфавите 26 букв: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z. Гласные — A, E, I, O, U, остальные буквы согласные.",
+  "tasks": [
+    {
+      "question": "Сколько букв в английском алфавите?",
+      "options": ["24", "26", "28"],
+      "answer": 1
+    },
+    {
+      "question": "Какая буква идёт после D?",
+      "options": ["E", "C", "F"],
+      "answer": 0
+    },
+    {
+      "question": "Выбери гласную букву.",
+      "options": ["B", "E", "K"],
+      "answer": 1
+    },
+    {
+      "question": "Какая буква идёт перед Z?",
+      "options": ["Y", "X", "W"],
+      "answer": 0
+    },
+    {
+      "question": "Выбери согласную букву.",
+      "options": ["A", "I", "M"],
+      "answer": 2
+    }
+  ]
+}

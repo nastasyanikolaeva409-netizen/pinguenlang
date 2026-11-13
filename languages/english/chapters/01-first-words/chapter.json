@@ -4,14 +4,21 @@
   "lessons": [
     {
       "id": 1,
-      "slug": "01-hello",
+      "slug": "01-alphabet",
+      "title": "Alphabet",
+      "type": "alphabet",
+      "taskCount": 5
+    },
+    {
+      "id": 2,
+      "slug": "02-hello",
       "title": "Hello",
       "type": "vocabulary",
       "taskCount": 3
     },
     {
-      "id": 2,
-      "slug": "02-my-name",
+      "id": 3,
+      "slug": "03-my-name",
       "title": "My name",
       "type": "vocabulary",
       "taskCount": 3

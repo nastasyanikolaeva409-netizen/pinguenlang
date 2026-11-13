@@ -1,17 +1,17 @@
 /* ==========================================================================
    пингвинёнок — lessons SPA
-   Уроки 1–2 загружаются из JSON через js/app/course-loader.js.
-   Уроки 3–10 пока остаются в старом inline-формате.
+   Уроки 1–3 загружаются из JSON через js/app/course-loader.js.
+   Уроки 4–11 пока остаются в старом inline-формате.
    ========================================================================== */
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'penguin-lessons-progress';
 
-  /* Уроки 1–2 живут в languages/english/... и загружаются через fetch. */
+  /* Уроки 1–3 живут в languages/english/... и загружаются через fetch. */
   var lessonsData = [
     {
-      id: 3,
+      id: 4,
       title: 'Числа: 1, 2, 3',
       type: 'numbers',
       theory: 'One — 1, two — 2, three — 3. Числа пригодятся, чтобы назвать возраст, время или количество.',
@@ -34,49 +34,49 @@
       ]
     },
     {
-      id: 4,
+      id: 5,
       title: 'Цвета',
       type: 'vocabulary',
-      theory: 'Урок скоро появится. Пока доступны уроки 1–3.',
+      theory: 'Урок скоро появится. Пока доступны уроки 1–4.',
       tasks: []
     },
     {
-      id: 5,
+      id: 6,
       title: 'Семья',
       type: 'vocabulary',
       theory: 'Урок скоро появится.',
       tasks: []
     },
     {
-      id: 6,
+      id: 7,
       title: 'Еда',
       type: 'vocabulary',
       theory: 'Урок скоро появится.',
       tasks: []
     },
     {
-      id: 7,
+      id: 8,
       title: 'Дом',
       type: 'vocabulary',
       theory: 'Урок скоро появится.',
       tasks: []
     },
     {
-      id: 8,
+      id: 9,
       title: 'Животные',
       type: 'vocabulary',
       theory: 'Урок скоро появится.',
       tasks: []
     },
     {
-      id: 9,
+      id: 10,
       title: 'Погода',
       type: 'vocabulary',
       theory: 'Урок скоро появится.',
       tasks: []
     },
     {
-      id: 10,
+      id: 11,
       title: 'Время',
       type: 'grammar',
       theory: 'Урок скоро появится.',
@@ -748,7 +748,7 @@
       state.testAnswered = false;
       renderTest();
     } else {
-      startLesson(state.testCorrect === levelTest.length ? 3 : 1);
+      startLesson(state.testCorrect === levelTest.length ? 2 : 1);
     }
   });
 
