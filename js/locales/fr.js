@@ -98,6 +98,7 @@
       eyebrow: 'Choisissez une langue',
       title: 'Quelle langue vous ouvrira de nouvelles portes ?',
       lead: 'Des cours du niveau débutant à la maîtrise. Choisissez une langue — la première leçon ne prend que quelques minutes.',
+      inDevelopment: 'En développement',
       studentsTemplate: '{count} apprenants',
       cards: {
         en: { name: 'Anglais', students: '12,4 M apprenants' },

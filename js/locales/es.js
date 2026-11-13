@@ -98,6 +98,7 @@
       eyebrow: 'Elige un idioma',
       title: '¿Qué idioma te abrirá nuevas puertas?',
       lead: 'Cursos desde cero hasta la fluidez. Elige un idioma: la primera lección solo tarda unos minutos.',
+      inDevelopment: 'En desarrollo',
       studentsTemplate: '{count} estudiantes',
       cards: {
         en: { name: 'Inglés', students: '12,4 M estudiantes' },

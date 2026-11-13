@@ -98,6 +98,7 @@
       eyebrow: 'Wähle eine Sprache',
       title: 'Welche Sprache öffnet dir neue Türen?',
       lead: 'Kurse von null bis zur fließenden Beherrschung. Wähle eine Sprache — die erste Lektion dauert nur ein paar Minuten.',
+      inDevelopment: 'In Entwicklung',
       studentsTemplate: '{count} Lernende',
       cards: {
         en: { name: 'Englisch', students: '12,4 Mio. Lernende' },

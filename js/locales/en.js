@@ -102,6 +102,7 @@
       eyebrow: 'Choose a language',
       title: 'Which language will open new doors for you?',
       lead: 'Courses from beginner to fluent. Pick a language — your first lesson takes just a couple of minutes.',
+      inDevelopment: 'In development',
       /* {count} is filled by Intl.NumberFormat(notation: 'compact'). */
       studentsTemplate: '{count} learners',
       cards: {

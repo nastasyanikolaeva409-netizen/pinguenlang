@@ -102,6 +102,7 @@
       eyebrow: 'Выберите язык',
       title: 'Какой язык откроет вам новые двери?',
       lead: 'Курсы с нуля и до свободного уровня. Выберите язык — первый урок займёт пару минут.',
+      inDevelopment: 'В разработке',
       /* {count} подставляется через Intl.NumberFormat(notation: 'compact'). */
       studentsTemplate: '{count} учеников',
       cards: {

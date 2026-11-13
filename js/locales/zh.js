@@ -98,6 +98,7 @@
       eyebrow: '选择语言',
       title: '哪门语言会为你打开新的大门？',
       lead: '从零基础到流利水平的课程。选择一门语言——第一节课只需几分钟。',
+      inDevelopment: '开发中',
       studentsTemplate: '{count}名学习者',
       cards: {
         en: { name: '英语', students: '1240 万学习者' },

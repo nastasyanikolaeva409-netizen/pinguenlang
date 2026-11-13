@@ -1,7 +1,6 @@
 /* ==========================================================================
    пингвинёнок — site behaviour
-   Vanilla JS: i18n engine (js/i18n.js), mobile menu, snow, tabs, exercise,
-   streak, carousel, FAQ.
+   Vanilla JS: i18n engine (js/i18n.js), mobile menu, snow, tabs, FAQ.
    ========================================================================== */
 (function () {
   'use strict';
@@ -14,10 +13,7 @@
 
   var renderExam = function () {};
   var renderAudience = function () {};
-  var renderStreak = function () {};
-  var renderExercise = function () {};
   var renderNumbers = function () {};
-  var renderWeekdays = function () {};
 
   function t(key, vars) {
     if (window.I18N && typeof window.I18N.t === 'function') {
@@ -55,22 +51,6 @@
       formatted = '+' + formatted;
     }
     return formatted;
-  }
-
-  function safeGet(key) {
-    try {
-      return window.localStorage.getItem(key);
-    } catch (error) {
-      return null;
-    }
-  }
-
-  function safeSet(key, value) {
-    try {
-      window.localStorage.setItem(key, value);
-    } catch (error) {
-      /* localStorage can be unavailable (private mode, file protocol) */
-    }
   }
 
   /* Endonyms: language names are intentionally not translated. */
@@ -458,149 +438,7 @@
   }
 
   /* ------------------------------------------------------------------
-     7. Method — word-building exercise
-     ------------------------------------------------------------------ */
-  function initExercise() {
-    var root = document.querySelector('[data-exercise]');
-    if (!root) {
-      return;
-    }
-    var bankEl = root.querySelector('[data-exercise-bank]');
-    var answerEl = root.querySelector('[data-exercise-answer]');
-    var countEl = root.querySelector('[data-exercise-count]');
-    var feedbackEl = root.querySelector('[data-exercise-feedback]');
-    var checkBtn = root.querySelector('[data-exercise-check]');
-    var resetBtn = root.querySelector('[data-exercise-reset]');
-    if (!bankEl || !answerEl) {
-      return;
-    }
-
-    var words = ['travel', 'I', 'go', 'love', 'to', 'like'];
-    var target = 'I love to travel';
-    var used = words.map(function () {
-      return false;
-    });
-    var selection = [];
-    var feedbackKey = '';
-    var feedbackState = null;
-
-    function renderFeedback() {
-      if (!feedbackEl) {
-        return;
-      }
-      feedbackEl.textContent = feedbackKey ? t(feedbackKey) : '';
-      feedbackEl.classList.remove('is-success', 'is-error');
-      if (feedbackState) {
-        feedbackEl.classList.add(feedbackState);
-      }
-    }
-
-    function setFeedback(key, state) {
-      feedbackKey = key || '';
-      feedbackState = state || null;
-      renderFeedback();
-    }
-
-    function render() {
-      bankEl.innerHTML = '';
-      words.forEach(function (word, index) {
-        var chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'word-chip' + (used[index] ? ' is-used' : '');
-        chip.textContent = word;
-        chip.setAttribute('data-bank-index', String(index));
-        chip.setAttribute('aria-label', t('a11y.addWord', { word: word }));
-        bankEl.appendChild(chip);
-      });
-
-      answerEl.innerHTML = '';
-      selection.forEach(function (bankIndex, position) {
-        var chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'word-chip';
-        chip.textContent = words[bankIndex];
-        chip.setAttribute('data-answer-pos', String(position));
-        chip.setAttribute('aria-label', t('a11y.removeWord', { word: words[bankIndex] }));
-        answerEl.appendChild(chip);
-      });
-
-      if (countEl) {
-        countEl.textContent = String(selection.length);
-      }
-    }
-
-    function renderExerciseState() {
-      render();
-      renderFeedback();
-    }
-
-    renderExercise = renderExerciseState;
-
-    bankEl.addEventListener('click', function (event) {
-      var chip = event.target.closest('[data-bank-index]');
-      if (!chip) {
-        return;
-      }
-      var index = Number(chip.getAttribute('data-bank-index'));
-      if (used[index]) {
-        return;
-      }
-      used[index] = true;
-      selection.push(index);
-      root.classList.remove('is-solved');
-      setFeedback('', null);
-      render();
-    });
-
-    answerEl.addEventListener('click', function (event) {
-      var chip = event.target.closest('[data-answer-pos]');
-      if (!chip) {
-        return;
-      }
-      var position = Number(chip.getAttribute('data-answer-pos'));
-      var bankIndex = selection[position];
-      used[bankIndex] = false;
-      selection.splice(position, 1);
-      root.classList.remove('is-solved');
-      setFeedback('', null);
-      render();
-    });
-
-    if (checkBtn) {
-      checkBtn.addEventListener('click', function () {
-        if (!selection.length) {
-          setFeedback('exercise.feedbackEmpty', 'is-error');
-          return;
-        }
-        var attempt = selection.map(function (index) {
-          return words[index];
-        }).join(' ');
-        if (attempt === target) {
-          root.classList.add('is-solved');
-          setFeedback('exercise.feedbackCorrect', 'is-success');
-        } else {
-          setFeedback('exercise.feedbackWrong', 'is-error');
-        }
-      });
-    }
-
-    if (resetBtn) {
-      resetBtn.addEventListener('click', function () {
-        used = words.map(function () {
-          return false;
-        });
-        selection = [];
-        root.classList.remove('is-solved');
-        setFeedback('', null);
-        render();
-      });
-    }
-
-    renderExerciseState();
-  }
-
-  /* ------------------------------------------------------------------
-     8. Exam tabs
+     7. Exam tabs
      ------------------------------------------------------------------ */
   function initExamTabs() {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-exam]'));
@@ -727,7 +565,7 @@
   }
 
   /* ------------------------------------------------------------------
-     9. Audience tabs
+     8. Audience tabs
      ------------------------------------------------------------------ */
   function initAudienceTabs() {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-audience]'));
@@ -887,140 +725,7 @@
   }
 
   /* ------------------------------------------------------------------
-     10. Streak demo
-     ------------------------------------------------------------------ */
-  function initStreak() {
-    var root = document.querySelector('[data-streak]');
-    if (!root) {
-      return;
-    }
-    var countEl = root.querySelector('[data-streak-count]');
-    var wordEl = root.querySelector('[data-streak-word]');
-    var messageEl = root.querySelector('[data-streak-message]');
-    var daysEl = root.querySelector('[data-streak-days]');
-    var doneBtn = root.querySelector('[data-streak-done]');
-    var resetBtn = root.querySelector('[data-streak-reset]');
-    var streakKey = 'penguin-streak';
-    var maxDays = 7;
-    var streak = 4;
-
-    var saved = safeGet(streakKey);
-    if (saved !== null) {
-      var storedStreak = Number(saved);
-      if (!Number.isNaN(storedStreak) && storedStreak >= 0) {
-        streak = Math.min(storedStreak, maxDays);
-      }
-    }
-
-    function renderStreakState() {
-      if (countEl) {
-        countEl.textContent = String(streak);
-      }
-      if (wordEl) {
-        wordEl.textContent = t('streak.days', { n: streak });
-      }
-      if (daysEl) {
-        Array.prototype.forEach.call(daysEl.children, function (day, index) {
-          day.classList.toggle('is-done', index < streak);
-        });
-      }
-      if (messageEl) {
-        if (streak === 0) {
-          messageEl.textContent = t('streak.messageStart');
-        } else if (streak >= maxDays) {
-          messageEl.textContent = t('streak.messageWeek');
-        } else {
-          messageEl.textContent = t('streak.messageKeep');
-        }
-      }
-    }
-
-    renderStreak = renderStreakState;
-
-    if (doneBtn) {
-      doneBtn.addEventListener('click', function () {
-        streak = Math.min(streak + 1, maxDays);
-        safeSet(streakKey, String(streak));
-        renderStreakState();
-        if (!reduceMotion.matches && typeof countEl.animate === 'function') {
-          countEl.animate(
-            [{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(1)' }],
-            { duration: 320, easing: 'ease-out' }
-          );
-        }
-      });
-    }
-
-    if (resetBtn) {
-      resetBtn.addEventListener('click', function () {
-        streak = 0;
-        safeSet(streakKey, '0');
-        renderStreakState();
-      });
-    }
-
-    renderStreakState();
-  }
-
-  /* ------------------------------------------------------------------
-     11. Reviews carousel
-     ------------------------------------------------------------------ */
-  function initReviews() {
-    var viewport = document.querySelector('[data-reviews-viewport]');
-    if (!viewport) {
-      return;
-    }
-    var prevBtn = document.querySelector('[data-review-prev]');
-    var nextBtn = document.querySelector('[data-review-next]');
-    var card = viewport.querySelector('.review-card');
-
-    function updateButtons() {
-      var maxScroll = viewport.scrollWidth - viewport.clientWidth;
-      if (prevBtn) {
-        prevBtn.disabled = viewport.scrollLeft <= 2;
-      }
-      if (nextBtn) {
-        nextBtn.disabled = viewport.scrollLeft >= maxScroll - 2;
-      }
-    }
-
-    function scrollByCard(direction) {
-      var gap = 16;
-      var amount = (card ? card.getBoundingClientRect().width : viewport.clientWidth) + gap;
-      viewport.scrollBy({
-        left: amount * direction,
-        behavior: reduceMotion.matches ? 'auto' : 'smooth'
-      });
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function () {
-        scrollByCard(-1);
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function () {
-        scrollByCard(1);
-      });
-    }
-
-    viewport.addEventListener('scroll', updateButtons, { passive: true });
-    window.addEventListener('resize', updateButtons);
-    viewport.addEventListener('keydown', function (event) {
-      if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        scrollByCard(1);
-      } else if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        scrollByCard(-1);
-      }
-    });
-
-    updateButtons();
-  }
-
-  /* ------------------------------------------------------------------
-     12. FAQ accordion
+     9. FAQ accordion
      ------------------------------------------------------------------ */
   function initFaq() {
     var items = Array.prototype.slice.call(document.querySelectorAll('.faq__item'));
@@ -1056,7 +761,7 @@
   }
 
   /* ------------------------------------------------------------------
-     13. Footer year
+     10. Footer year
      ------------------------------------------------------------------ */
   function initYear() {
     var els = document.querySelectorAll('[data-year]');
@@ -1067,11 +772,9 @@
   }
 
   /* ------------------------------------------------------------------
-     14. Intl: numbers and weekday labels
+     11. Intl: language student counts
      ------------------------------------------------------------------ */
   function initNumbers() {
-    var ratingEl = document.querySelector('.reviews__score');
-    var countEl = document.querySelector('.reviews__count');
     var studentMetaEls = document.querySelectorAll('.language-card__meta');
     var studentCounts = {
       en: 12400000,
@@ -1083,20 +786,6 @@
     };
 
     function render() {
-      if (ratingEl) {
-        var rating = formatNumber(4.9, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-        if (rating != null) {
-          ratingEl.textContent = rating;
-        }
-      }
-
-      if (countEl) {
-        var count = formatNumber(120000);
-        if (count != null) {
-          countEl.textContent = t('reviews.countTemplate', { count: count });
-        }
-      }
-
       studentMetaEls.forEach(function (element) {
         var key = element.getAttribute('data-i18n') || '';
         var match = key.match(/^languages\.cards\.([a-z]+)\.students$/);
@@ -1119,56 +808,6 @@
     render();
   }
 
-  var WEEKDAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-
-  function initWeekdays() {
-    var root = document.querySelector('[data-streak-days]');
-    if (!root) {
-      return;
-    }
-
-    var labels = Array.prototype.slice.call(root.children).map(function (day) {
-      return day.querySelector('span');
-    });
-
-    function render() {
-      var formatter = null;
-      try {
-        formatter = new Intl.DateTimeFormat(getLang(), { weekday: 'short' });
-      } catch (error) {
-        formatter = null;
-      }
-
-      labels.forEach(function (element, index) {
-        if (!element) {
-          return;
-        }
-
-        var label = '';
-        if (formatter) {
-          try {
-            /* 1 января 2024 — понедельник; полдень защищает от сдвига даты. */
-            label = formatter.format(new Date(2024, 0, 1 + index, 12));
-          } catch (error) {
-            label = '';
-          }
-        }
-
-        if (!label) {
-          label = t('weekdays.' + WEEKDAY_KEYS[index]);
-        } else {
-          label = label.replace(/\.$/, '').trim();
-          label = label.charAt(0).toUpperCase() + label.slice(1);
-        }
-
-        element.textContent = label;
-      });
-    }
-
-    renderWeekdays = render;
-    render();
-  }
-
   /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
@@ -1181,15 +820,11 @@
         initHeader,
         initReveal,
         initSnow,
-        initExercise,
         initExamTabs,
         initAudienceTabs,
-        initStreak,
-        initReviews,
         initFaq,
         initYear,
-        initNumbers,
-        initWeekdays
+        initNumbers
       ];
       initializers.forEach(function (initializer) {
         try {
@@ -1207,10 +842,7 @@
           syncDrawerLabel();
           renderExam(currentExam, false);
           renderAudience(currentAudience, false);
-          renderStreak();
-          renderExercise();
           renderNumbers();
-          renderWeekdays();
         });
       }
     };
