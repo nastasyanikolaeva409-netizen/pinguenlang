@@ -1,38 +1,15 @@
 /* ==========================================================================
    пингвинёнок — lessons SPA
-   Уроки 1–3 загружаются из JSON через js/app/course-loader.js.
-   Уроки 4–11 пока остаются в старом inline-формате.
+   Уроки 1–4 загружаются из JSON через js/app/course-loader.js.
+   Уроки 5–11 пока остаются в старом inline-формате.
    ========================================================================== */
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'penguin-lessons-progress';
 
-  /* Уроки 1–3 живут в languages/english/... и загружаются через fetch. */
+  /* Уроки 1–4 живут в languages/english/... и загружаются через fetch. */
   var lessonsData = [
-    {
-      id: 4,
-      title: 'Числа: 1, 2, 3',
-      type: 'numbers',
-      theory: 'One — 1, two — 2, three — 3. Числа пригодятся, чтобы назвать возраст, время или количество.',
-      tasks: [
-        {
-          question: 'Как переводится two?',
-          options: ['1', '3', '2'],
-          answer: 2
-        },
-        {
-          question: 'Как сказать «три»?',
-          options: ['One', 'Two', 'Three'],
-          answer: 2
-        },
-        {
-          question: 'Сколько будет one + two?',
-          options: ['2', '3', '1'],
-          answer: 1
-        }
-      ]
-    },
     {
       id: 5,
       title: 'Цвета',
@@ -272,12 +249,13 @@
     if (Array.isArray(rawTheory)) {
       theorySteps = rawTheory.map(function (step) {
         if (typeof step === 'string') {
-          return { title: '', text: step, html: '' };
+          return { title: '', text: step, html: '', audio: '' };
         }
         return {
           title: String(step.title || ''),
           text: String(step.text || ''),
-          html: String(step.html || '')
+          html: String(step.html || ''),
+          audio: String(step.audio || '')
         };
       }).filter(function (step) {
         return step.text || step.html;
@@ -299,14 +277,32 @@
 
     var rawTasks = Array.isArray(raw.tasks) ? raw.tasks : [];
     var tasks = rawTasks.map(function (task) {
-      var options = Array.isArray(task.options) ? task.options.map(String) : [];
+      var rawOptions = Array.isArray(task.options) ? task.options : [];
+      var options = rawOptions.map(function (opt) {
+        if (opt && typeof opt === 'object') {
+          return {
+            text: String(opt.text == null ? '' : opt.text),
+            audio: String(opt.audio || '')
+          };
+        }
+        return { text: String(opt == null ? '' : opt), audio: '' };
+      }).filter(function (opt) {
+        return opt.text !== '';
+      });
+
       var rawCorrect = task.correct != null ? task.correct : task.answer;
       var correctValues = Array.isArray(rawCorrect) ? rawCorrect : [rawCorrect];
       var correct = correctValues.map(function (value) {
         if (typeof value === 'number') {
           return value;
         }
-        return options.indexOf(String(value));
+        var needle = String(value);
+        for (var k = 0; k < options.length; k += 1) {
+          if (options[k].text === needle) {
+            return k;
+          }
+        }
+        return -1;
       }).filter(function (index, position, all) {
         return isFinite(index) && index >= 0 && index < options.length && all.indexOf(index) === position;
       });
@@ -317,6 +313,7 @@
 
       return {
         question: String(task.question || ''),
+        audio: String(task.audio || ''),
         options: options,
         correct: correct,
         type: task.type === 'multiple' || correct.length > 1 ? 'multiple' : 'single'
@@ -512,7 +509,8 @@
     var selected = Array.isArray(selectedIndices) ? selectedIndices : [selectedIndices];
     var correct = Array.isArray(correctIndices) ? correctIndices : [correctIndices];
 
-    Array.prototype.forEach.call(container.children, function (button, index) {
+    var buttons = container.querySelectorAll('.lesson-option');
+    Array.prototype.forEach.call(buttons, function (button, index) {
       button.disabled = true;
       button.classList.remove('is-selected');
       button.setAttribute('aria-pressed', 'false');
@@ -655,6 +653,75 @@
     return theoryStepHtml(theory);
   }
 
+  function createAudioChip(word, ariaLabel) {
+    var chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'audio-chip';
+    chip.setAttribute('data-audio', word);
+    chip.setAttribute('aria-label', 'Прослушать ' + (ariaLabel || word));
+
+    var icon = document.createElement('span');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = '🔊';
+
+    var label = document.createElement('span');
+    label.textContent = word;
+
+    chip.appendChild(icon);
+    chip.appendChild(label);
+    return chip;
+  }
+
+  function createAudioButton(word, ariaLabel) {
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'audio-btn';
+    button.setAttribute('data-audio', word);
+    button.setAttribute('aria-label', 'Прослушать ' + (ariaLabel || word));
+    button.textContent = '🔊';
+    return button;
+  }
+
+  function speakAudio(word, button) {
+    if (!word) {
+      return;
+    }
+    var speech = window.Speech;
+    if (!speech || typeof speech.speakWord !== 'function') {
+      return;
+    }
+    if (typeof speech.isSupported === 'function' && !speech.isSupported()) {
+      if (button) {
+        button.setAttribute('title', 'Озвучивание не поддерживается этим браузером');
+      }
+      return;
+    }
+
+    var previous = document.querySelectorAll('.audio-btn.is-speaking, .audio-chip.is-speaking');
+    for (var i = 0; i < previous.length; i += 1) {
+      previous[i].classList.remove('is-speaking');
+    }
+
+    speech.speakWord(word, {
+      onStart: function () {
+        if (button) {
+          button.classList.add('is-speaking');
+        }
+      },
+      onEnd: function () {
+        if (button) {
+          button.classList.remove('is-speaking');
+        }
+      },
+      onError: function () {
+        if (button) {
+          button.classList.remove('is-speaking');
+          button.setAttribute('title', 'Не удалось озвучить слово');
+        }
+      }
+    });
+  }
+
   function renderTheory() {
     var lesson = state.lesson;
     var step = lesson.theorySteps[state.theoryIndex];
@@ -667,6 +734,18 @@
     } else {
       refs.theoryContent.textContent = step.text;
     }
+
+    var parent = refs.theoryContent.parentNode;
+    var oldChip = parent && parent.querySelector('.theory-audio-chip');
+    if (oldChip) {
+      parent.removeChild(oldChip);
+    }
+    if (step.audio) {
+      var chip = createAudioChip(step.audio, step.title || step.audio);
+      chip.classList.add('theory-audio-chip');
+      parent.insertBefore(chip, refs.theoryContent.nextSibling);
+    }
+
     refs.theoryCount.textContent = 'Страница ' + (state.theoryIndex + 1) + ' из ' + lesson.theorySteps.length;
     refs.theoryBack.disabled = state.theoryIndex === 0;
     refs.theoryNext.textContent = state.theoryIndex === lesson.theorySteps.length - 1
@@ -786,6 +865,18 @@
 
     refs.lessonCount.textContent = 'Задание ' + (state.taskIndex + 1) + ' из ' + lesson.tasks.length;
     refs.lessonQuestion.textContent = task.question;
+
+    var questionParent = refs.lessonQuestion.parentNode;
+    var oldQuestionChip = questionParent && questionParent.querySelector('.question-audio-chip');
+    if (oldQuestionChip) {
+      questionParent.removeChild(oldQuestionChip);
+    }
+    if (task.audio) {
+      var questionChip = createAudioChip(task.audio, task.question || task.audio);
+      questionChip.classList.add('question-audio-chip');
+      questionParent.insertBefore(questionChip, refs.lessonQuestion.nextSibling);
+    }
+
     refs.lessonOptions.innerHTML = '';
     refs.lessonFeedback.textContent = '';
     refs.lessonFeedback.className = 'lesson-feedback';
@@ -798,15 +889,24 @@
     state.selected = [];
 
     task.options.forEach(function (option, index) {
+      var row = document.createElement('div');
+      row.className = 'lesson-option-row';
+
       var button = document.createElement('button');
       button.type = 'button';
       button.className = 'lesson-option';
-      button.textContent = option;
+      button.textContent = option.text;
       button.setAttribute('data-lesson-option', String(index));
       if (task.type === 'multiple') {
         button.setAttribute('aria-pressed', 'false');
       }
-      refs.lessonOptions.appendChild(button);
+      row.appendChild(button);
+
+      if (option.audio) {
+        row.appendChild(createAudioButton(option.audio, option.text));
+      }
+
+      refs.lessonOptions.appendChild(row);
     });
 
     updateProgress(
@@ -827,7 +927,7 @@
 
     if (task.type === 'multiple') {
       var position = state.selected.indexOf(index);
-      var optionButton = refs.lessonOptions.children[index];
+      var optionButton = refs.lessonOptions.querySelectorAll('.lesson-option')[index];
       if (position === -1) {
         state.selected.push(index);
       } else {
@@ -851,7 +951,7 @@
     markOptions(refs.lessonOptions, [index], task.correct);
     refs.lessonFeedback.textContent = correct
       ? 'Верно!'
-      : 'Не совсем. Правильный ответ: ' + task.options[task.correct[0]];
+      : 'Не совсем. Правильный ответ: ' + task.options[task.correct[0]].text;
     refs.lessonFeedback.classList.toggle('is-success', correct);
     refs.lessonFeedback.classList.toggle('is-error', !correct);
     refs.lessonNext.hidden = false;
@@ -894,7 +994,7 @@
     refs.lessonFeedback.textContent = isCorrect
       ? 'Верно!'
       : 'Не совсем. Правильные ответы: ' + task.correct.map(function (index) {
-        return task.options[index];
+        return task.options[index].text;
       }).join(', ');
     refs.lessonFeedback.classList.toggle('is-success', isCorrect);
     refs.lessonFeedback.classList.toggle('is-error', !isCorrect);
@@ -1035,6 +1135,13 @@
   }
 
   document.addEventListener('click', function (event) {
+    var audioButton = event.target.closest('[data-audio]');
+    if (audioButton) {
+      event.stopPropagation();
+      speakAudio(audioButton.getAttribute('data-audio'), audioButton);
+      return;
+    }
+
     var actionElement = event.target.closest('[data-action]');
     if (actionElement) {
       var action = actionElement.getAttribute('data-action');

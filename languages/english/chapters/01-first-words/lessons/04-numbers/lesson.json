@@ -1,0 +1,44 @@
+{
+  "id": 4,
+  "title": "Numbers",
+  "type": "numbers",
+  "theory": [
+    { "title": "One", "text": "One — «один».", "audio": "one" },
+    { "title": "Two", "text": "Two — «два».", "audio": "two" },
+    { "title": "Three", "text": "Three — «три».", "audio": "three" },
+    { "title": "Four", "text": "Four — «четыре».", "audio": "four" },
+    { "title": "Five", "text": "Five — «пять».", "audio": "five" }
+  ],
+  "tasks": [
+    {
+      "question": "Как переводится One?",
+      "audio": "one",
+      "options": [
+        { "text": "Пять" },
+        { "text": "Один" },
+        { "text": "Три" }
+      ],
+      "answer": 1
+    },
+    {
+      "question": "Как сказать «три»?",
+      "audio": "three",
+      "options": [
+        { "text": "One", "audio": "one" },
+        { "text": "Three", "audio": "three" },
+        { "text": "Five", "audio": "five" }
+      ],
+      "answer": 1
+    },
+    {
+      "question": "Сколько будет two плюс three?",
+      "audio": "two",
+      "options": [
+        { "text": "Four", "audio": "four" },
+        { "text": "Five", "audio": "five" },
+        { "text": "Six", "audio": "six" }
+      ],
+      "answer": 1
+    }
+  ]
+}

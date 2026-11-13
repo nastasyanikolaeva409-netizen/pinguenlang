@@ -2,21 +2,47 @@
   "id": 2,
   "title": "Hello",
   "type": "vocabulary",
-  "theory": "Hello — «привет», Goodbye — «пока». Эти слова открывают и закрывают разговор.",
+  "theory": [
+    {
+      "title": "Hello",
+      "text": "Hello — «привет». Так здороваются при встрече.",
+      "audio": "hello"
+    },
+    {
+      "title": "Goodbye",
+      "text": "Goodbye — «пока». Так прощаются.",
+      "audio": "goodbye"
+    }
+  ],
   "tasks": [
     {
       "question": "Как переводится Hello?",
-      "options": ["Пока", "Привет", "Спасибо"],
+      "audio": "hello",
+      "options": [
+        { "text": "Пока" },
+        { "text": "Привет" },
+        { "text": "Спасибо" }
+      ],
       "answer": 1
     },
     {
       "question": "Как сказать «пока»?",
-      "options": ["Hello", "Goodbye", "Please"],
+      "audio": "goodbye",
+      "options": [
+        { "text": "Hello", "audio": "hello" },
+        { "text": "Goodbye", "audio": "goodbye" },
+        { "text": "Please", "audio": "please" }
+      ],
       "answer": 1
     },
     {
       "question": "Что уместно сказать при встрече?",
-      "options": ["Goodbye", "Sorry", "Hello"],
+      "audio": "hello",
+      "options": [
+        { "text": "Goodbye", "audio": "goodbye" },
+        { "text": "Sorry", "audio": "sorry" },
+        { "text": "Hello", "audio": "hello" }
+      ],
       "answer": 2
     }
   ]

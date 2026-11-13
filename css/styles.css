@@ -2786,6 +2786,104 @@ body.menu-open {
   animation: lesson-shake 0.35s var(--ease);
 }
 
+.lesson-option-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.lesson-option-row .lesson-option {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.audio-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border: 1.5px solid var(--border-color);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 2px 0 var(--border-color);
+  color: var(--dark-blue);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s,
+    background-color 0.15s, color 0.15s;
+}
+
+.audio-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 var(--primary-light);
+}
+
+.audio-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.audio-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 2px 0 var(--border-color);
+  color: var(--dark-blue);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s,
+    background-color 0.15s, color 0.15s;
+}
+
+.audio-chip:hover:not(:disabled) {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 var(--primary-light);
+}
+
+.audio-chip:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.theory-audio-chip {
+  margin-top: 12px;
+}
+
+.question-audio-chip {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.audio-btn.is-speaking,
+.audio-chip.is-speaking {
+  border-color: var(--primary);
+  background: rgba(14, 165, 233, 0.12);
+  color: var(--primary-ink);
+  animation: audio-pulse 0.9s ease-in-out infinite;
+}
+
+@keyframes audio-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
 .lesson-feedback {
   min-height: 24px;
   margin: 14px 0 0;
@@ -2982,6 +3080,19 @@ body.menu-open {
   }
 }
 
+@media (max-width: 480px) {
+  .audio-btn {
+    width: 44px;
+    min-height: 44px;
+    font-size: 1.05rem;
+  }
+
+  .audio-chip {
+    padding: 7px 12px;
+    font-size: 0.88rem;
+  }
+}
+
 /* ==========================================================================
    Reduced motion & dark-mode finishing touches
    ========================================================================== */
@@ -3016,6 +3127,11 @@ body.menu-open {
   }
 
   .alphabet-letter.is-speaking {
+    animation: none;
+  }
+
+  .audio-btn.is-speaking,
+  .audio-chip.is-speaking {
     animation: none;
   }
 

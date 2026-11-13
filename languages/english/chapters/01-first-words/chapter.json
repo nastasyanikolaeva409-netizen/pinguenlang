@@ -22,6 +22,13 @@
       "title": "My name",
       "type": "vocabulary",
       "taskCount": 3
+    },
+    {
+      "id": 4,
+      "slug": "04-numbers",
+      "title": "Numbers",
+      "type": "numbers",
+      "taskCount": 3
     }
   ]
 }

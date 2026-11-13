@@ -2,21 +2,47 @@
   "id": 3,
   "title": "My name",
   "type": "vocabulary",
-  "theory": "What is your name? — «Как тебя зовут?». My name is... — «Меня зовут...».",
+  "theory": [
+    {
+      "title": "What is your name?",
+      "text": "What is your name? — «Как тебя зовут?».",
+      "audio": "what is your name"
+    },
+    {
+      "title": "My name is...",
+      "text": "My name is... — «Меня зовут...».",
+      "audio": "my name is"
+    }
+  ],
   "tasks": [
     {
       "question": "Как спросить «Как тебя зовут?»?",
-      "options": ["What is your name?", "How old are you?", "Where are you from?"],
+      "audio": "what is your name",
+      "options": [
+        { "text": "What is your name?", "audio": "what is your name" },
+        { "text": "How old are you?", "audio": "how old are you" },
+        { "text": "Where are you from?", "audio": "where are you from" }
+      ],
       "answer": 0
     },
     {
       "question": "Что ответить на What is your name?",
-      "options": ["My name is Anna.", "I am fine.", "Goodbye."],
+      "audio": "my name is",
+      "options": [
+        { "text": "My name is Anna.", "audio": "my name is Anna" },
+        { "text": "I am fine.", "audio": "I am fine" },
+        { "text": "Goodbye.", "audio": "goodbye" }
+      ],
       "answer": 0
     },
     {
       "question": "Как переводится My name is...?",
-      "options": ["Меня зовут...", "Мне ... лет", "Я из..."],
+      "audio": "my name is",
+      "options": [
+        { "text": "Меня зовут..." },
+        { "text": "Мне ... лет" },
+        { "text": "Я из..." }
+      ],
       "answer": 0
     }
   ]
