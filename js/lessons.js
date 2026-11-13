@@ -258,7 +258,7 @@
 
   function normalizeLesson(raw, fallbackId) {
     var rawTheory = raw.theory;
-    var theory = '';
+    var theory = rawTheory;
     var theorySteps = [];
 
     if (Array.isArray(rawTheory)) {
@@ -274,8 +274,6 @@
       }).filter(function (step) {
         return step.text || step.html;
       });
-    } else if (typeof rawTheory === 'string') {
-      theory = rawTheory;
     }
 
     var rawTasks = Array.isArray(raw.tasks) ? raw.tasks : [];
@@ -571,6 +569,67 @@
     });
   }
 
+  function escapeHtml(value) {
+    var replacements = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    };
+    return String(value).replace(/[&<>"']/g, function (character) {
+      return replacements[character];
+    });
+  }
+
+  function theoryStepHtml(step) {
+    if (typeof step === 'string') {
+      return '<p>' + escapeHtml(step) + '</p>';
+    }
+    if (!step || typeof step !== 'object') {
+      return '';
+    }
+
+    var title = step.title ? '<h3>' + escapeHtml(step.title) + '</h3>' : '';
+    var body = '';
+
+    if (step.html) {
+      body = String(step.html);
+    } else if (step.text) {
+      body = '<p>' + escapeHtml(step.text) + '</p>';
+    } else {
+      body = Object.keys(step).filter(function (key) {
+        return key !== 'title' && key !== 'text' && key !== 'html';
+      }).map(function (key) {
+        var value = step[key];
+        if (value == null) {
+          return '';
+        }
+        if (Array.isArray(value)) {
+          value = value.join(', ');
+        } else if (typeof value === 'object') {
+          value = JSON.stringify(value);
+        }
+        return '<p><strong>' + escapeHtml(key) + ':</strong> ' + escapeHtml(value) + '</p>';
+      }).join('');
+    }
+
+    if (!title && !body) {
+      return '';
+    }
+    return '<div class="theory-inline-step">' + title + body + '</div>';
+  }
+
+  function buildTheoryHtml(theory) {
+    if (!theory) {
+      return '';
+    }
+    if (Array.isArray(theory)) {
+      return theory.map(theoryStepHtml).join('');
+    }
+    return theoryStepHtml(theory);
+  }
+
   function renderTheory() {
     var lesson = state.lesson;
     var step = lesson.theorySteps[state.theoryIndex];
@@ -603,8 +662,13 @@
 
     refs.lessonType.textContent = TYPE_LABELS[lesson.type] || lesson.type;
     refs.lessonTitle.textContent = lesson.title;
-    refs.lessonTheory.textContent = lesson.theory || '';
-    refs.lessonTheory.hidden = !lesson.theory;
+
+    var theoryHtml = lesson.theorySteps && lesson.theorySteps.length
+      ? ''
+      : buildTheoryHtml(lesson.theory);
+    refs.lessonTheory.innerHTML = theoryHtml;
+    refs.lessonTheory.hidden = !theoryHtml;
+
     refs.lessonCount.textContent = 'Задание ' + (state.taskIndex + 1) + ' из ' + lesson.tasks.length;
     refs.lessonQuestion.textContent = task.question;
     refs.lessonOptions.innerHTML = '';
