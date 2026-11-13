@@ -1,0 +1,23 @@
+{
+  "id": 1,
+  "title": "Hello",
+  "type": "vocabulary",
+  "theory": "Hello — «привет», Goodbye — «пока». Эти слова открывают и закрывают разговор.",
+  "tasks": [
+    {
+      "question": "Как переводится Hello?",
+      "options": ["Пока", "Привет", "Спасибо"],
+      "answer": 1
+    },
+    {
+      "question": "Как сказать «пока»?",
+      "options": ["Hello", "Goodbye", "Please"],
+      "answer": 1
+    },
+    {
+      "question": "Что уместно сказать при встрече?",
+      "options": ["Goodbye", "Sorry", "Hello"],
+      "answer": 2
+    }
+  ]
+}

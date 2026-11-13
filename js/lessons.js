@@ -1,59 +1,15 @@
 /* ==========================================================================
    пингвинёнок — lessons SPA
-   Онбординг, мини-тест, прохождение урока и сохранение прогресса.
+   Уроки 1–2 загружаются из JSON через js/app/course-loader.js.
+   Уроки 3–10 пока остаются в старом inline-формате.
    ========================================================================== */
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'penguin-lessons-progress';
 
+  /* Уроки 1–2 живут в languages/english/... и загружаются через fetch. */
   var lessonsData = [
-    {
-      id: 1,
-      title: 'Алфавит: A, B, C',
-      type: 'alphabet',
-      theory: 'A, B и C — первые три буквы английского алфавита. A читается «эй», B — «би», C — «си».',
-      tasks: [
-        {
-          question: 'Какая буква идёт после A?',
-          options: ['B', 'C', 'D'],
-          answer: 0
-        },
-        {
-          question: 'Как читается буква B?',
-          options: ['«эй»', '«би»', '«си»'],
-          answer: 1
-        },
-        {
-          question: 'Выберите первую букву алфавита:',
-          options: ['C', 'A', 'B'],
-          answer: 1
-        }
-      ]
-    },
-    {
-      id: 2,
-      title: 'Приветствия: Hello и Goodbye',
-      type: 'vocabulary',
-      theory: 'Hello — «привет», Goodbye — «пока». Эти слова подходят для начала и конца разговора.',
-      tasks: [
-        {
-          question: 'Как переводится Hello?',
-          options: ['Пока', 'Привет', 'Спасибо'],
-          answer: 1
-        },
-        {
-          question: 'Как сказать «пока»?',
-          options: ['Hello', 'Goodbye', 'Please'],
-          answer: 1
-        },
-        {
-          question: 'Что уместно сказать при встрече?',
-          options: ['Goodbye', 'Sorry', 'Hello'],
-          answer: 2
-        }
-      ]
-    },
     {
       id: 3,
       title: 'Числа: 1, 2, 3',
@@ -158,6 +114,8 @@
     continue: 'Продолжить обучение — пингвинёнок',
     test: 'Мини-тест — пингвинёнок',
     lesson: 'Урок — пингвинёнок',
+    loading: 'Загрузка — пингвинёнок',
+    error: 'Ошибка — пингвинёнок',
     result: 'Результат — пингвинёнок'
   };
 
@@ -188,7 +146,8 @@
     resultTitle: document.querySelector('[data-result-title]'),
     resultScore: document.querySelector('[data-result-score]'),
     resultText: document.querySelector('[data-result-text]'),
-    resultNext: document.querySelector('[data-result-next]')
+    resultNext: document.querySelector('[data-result-next]'),
+    errorText: document.querySelector('[data-error-text]')
   };
 
   var state = {
@@ -207,6 +166,10 @@
   };
 
   var audioContext = null;
+  var catalog = null;
+  var catalogPromise = null;
+  var lessonCache = {};
+  var pendingLessonId = null;
 
   function loadProgress() {
     try {
@@ -244,7 +207,11 @@
     }
   }
 
-  function findLesson(id) {
+  function isCompleted(id) {
+    return progress.completed.indexOf(Number(id)) !== -1;
+  }
+
+  function findLegacyLesson(id) {
     var numericId = Number(id);
     for (var i = 0; i < lessonsData.length; i += 1) {
       if (lessonsData[i].id === numericId) {
@@ -254,14 +221,120 @@
     return null;
   }
 
-  function availableLessons() {
-    return lessonsData.filter(function (lesson) {
-      return lesson.tasks.length > 0;
+  function findCatalogLesson(id) {
+    var numericId = Number(id);
+    if (!catalog) {
+      return null;
+    }
+    for (var i = 0; i < catalog.length; i += 1) {
+      if (catalog[i].id === numericId) {
+        return catalog[i];
+      }
+    }
+    return null;
+  }
+
+  function taskCount(lesson) {
+    if (!lesson) {
+      return 0;
+    }
+    if (Array.isArray(lesson.tasks)) {
+      return lesson.tasks.length;
+    }
+    var count = Number(lesson.taskCount);
+    return isFinite(count) ? count : 0;
+  }
+
+  function normalizeLesson(raw, fallbackId) {
+    var rawTasks = Array.isArray(raw.tasks) ? raw.tasks : [];
+    var tasks = rawTasks.map(function (task) {
+      var options = Array.isArray(task.options) ? task.options.map(String) : [];
+      var answer = Number(task.answer);
+      if (!isFinite(answer) || answer < 0 || answer >= options.length) {
+        answer = 0;
+      }
+      return {
+        question: String(task.question || ''),
+        options: options,
+        answer: answer
+      };
+    }).filter(function (task) {
+      return task.question && task.options.length > 0;
+    });
+
+    return {
+      id: Number(raw.id) || fallbackId,
+      title: String(raw.title || ''),
+      type: raw.type || 'vocabulary',
+      theory: String(raw.theory || ''),
+      tasks: tasks
+    };
+  }
+
+  function loadCatalog() {
+    if (catalog) {
+      return Promise.resolve(catalog);
+    }
+    if (catalogPromise) {
+      return catalogPromise;
+    }
+    if (!window.CourseLoader || typeof window.CourseLoader.loadCourse !== 'function') {
+      return Promise.reject(new Error('CourseLoader не подключён. Подключите js/app/course-loader.js перед js/lessons.js.'));
+    }
+
+    catalogPromise = window.CourseLoader.loadCourse().then(function (course) {
+      var remoteLessons = Array.isArray(course.lessons) ? course.lessons : [];
+      var legacyIds = {};
+      lessonsData.forEach(function (lesson) {
+        legacyIds[lesson.id] = true;
+      });
+
+      var merged = remoteLessons.filter(function (lesson) {
+        return !legacyIds[lesson.id];
+      }).concat(lessonsData);
+
+      merged.sort(function (a, b) {
+        return a.id - b.id;
+      });
+
+      catalog = merged;
+      return catalog;
+    }).catch(function (error) {
+      catalogPromise = null;
+      throw error;
+    });
+
+    return catalogPromise;
+  }
+
+  function getLessonData(id) {
+    var numericId = Number(id);
+    if (lessonCache[numericId]) {
+      return Promise.resolve(lessonCache[numericId]);
+    }
+
+    var legacy = findLegacyLesson(numericId);
+    if (legacy) {
+      var normalizedLegacy = normalizeLesson(legacy, numericId);
+      lessonCache[numericId] = normalizedLegacy;
+      return Promise.resolve(normalizedLegacy);
+    }
+
+    if (!window.CourseLoader || typeof window.CourseLoader.loadLesson !== 'function') {
+      return Promise.reject(new Error('CourseLoader не подключён.'));
+    }
+
+    return window.CourseLoader.loadLesson(numericId).then(function (raw) {
+      var lesson = normalizeLesson(raw, numericId);
+      lessonCache[numericId] = lesson;
+      return lesson;
     });
   }
 
-  function isCompleted(id) {
-    return progress.completed.indexOf(Number(id)) !== -1;
+  function availableLessons() {
+    return (catalog || []).filter(function (lesson) {
+      return taskCount(lesson) > 0;
+    });
   }
 
   function nextAvailableLesson(id) {
@@ -281,8 +354,8 @@
   }
 
   function resumeLessonId() {
-    var current = findLesson(progress.currentLessonId);
-    if (current && current.tasks.length > 0 && !isCompleted(current.id)) {
+    var current = findCatalogLesson(progress.currentLessonId);
+    if (current && taskCount(current) > 0 && !isCompleted(current.id)) {
       return current.id;
     }
     var available = availableLessons();
@@ -292,7 +365,7 @@
         return available[i].id;
       }
     }
-    if (current && current.tasks.length > 0) {
+    if (current && taskCount(current) > 0) {
       return current.id;
     }
     return available.length ? available[0].id : 1;
@@ -323,6 +396,13 @@
     }
 
     window.scrollTo(0, 0);
+  }
+
+  function showError(message) {
+    if (refs.errorText) {
+      refs.errorText.textContent = message;
+    }
+    showScreen('error');
   }
 
   function updateProgress(bar, wrap, index, total, answered) {
@@ -373,8 +453,7 @@
   }
 
   function renderContinue() {
-    var id = resumeLessonId();
-    var lesson = findLesson(id);
+    var lesson = findCatalogLesson(resumeLessonId());
     if (!lesson) {
       showScreen('onboarding');
       return;
@@ -395,7 +474,7 @@
       ? 'Вы прошли все доступные уроки. Новые появятся скоро.'
       : 'Вы остановились здесь. Продолжим с этого места.';
     refs.continueMeta.textContent = 'Урок ' + lesson.id + ' · ' +
-      (TYPE_LABELS[lesson.type] || lesson.type) + ' · заданий: ' + lesson.tasks.length;
+      (TYPE_LABELS[lesson.type] || lesson.type) + ' · заданий: ' + taskCount(lesson);
     refs.continueButton.textContent = completed || allCompleted
       ? 'Повторить урок'
       : 'Продолжить урок';
@@ -403,21 +482,35 @@
   }
 
   function startLesson(id) {
-    var lesson = findLesson(id);
-    if (!lesson || !lesson.tasks.length) {
-      renderContinue();
-      showScreen('continue');
+    var lessonId = Number(id);
+    if (!isFinite(lessonId) || lessonId <= 0) {
+      showScreen('onboarding');
       return;
     }
 
-    state.lesson = lesson;
-    state.taskIndex = 0;
-    state.correct = 0;
-    state.answered = false;
-    progress.currentLessonId = lesson.id;
-    saveProgress();
-    renderLesson();
-    showScreen('lesson');
+    pendingLessonId = lessonId;
+    showScreen('loading');
+
+    loadCatalog().then(function () {
+      return getLessonData(lessonId);
+    }).then(function (lesson) {
+      if (!lesson || taskCount(lesson) === 0) {
+        throw new Error('Урок не содержит заданий');
+      }
+      state.lesson = lesson;
+      state.taskIndex = 0;
+      state.correct = 0;
+      state.answered = false;
+      progress.currentLessonId = lesson.id;
+      saveProgress();
+      renderLesson();
+      showScreen('lesson');
+    }).catch(function (error) {
+      if (window.console && typeof window.console.error === 'function') {
+        window.console.error('[lessons] lesson load failed:', error);
+      }
+      showError('Не удалось загрузить урок. Проверьте, что сайт открыт через локальный сервер (например, Live Server), и попробуйте снова.');
+    });
   }
 
   function renderLesson() {
@@ -587,7 +680,25 @@
       currentLessonId: null,
       completed: []
     };
+    pendingLessonId = null;
     showScreen('onboarding');
+  }
+
+  function boot() {
+    if (progress.currentLessonId || progress.completed.length) {
+      showScreen('loading');
+      loadCatalog().then(function () {
+        renderContinue();
+        showScreen('continue');
+      }).catch(function (error) {
+        if (window.console && typeof window.console.error === 'function') {
+          window.console.error('[lessons] course load failed:', error);
+        }
+        showError('Не удалось загрузить программу. Проверьте, что сайт открыт через локальный сервер (например, Live Server), и попробуйте снова.');
+      });
+    } else {
+      showScreen('onboarding');
+    }
   }
 
   document.addEventListener('click', function (event) {
@@ -601,6 +712,12 @@
       } else if (action === 'continue') {
         var id = Number(actionElement.getAttribute('data-continue-id'));
         startLesson(id || resumeLessonId());
+      } else if (action === 'retry') {
+        if (pendingLessonId) {
+          startLesson(pendingLessonId);
+        } else {
+          boot();
+        }
       } else if (action === 'reset') {
         resetProgress();
       } else if (action === 'exit') {
@@ -655,10 +772,9 @@
     }
   });
 
-  if (progress.currentLessonId || progress.completed.length) {
-    renderContinue();
-    showScreen('continue');
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    showScreen('onboarding');
+    boot();
   }
 })();

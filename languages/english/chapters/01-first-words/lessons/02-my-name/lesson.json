@@ -1,0 +1,23 @@
+{
+  "id": 2,
+  "title": "My name",
+  "type": "vocabulary",
+  "theory": "What is your name? — «Как тебя зовут?». My name is... — «Меня зовут...».",
+  "tasks": [
+    {
+      "question": "Как спросить «Как тебя зовут?»?",
+      "options": ["What is your name?", "How old are you?", "Where are you from?"],
+      "answer": 0
+    },
+    {
+      "question": "Что ответить на What is your name?",
+      "options": ["My name is Anna.", "I am fine.", "Goodbye."],
+      "answer": 0
+    },
+    {
+      "question": "Как переводится My name is...?",
+      "options": ["Меня зовут...", "Мне ... лет", "Я из..."],
+      "answer": 0
+    }
+  ]
+}

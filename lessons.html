@@ -87,6 +87,28 @@
         <button class="btn-text lesson-exit" type="button" data-action="exit">Выйти к продолжению</button>
       </section>
 
+      <section class="lesson-screen" data-screen="loading" hidden>
+        <div class="lesson-card lesson-card--centered">
+          <span class="eyebrow">Загрузка</span>
+          <h1 class="section__title">Загружаем урок…</h1>
+          <p class="section__lead">Это займёт секунду.</p>
+          <div class="lesson-loader" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="lesson-screen" data-screen="error" hidden>
+        <div class="lesson-card lesson-card--centered">
+          <span class="eyebrow">Ошибка</span>
+          <h1 class="section__title">Не удалось загрузить урок</h1>
+          <p class="section__lead" data-error-text>Проверьте соединение и попробуйте снова.</p>
+          <div class="lesson-actions">
+            <button class="btn btn--primary" type="button" data-action="retry">Повторить</button>
+            <button class="btn btn--secondary" type="button" data-action="reset">Начать заново</button>
+            <a class="btn btn--secondary" href="index.html">На главную</a>
+          </div>
+        </div>
+      </section>
+
       <section class="lesson-screen" data-screen="result" hidden>
         <div class="lesson-card lesson-card--centered lesson-result">
           <span class="eyebrow">Результат</span>
@@ -102,6 +124,7 @@
     </div>
   </main>
 
+  <script src="js/app/course-loader.js" defer></script>
   <script src="js/lessons.js" defer></script>
 </body>
 </html>

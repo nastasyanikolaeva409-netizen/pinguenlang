@@ -1,0 +1,14 @@
+{
+  "id": "english",
+  "language": "en",
+  "title": "Английский с нуля",
+  "description": "Первые слова: приветствие и знакомство.",
+  "level": "beginner",
+  "chapters": [
+    {
+      "id": "01-first-words",
+      "slug": "01-first-words",
+      "title": "Первые слова"
+    }
+  ]
+}
