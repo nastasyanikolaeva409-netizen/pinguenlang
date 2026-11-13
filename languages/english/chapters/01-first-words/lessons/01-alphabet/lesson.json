@@ -2,32 +2,46 @@
   "id": 1,
   "title": "Alphabet",
   "type": "alphabet",
-  "theory": "В английском алфавите 26 букв: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z. Гласные — A, E, I, O, U, остальные буквы согласные.",
+  "theory": [
+    {
+      "title": "Группы по звучанию",
+      "html": "<p>Учить алфавит проще не по порядку, а группами по звучанию — по методике Klett Sprachen. Буквы внутри группы рифмуются, поэтому запоминаются быстрее.</p><div class=\"theory-groups\"><div class=\"theory-group\"><h3>[iː]</h3><p>B, C, D, E, G, P, T, V</p></div><div class=\"theory-group\"><h3>[eɪ]</h3><p>A, H, J, K</p></div><div class=\"theory-group\"><h3>[e]</h3><p>F, L, M, N, S, X, Z</p></div><div class=\"theory-group\"><h3>[aɪ]</h3><p>I, Y</p></div><div class=\"theory-group\"><h3>[əʊ]</h3><p>O</p></div><div class=\"theory-group\"><h3>[uː]</h3><p>Q, U, W</p></div><div class=\"theory-group\"><h3>[ɑː]</h3><p>R</p></div></div>"
+    },
+    {
+      "title": "Мнемотехника и ловушки",
+      "html": "<p>Запоминайте буквы через русские ассоциации — так проще удержать произношение в памяти.</p><ul class=\"theory-list\"><li><strong>A [eɪ]</strong> — «эй»</li><li><strong>B [biː]</strong> — «би»</li><li><strong>C [siː]</strong> — «си»</li><li><strong>D [diː]</strong> — «ди»</li><li><strong>E [iː]</strong> — «и»</li><li><strong>F [ef]</strong> — «эф»</li><li><strong>G [dʒiː]</strong> — «джи»</li><li><strong>H [eɪtʃ]</strong> — «эйч»</li><li><strong>I [aɪ]</strong> — «ай»</li><li><strong>J [dʒeɪ]</strong> — «джей»</li><li><strong>K [keɪ]</strong> — «кей»</li><li><strong>L [el]</strong> — «эл»</li><li><strong>M [em]</strong> — «эм»</li><li><strong>N [en]</strong> — «эн»</li><li><strong>O [əʊ]</strong> — «оу»</li><li><strong>P [piː]</strong> — «пи»</li><li><strong>Q [kjuː]</strong> — «кью»</li><li><strong>R [ɑː]</strong> — «а»</li><li><strong>S [es]</strong> — «эс»</li><li><strong>T [tiː]</strong> — «ти»</li><li><strong>U [juː]</strong> — «ю»</li><li><strong>V [viː]</strong> — «ви»</li><li><strong>W [ˈdʌb(ə)l juː]</strong> — «дабл-ю»</li><li><strong>X [eks]</strong> — «экс»</li><li><strong>Y [waɪ]</strong> — «уай»</li><li><strong>Z [zed] / [ziː]</strong> — «зед» / «зи»</li></ul><p>Z может звучать как [zed] в британском варианте и как [ziː] в американском.</p><div class=\"theory-warning\"><strong>Ловушки:</strong> не говорите [бэ] вместо [biː], [цэ] вместо [siː], [хэ] вместо [eɪtʃ].</div>"
+    }
+  ],
   "tasks": [
     {
-      "question": "Сколько букв в английском алфавите?",
-      "options": ["24", "26", "28"],
-      "answer": 1
+      "type": "single",
+      "question": "Какая буква звучит как [dʒiː]?",
+      "options": ["G", "J", "K"],
+      "correct": "G"
     },
     {
-      "question": "Какая буква идёт после D?",
-      "options": ["E", "C", "F"],
-      "answer": 0
+      "type": "multiple",
+      "question": "Выберите буквы, которые рифмуются со звуком [iː] (как в слове tea).",
+      "options": ["B", "C", "D", "A", "H"],
+      "correct": ["B", "C", "D"]
     },
     {
-      "question": "Выбери гласную букву.",
-      "options": ["B", "E", "K"],
-      "answer": 1
+      "type": "single",
+      "question": "Какая буква идёт сразу после Q?",
+      "options": ["R", "S", "P"],
+      "correct": "R"
     },
     {
-      "question": "Какая буква идёт перед Z?",
-      "options": ["Y", "X", "W"],
-      "answer": 0
+      "type": "single",
+      "question": "Какая буква стоит в конце алфавита и может произноситься как [zed] или [ziː]?",
+      "options": ["Y", "Z", "X"],
+      "correct": "Z"
     },
     {
-      "question": "Выбери согласную букву.",
-      "options": ["A", "I", "M"],
-      "answer": 2
+      "type": "single",
+      "question": "Если вас зовут Иван, какая буква первая и как она произносится?",
+      "options": ["I [aɪ]", "E [iː]", "A [eɪ]"],
+      "correct": "I [aɪ]"
     }
   ]
 }

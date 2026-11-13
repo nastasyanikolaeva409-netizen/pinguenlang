@@ -67,6 +67,23 @@
         </div>
       </section>
 
+      <section class="lesson-screen" data-screen="theory" hidden>
+        <div class="lesson-card">
+          <div class="lesson-topline">
+            <span class="eyebrow" data-theory-type>Теория</span>
+            <span class="lesson-counter" data-theory-count></span>
+          </div>
+          <h1 class="lesson-title" data-theory-title></h1>
+          <div class="lesson-theory-content" data-theory-content></div>
+          <div class="lesson-progress" role="progressbar" aria-label="Прогресс теории" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-theory-progress-wrap>
+            <div class="lesson-progress__bar" data-theory-progress></div>
+          </div>
+          <div class="lesson-actions">
+            <button class="btn btn--primary" type="button" data-theory-next>Далее</button>
+          </div>
+        </div>
+      </section>
+
       <section class="lesson-screen" data-screen="lesson" hidden>
         <div class="lesson-card">
           <div class="lesson-topline">
@@ -82,6 +99,7 @@
           <div class="lesson-options" data-lesson-options></div>
           <p class="lesson-feedback" data-lesson-feedback aria-live="polite"></p>
           <div class="lesson-actions">
+            <button class="btn btn--primary" type="button" data-lesson-check hidden>Проверить</button>
             <button class="btn btn--primary" type="button" data-lesson-next hidden>Далее</button>
           </div>
         </div>

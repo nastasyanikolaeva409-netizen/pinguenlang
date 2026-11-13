@@ -113,6 +113,7 @@
     onboarding: 'Уроки — пингвинёнок',
     continue: 'Продолжить обучение — пингвинёнок',
     test: 'Мини-тест — пингвинёнок',
+    theory: 'Теория — пингвинёнок',
     lesson: 'Урок — пингвинёнок',
     loading: 'Загрузка — пингвинёнок',
     error: 'Ошибка — пингвинёнок',
@@ -133,6 +134,13 @@
     testNext: document.querySelector('[data-test-next]'),
     testProgress: document.querySelector('[data-test-progress]'),
     testProgressWrap: document.querySelector('[data-test-progress-wrap]'),
+    theoryType: document.querySelector('[data-theory-type]'),
+    theoryTitle: document.querySelector('[data-theory-title]'),
+    theoryContent: document.querySelector('[data-theory-content]'),
+    theoryCount: document.querySelector('[data-theory-count]'),
+    theoryNext: document.querySelector('[data-theory-next]'),
+    theoryProgress: document.querySelector('[data-theory-progress]'),
+    theoryProgressWrap: document.querySelector('[data-theory-progress-wrap]'),
     lessonType: document.querySelector('[data-lesson-type]'),
     lessonTitle: document.querySelector('[data-lesson-title]'),
     lessonTheory: document.querySelector('[data-lesson-theory]'),
@@ -140,6 +148,7 @@
     lessonQuestion: document.querySelector('[data-lesson-question]'),
     lessonOptions: document.querySelector('[data-lesson-options]'),
     lessonFeedback: document.querySelector('[data-lesson-feedback]'),
+    lessonCheck: document.querySelector('[data-lesson-check]'),
     lessonNext: document.querySelector('[data-lesson-next]'),
     lessonProgress: document.querySelector('[data-lesson-progress]'),
     lessonProgressWrap: document.querySelector('[data-lesson-progress-wrap]'),
@@ -152,7 +161,9 @@
 
   var state = {
     lesson: null,
+    theoryIndex: 0,
     taskIndex: 0,
+    selected: [],
     correct: 0,
     answered: false,
     testIndex: 0,
@@ -246,17 +257,50 @@
   }
 
   function normalizeLesson(raw, fallbackId) {
+    var rawTheory = raw.theory;
+    var theory = '';
+    var theorySteps = [];
+
+    if (Array.isArray(rawTheory)) {
+      theorySteps = rawTheory.map(function (step) {
+        if (typeof step === 'string') {
+          return { title: '', text: step, html: '' };
+        }
+        return {
+          title: String(step.title || ''),
+          text: String(step.text || ''),
+          html: String(step.html || '')
+        };
+      }).filter(function (step) {
+        return step.text || step.html;
+      });
+    } else if (typeof rawTheory === 'string') {
+      theory = rawTheory;
+    }
+
     var rawTasks = Array.isArray(raw.tasks) ? raw.tasks : [];
     var tasks = rawTasks.map(function (task) {
       var options = Array.isArray(task.options) ? task.options.map(String) : [];
-      var answer = Number(task.answer);
-      if (!isFinite(answer) || answer < 0 || answer >= options.length) {
-        answer = 0;
+      var rawCorrect = task.correct != null ? task.correct : task.answer;
+      var correctValues = Array.isArray(rawCorrect) ? rawCorrect : [rawCorrect];
+      var correct = correctValues.map(function (value) {
+        if (typeof value === 'number') {
+          return value;
+        }
+        return options.indexOf(String(value));
+      }).filter(function (index, position, all) {
+        return isFinite(index) && index >= 0 && index < options.length && all.indexOf(index) === position;
+      });
+
+      if (!correct.length) {
+        correct = [0];
       }
+
       return {
         question: String(task.question || ''),
         options: options,
-        answer: answer
+        correct: correct,
+        type: task.type === 'multiple' || correct.length > 1 ? 'multiple' : 'single'
       };
     }).filter(function (task) {
       return task.question && task.options.length > 0;
@@ -266,7 +310,8 @@
       id: Number(raw.id) || fallbackId,
       title: String(raw.title || ''),
       type: raw.type || 'vocabulary',
-      theory: String(raw.theory || ''),
+      theory: theory,
+      theorySteps: theorySteps,
       tasks: tasks
     };
   }
@@ -376,8 +421,8 @@
       screen.hidden = screen.getAttribute('data-screen') !== name;
     });
 
-    if (name === 'lesson' && state.lesson) {
-      document.title = state.lesson.title + ' — пингвинёнок';
+    if ((name === 'lesson' || name === 'theory') && state.lesson) {
+      document.title = state.lesson.title + (name === 'theory' ? ' — теория' : '') + ' — пингвинёнок';
     } else {
       document.title = SCREEN_TITLES[name] || SCREEN_TITLES.onboarding;
     }
@@ -441,12 +486,17 @@
     }
   }
 
-  function markOptions(container, selectedIndex, correctIndex) {
+  function markOptions(container, selectedIndices, correctIndices) {
+    var selected = Array.isArray(selectedIndices) ? selectedIndices : [selectedIndices];
+    var correct = Array.isArray(correctIndices) ? correctIndices : [correctIndices];
+
     Array.prototype.forEach.call(container.children, function (button, index) {
       button.disabled = true;
-      if (index === correctIndex) {
+      button.classList.remove('is-selected');
+      button.setAttribute('aria-pressed', 'false');
+      if (correct.indexOf(index) !== -1) {
         button.classList.add('is-correct');
-      } else if (index === selectedIndex) {
+      } else if (selected.indexOf(index) !== -1) {
         button.classList.add('is-wrong');
       }
     });
@@ -498,13 +548,21 @@
         throw new Error('Урок не содержит заданий');
       }
       state.lesson = lesson;
+      state.theoryIndex = 0;
       state.taskIndex = 0;
+      state.selected = [];
       state.correct = 0;
       state.answered = false;
       progress.currentLessonId = lesson.id;
       saveProgress();
-      renderLesson();
-      showScreen('lesson');
+
+      if (lesson.theorySteps.length > 0) {
+        renderTheory();
+        showScreen('theory');
+      } else {
+        renderLesson();
+        showScreen('lesson');
+      }
     }).catch(function (error) {
       if (window.console && typeof window.console.error === 'function') {
         window.console.error('[lessons] lesson load failed:', error);
@@ -513,22 +571,52 @@
     });
   }
 
+  function renderTheory() {
+    var lesson = state.lesson;
+    var step = lesson.theorySteps[state.theoryIndex];
+
+    refs.theoryType.textContent = TYPE_LABELS[lesson.type] || lesson.type;
+    refs.theoryTitle.textContent = step.title || lesson.title;
+    refs.theoryContent.innerHTML = '';
+    if (step.html) {
+      refs.theoryContent.innerHTML = step.html;
+    } else {
+      refs.theoryContent.textContent = step.text;
+    }
+    refs.theoryCount.textContent = 'Экран ' + (state.theoryIndex + 1) + ' из ' + lesson.theorySteps.length;
+    refs.theoryNext.textContent = state.theoryIndex === lesson.theorySteps.length - 1
+      ? 'К практике'
+      : 'Далее';
+
+    updateProgress(
+      refs.theoryProgress,
+      refs.theoryProgressWrap,
+      state.theoryIndex,
+      lesson.theorySteps.length,
+      true
+    );
+  }
+
   function renderLesson() {
     var lesson = state.lesson;
     var task = lesson.tasks[state.taskIndex];
 
     refs.lessonType.textContent = TYPE_LABELS[lesson.type] || lesson.type;
     refs.lessonTitle.textContent = lesson.title;
-    refs.lessonTheory.textContent = lesson.theory;
+    refs.lessonTheory.textContent = lesson.theory || '';
+    refs.lessonTheory.hidden = !lesson.theory;
     refs.lessonCount.textContent = 'Задание ' + (state.taskIndex + 1) + ' из ' + lesson.tasks.length;
     refs.lessonQuestion.textContent = task.question;
     refs.lessonOptions.innerHTML = '';
     refs.lessonFeedback.textContent = '';
     refs.lessonFeedback.className = 'lesson-feedback';
+    refs.lessonCheck.hidden = task.type !== 'multiple';
+    refs.lessonCheck.textContent = 'Проверить';
     refs.lessonNext.hidden = true;
     refs.lessonNext.textContent = state.taskIndex === lesson.tasks.length - 1
       ? 'Завершить урок'
       : 'Далее';
+    state.selected = [];
 
     task.options.forEach(function (option, index) {
       var button = document.createElement('button');
@@ -536,6 +624,9 @@
       button.className = 'lesson-option';
       button.textContent = option;
       button.setAttribute('data-lesson-option', String(index));
+      if (task.type === 'multiple') {
+        button.setAttribute('aria-pressed', 'false');
+      }
       refs.lessonOptions.appendChild(button);
     });
 
@@ -553,17 +644,34 @@
       return;
     }
     var task = state.lesson.tasks[state.taskIndex];
-    var correct = index === task.answer;
 
+    if (task.type === 'multiple') {
+      var position = state.selected.indexOf(index);
+      var optionButton = refs.lessonOptions.children[index];
+      if (position === -1) {
+        state.selected.push(index);
+      } else {
+        state.selected.splice(position, 1);
+      }
+      if (optionButton) {
+        optionButton.classList.toggle('is-selected', position === -1);
+        optionButton.setAttribute('aria-pressed', position === -1 ? 'true' : 'false');
+      }
+      refs.lessonFeedback.textContent = '';
+      refs.lessonFeedback.className = 'lesson-feedback';
+      return;
+    }
+
+    var correct = task.correct.indexOf(index) !== -1;
     state.answered = true;
     if (correct) {
       state.correct += 1;
     }
 
-    markOptions(refs.lessonOptions, index, task.answer);
+    markOptions(refs.lessonOptions, [index], task.correct);
     refs.lessonFeedback.textContent = correct
       ? 'Верно!'
-      : 'Не совсем. Правильный ответ: ' + task.options[task.answer];
+      : 'Не совсем. Правильный ответ: ' + task.options[task.correct[0]];
     refs.lessonFeedback.classList.toggle('is-success', correct);
     refs.lessonFeedback.classList.toggle('is-error', !correct);
     refs.lessonNext.hidden = false;
@@ -575,6 +683,51 @@
       true
     );
     playSound(correct);
+  }
+
+  function checkLessonAnswer() {
+    if (state.answered || !state.lesson) {
+      return;
+    }
+    var task = state.lesson.tasks[state.taskIndex];
+    if (task.type !== 'multiple') {
+      return;
+    }
+    if (!state.selected.length) {
+      refs.lessonFeedback.textContent = 'Выберите хотя бы один вариант.';
+      refs.lessonFeedback.className = 'lesson-feedback is-error';
+      return;
+    }
+
+    var selected = state.selected.slice().sort(function (a, b) { return a - b; });
+    var correct = task.correct.slice().sort(function (a, b) { return a - b; });
+    var isCorrect = selected.length === correct.length && selected.every(function (index, position) {
+      return index === correct[position];
+    });
+
+    state.answered = true;
+    if (isCorrect) {
+      state.correct += 1;
+    }
+
+    markOptions(refs.lessonOptions, state.selected, task.correct);
+    refs.lessonFeedback.textContent = isCorrect
+      ? 'Верно!'
+      : 'Не совсем. Правильные ответы: ' + task.correct.map(function (index) {
+        return task.options[index];
+      }).join(', ');
+    refs.lessonFeedback.classList.toggle('is-success', isCorrect);
+    refs.lessonFeedback.classList.toggle('is-error', !isCorrect);
+    refs.lessonCheck.hidden = true;
+    refs.lessonNext.hidden = false;
+    updateProgress(
+      refs.lessonProgress,
+      refs.lessonProgressWrap,
+      state.taskIndex,
+      state.lesson.tasks.length,
+      true
+    );
+    playSound(isCorrect);
   }
 
   function finishLesson() {
@@ -751,6 +904,21 @@
       startLesson(state.testCorrect === levelTest.length ? 2 : 1);
     }
   });
+
+  refs.theoryNext.addEventListener('click', function () {
+    if (!state.lesson || !state.lesson.theorySteps.length) {
+      return;
+    }
+    if (state.theoryIndex < state.lesson.theorySteps.length - 1) {
+      state.theoryIndex += 1;
+      renderTheory();
+    } else {
+      renderLesson();
+      showScreen('lesson');
+    }
+  });
+
+  refs.lessonCheck.addEventListener('click', checkLessonAnswer);
 
   refs.lessonNext.addEventListener('click', function () {
     if (!state.answered || !state.lesson) {
