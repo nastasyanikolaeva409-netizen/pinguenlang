@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Уроки — пингвинёнок</title>
-  <meta name="description" content="Раздел уроков пингвинёнка скоро появится.">
+  <meta name="description" content="Первые уроки английского с пингвинёнком: алфавит, приветствия и числа.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,17 +13,95 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <main class="lessons-stub" id="main">
-    <div class="container lessons-stub__inner">
-      <a class="logo" href="index.html" aria-label="пингвинёнок — на главную">
-        <span class="logo__icon"><img src="images/penguin-icon.png" alt="" width="48" height="48"></span>
-        <span class="logo__text"><span class="logo__text-dark">пингвин</span><span class="logo__text-blue">ёнок</span></span>
-      </a>
+  <main class="lessons-app" id="main">
+    <div class="container lessons-app__inner">
+      <header class="lessons-topbar">
+        <a class="logo" href="index.html" aria-label="пингвинёнок — на главную">
+          <span class="logo__icon"><img src="images/penguin-icon.png" alt="" width="48" height="48"></span>
+          <span class="logo__text"><span class="logo__text-dark">пингвин</span><span class="logo__text-blue">ёнок</span></span>
+        </a>
+        <a class="btn-text" href="index.html">На главную</a>
+      </header>
 
-      <h1 class="section__title">Уроки скоро появятся</h1>
-      <p class="section__lead">Мы готовим новый раздел с уроками. Пока можно вернуться на главную и начать с английского.</p>
-      <a class="btn btn--primary" href="index.html">На главную</a>
+      <section class="lesson-screen" data-screen="onboarding">
+        <div class="lesson-card lesson-card--centered">
+          <span class="eyebrow">Английский · первые шаги</span>
+          <h1 class="section__title">Знакомы ли вы с английским?</h1>
+          <p class="section__lead">Выберите подходящий вариант — мы подстроим первый урок под вас.</p>
+          <div class="lesson-actions">
+            <button class="btn btn--primary" type="button" data-action="start-zero">Я с нуля (начать с алфавита)</button>
+            <button class="btn btn--secondary" type="button" data-action="start-test">Я кое-что знаю (проверить знания)</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-screen" data-screen="continue" hidden>
+        <div class="lesson-card lesson-card--centered">
+          <span class="eyebrow" data-continue-label>Продолжить обучение</span>
+          <h1 class="section__title" data-continue-title>Продолжить обучение</h1>
+          <p class="section__lead" data-continue-text></p>
+          <p class="lesson-continue__meta" data-continue-meta></p>
+          <div class="lesson-actions">
+            <button class="btn btn--primary" type="button" data-action="continue" data-continue-button>Продолжить</button>
+            <button class="btn-text" type="button" data-action="reset">Начать заново</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-screen" data-screen="test" hidden>
+        <div class="lesson-card">
+          <div class="lesson-topline">
+            <span class="eyebrow">Мини-тест</span>
+            <span class="lesson-counter" data-test-count></span>
+          </div>
+          <div class="lesson-progress" role="progressbar" aria-label="Прогресс теста" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-test-progress-wrap>
+            <div class="lesson-progress__bar" data-test-progress></div>
+          </div>
+          <h1 class="lesson-question" data-test-question></h1>
+          <div class="lesson-options" data-test-options></div>
+          <p class="lesson-feedback" data-test-feedback aria-live="polite"></p>
+          <div class="lesson-actions">
+            <button class="btn btn--primary" type="button" data-test-next hidden>Далее</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-screen" data-screen="lesson" hidden>
+        <div class="lesson-card">
+          <div class="lesson-topline">
+            <span class="eyebrow" data-lesson-type></span>
+            <span class="lesson-counter" data-lesson-count></span>
+          </div>
+          <h1 class="lesson-title" data-lesson-title></h1>
+          <p class="lesson-theory" data-lesson-theory></p>
+          <div class="lesson-progress" role="progressbar" aria-label="Прогресс урока" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-lesson-progress-wrap>
+            <div class="lesson-progress__bar" data-lesson-progress></div>
+          </div>
+          <h2 class="lesson-question" data-lesson-question></h2>
+          <div class="lesson-options" data-lesson-options></div>
+          <p class="lesson-feedback" data-lesson-feedback aria-live="polite"></p>
+          <div class="lesson-actions">
+            <button class="btn btn--primary" type="button" data-lesson-next hidden>Далее</button>
+          </div>
+        </div>
+        <button class="btn-text lesson-exit" type="button" data-action="exit">Выйти к продолжению</button>
+      </section>
+
+      <section class="lesson-screen" data-screen="result" hidden>
+        <div class="lesson-card lesson-card--centered lesson-result">
+          <span class="eyebrow">Результат</span>
+          <h1 class="section__title" data-result-title>Урок пройден!</h1>
+          <p class="lesson-result__score" data-result-score></p>
+          <p class="section__lead" data-result-text></p>
+          <div class="lesson-actions">
+            <button class="btn btn--primary" type="button" data-result-next></button>
+            <a class="btn btn--secondary" href="index.html">На главную</a>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
+
+  <script src="js/lessons.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,664 @@
+/* ==========================================================================
+   пингвинёнок — lessons SPA
+   Онбординг, мини-тест, прохождение урока и сохранение прогресса.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'penguin-lessons-progress';
+
+  var lessonsData = [
+    {
+      id: 1,
+      title: 'Алфавит: A, B, C',
+      type: 'alphabet',
+      theory: 'A, B и C — первые три буквы английского алфавита. A читается «эй», B — «би», C — «си».',
+      tasks: [
+        {
+          question: 'Какая буква идёт после A?',
+          options: ['B', 'C', 'D'],
+          answer: 0
+        },
+        {
+          question: 'Как читается буква B?',
+          options: ['«эй»', '«би»', '«си»'],
+          answer: 1
+        },
+        {
+          question: 'Выберите первую букву алфавита:',
+          options: ['C', 'A', 'B'],
+          answer: 1
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: 'Приветствия: Hello и Goodbye',
+      type: 'vocabulary',
+      theory: 'Hello — «привет», Goodbye — «пока». Эти слова подходят для начала и конца разговора.',
+      tasks: [
+        {
+          question: 'Как переводится Hello?',
+          options: ['Пока', 'Привет', 'Спасибо'],
+          answer: 1
+        },
+        {
+          question: 'Как сказать «пока»?',
+          options: ['Hello', 'Goodbye', 'Please'],
+          answer: 1
+        },
+        {
+          question: 'Что уместно сказать при встрече?',
+          options: ['Goodbye', 'Sorry', 'Hello'],
+          answer: 2
+        }
+      ]
+    },
+    {
+      id: 3,
+      title: 'Числа: 1, 2, 3',
+      type: 'numbers',
+      theory: 'One — 1, two — 2, three — 3. Числа пригодятся, чтобы назвать возраст, время или количество.',
+      tasks: [
+        {
+          question: 'Как переводится two?',
+          options: ['1', '3', '2'],
+          answer: 2
+        },
+        {
+          question: 'Как сказать «три»?',
+          options: ['One', 'Two', 'Three'],
+          answer: 2
+        },
+        {
+          question: 'Сколько будет one + two?',
+          options: ['2', '3', '1'],
+          answer: 1
+        }
+      ]
+    },
+    {
+      id: 4,
+      title: 'Цвета',
+      type: 'vocabulary',
+      theory: 'Урок скоро появится. Пока доступны уроки 1–3.',
+      tasks: []
+    },
+    {
+      id: 5,
+      title: 'Семья',
+      type: 'vocabulary',
+      theory: 'Урок скоро появится.',
+      tasks: []
+    },
+    {
+      id: 6,
+      title: 'Еда',
+      type: 'vocabulary',
+      theory: 'Урок скоро появится.',
+      tasks: []
+    },
+    {
+      id: 7,
+      title: 'Дом',
+      type: 'vocabulary',
+      theory: 'Урок скоро появится.',
+      tasks: []
+    },
+    {
+      id: 8,
+      title: 'Животные',
+      type: 'vocabulary',
+      theory: 'Урок скоро появится.',
+      tasks: []
+    },
+    {
+      id: 9,
+      title: 'Погода',
+      type: 'vocabulary',
+      theory: 'Урок скоро появится.',
+      tasks: []
+    },
+    {
+      id: 10,
+      title: 'Время',
+      type: 'grammar',
+      theory: 'Урок скоро появится.',
+      tasks: []
+    }
+  ];
+
+  var levelTest = [
+    {
+      question: 'Как переводится Hello?',
+      options: ['Пока', 'Привет', 'Спасибо'],
+      answer: 1
+    },
+    {
+      question: 'Что означает two?',
+      options: ['1', '3', '2'],
+      answer: 2
+    },
+    {
+      question: 'Как сказать «пока»?',
+      options: ['Hello', 'Goodbye', 'Please'],
+      answer: 1
+    }
+  ];
+
+  var TYPE_LABELS = {
+    alphabet: 'Алфавит',
+    vocabulary: 'Слова',
+    numbers: 'Числа',
+    grammar: 'Грамматика'
+  };
+
+  var SCREEN_TITLES = {
+    onboarding: 'Уроки — пингвинёнок',
+    continue: 'Продолжить обучение — пингвинёнок',
+    test: 'Мини-тест — пингвинёнок',
+    lesson: 'Урок — пингвинёнок',
+    result: 'Результат — пингвинёнок'
+  };
+
+  var screens = document.querySelectorAll('[data-screen]');
+  var refs = {
+    continueLabel: document.querySelector('[data-continue-label]'),
+    continueTitle: document.querySelector('[data-continue-title]'),
+    continueText: document.querySelector('[data-continue-text]'),
+    continueMeta: document.querySelector('[data-continue-meta]'),
+    continueButton: document.querySelector('[data-continue-button]'),
+    testCount: document.querySelector('[data-test-count]'),
+    testQuestion: document.querySelector('[data-test-question]'),
+    testOptions: document.querySelector('[data-test-options]'),
+    testFeedback: document.querySelector('[data-test-feedback]'),
+    testNext: document.querySelector('[data-test-next]'),
+    testProgress: document.querySelector('[data-test-progress]'),
+    testProgressWrap: document.querySelector('[data-test-progress-wrap]'),
+    lessonType: document.querySelector('[data-lesson-type]'),
+    lessonTitle: document.querySelector('[data-lesson-title]'),
+    lessonTheory: document.querySelector('[data-lesson-theory]'),
+    lessonCount: document.querySelector('[data-lesson-count]'),
+    lessonQuestion: document.querySelector('[data-lesson-question]'),
+    lessonOptions: document.querySelector('[data-lesson-options]'),
+    lessonFeedback: document.querySelector('[data-lesson-feedback]'),
+    lessonNext: document.querySelector('[data-lesson-next]'),
+    lessonProgress: document.querySelector('[data-lesson-progress]'),
+    lessonProgressWrap: document.querySelector('[data-lesson-progress-wrap]'),
+    resultTitle: document.querySelector('[data-result-title]'),
+    resultScore: document.querySelector('[data-result-score]'),
+    resultText: document.querySelector('[data-result-text]'),
+    resultNext: document.querySelector('[data-result-next]')
+  };
+
+  var state = {
+    lesson: null,
+    taskIndex: 0,
+    correct: 0,
+    answered: false,
+    testIndex: 0,
+    testCorrect: 0,
+    testAnswered: false
+  };
+
+  var progress = loadProgress() || {
+    currentLessonId: null,
+    completed: []
+  };
+
+  var audioContext = null;
+
+  function loadProgress() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        return null;
+      }
+      var data = JSON.parse(raw);
+      if (!data || typeof data !== 'object') {
+        return null;
+      }
+      var current = Number(data.currentLessonId);
+      return {
+        currentLessonId: isFinite(current) && current > 0 ? current : null,
+        completed: Array.isArray(data.completed)
+          ? data.completed.map(Number).filter(function (id) {
+            return isFinite(id) && id > 0;
+          })
+          : []
+      };
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveProgress() {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        currentLessonId: progress.currentLessonId,
+        completed: progress.completed,
+        updatedAt: Date.now()
+      }));
+    } catch (error) {
+      /* localStorage may be unavailable */
+    }
+  }
+
+  function findLesson(id) {
+    var numericId = Number(id);
+    for (var i = 0; i < lessonsData.length; i += 1) {
+      if (lessonsData[i].id === numericId) {
+        return lessonsData[i];
+      }
+    }
+    return null;
+  }
+
+  function availableLessons() {
+    return lessonsData.filter(function (lesson) {
+      return lesson.tasks.length > 0;
+    });
+  }
+
+  function isCompleted(id) {
+    return progress.completed.indexOf(Number(id)) !== -1;
+  }
+
+  function nextAvailableLesson(id) {
+    var available = availableLessons();
+    var i;
+    for (i = 0; i < available.length; i += 1) {
+      if (available[i].id > id && !isCompleted(available[i].id)) {
+        return available[i];
+      }
+    }
+    for (i = 0; i < available.length; i += 1) {
+      if (!isCompleted(available[i].id)) {
+        return available[i];
+      }
+    }
+    return null;
+  }
+
+  function resumeLessonId() {
+    var current = findLesson(progress.currentLessonId);
+    if (current && current.tasks.length > 0 && !isCompleted(current.id)) {
+      return current.id;
+    }
+    var available = availableLessons();
+    var i;
+    for (i = 0; i < available.length; i += 1) {
+      if (!isCompleted(available[i].id)) {
+        return available[i].id;
+      }
+    }
+    if (current && current.tasks.length > 0) {
+      return current.id;
+    }
+    return available.length ? available[0].id : 1;
+  }
+
+  function showScreen(name) {
+    Array.prototype.forEach.call(screens, function (screen) {
+      screen.hidden = screen.getAttribute('data-screen') !== name;
+    });
+
+    if (name === 'lesson' && state.lesson) {
+      document.title = state.lesson.title + ' — пингвинёнок';
+    } else {
+      document.title = SCREEN_TITLES[name] || SCREEN_TITLES.onboarding;
+    }
+
+    var active = document.querySelector('[data-screen="' + name + '"]');
+    if (active) {
+      var heading = active.querySelector('h1');
+      if (heading) {
+        heading.setAttribute('tabindex', '-1');
+        try {
+          heading.focus({ preventScroll: true });
+        } catch (error) {
+          heading.focus();
+        }
+      }
+    }
+
+    window.scrollTo(0, 0);
+  }
+
+  function updateProgress(bar, wrap, index, total, answered) {
+    var percent = total ? Math.round(((index + (answered ? 1 : 0)) / total) * 100) : 0;
+    bar.style.width = percent + '%';
+    if (wrap) {
+      wrap.setAttribute('aria-valuenow', String(percent));
+    }
+  }
+
+  function playSound(correct) {
+    try {
+      var AudioCtor = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtor) {
+        return;
+      }
+      if (!audioContext) {
+        audioContext = new AudioCtor();
+      }
+      if (audioContext.state === 'suspended' && typeof audioContext.resume === 'function') {
+        audioContext.resume();
+      }
+      var oscillator = audioContext.createOscillator();
+      var gain = audioContext.createGain();
+      var now = audioContext.currentTime;
+      oscillator.type = 'sine';
+      oscillator.frequency.value = correct ? 880 : 220;
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start(now);
+      oscillator.stop(now + 0.2);
+    } catch (error) {
+      /* звук необязателен */
+    }
+  }
+
+  function markOptions(container, selectedIndex, correctIndex) {
+    Array.prototype.forEach.call(container.children, function (button, index) {
+      button.disabled = true;
+      if (index === correctIndex) {
+        button.classList.add('is-correct');
+      } else if (index === selectedIndex) {
+        button.classList.add('is-wrong');
+      }
+    });
+  }
+
+  function renderContinue() {
+    var id = resumeLessonId();
+    var lesson = findLesson(id);
+    if (!lesson) {
+      showScreen('onboarding');
+      return;
+    }
+
+    var allCompleted = availableLessons().every(function (item) {
+      return isCompleted(item.id);
+    });
+    var completed = isCompleted(lesson.id);
+
+    refs.continueLabel.textContent = allCompleted
+      ? 'Все доступные уроки пройдены'
+      : completed
+        ? 'Повторить урок'
+        : 'Продолжить обучение';
+    refs.continueTitle.textContent = lesson.title;
+    refs.continueText.textContent = allCompleted
+      ? 'Вы прошли все доступные уроки. Новые появятся скоро.'
+      : 'Вы остановились здесь. Продолжим с этого места.';
+    refs.continueMeta.textContent = 'Урок ' + lesson.id + ' · ' +
+      (TYPE_LABELS[lesson.type] || lesson.type) + ' · заданий: ' + lesson.tasks.length;
+    refs.continueButton.textContent = completed || allCompleted
+      ? 'Повторить урок'
+      : 'Продолжить урок';
+    refs.continueButton.setAttribute('data-continue-id', String(lesson.id));
+  }
+
+  function startLesson(id) {
+    var lesson = findLesson(id);
+    if (!lesson || !lesson.tasks.length) {
+      renderContinue();
+      showScreen('continue');
+      return;
+    }
+
+    state.lesson = lesson;
+    state.taskIndex = 0;
+    state.correct = 0;
+    state.answered = false;
+    progress.currentLessonId = lesson.id;
+    saveProgress();
+    renderLesson();
+    showScreen('lesson');
+  }
+
+  function renderLesson() {
+    var lesson = state.lesson;
+    var task = lesson.tasks[state.taskIndex];
+
+    refs.lessonType.textContent = TYPE_LABELS[lesson.type] || lesson.type;
+    refs.lessonTitle.textContent = lesson.title;
+    refs.lessonTheory.textContent = lesson.theory;
+    refs.lessonCount.textContent = 'Задание ' + (state.taskIndex + 1) + ' из ' + lesson.tasks.length;
+    refs.lessonQuestion.textContent = task.question;
+    refs.lessonOptions.innerHTML = '';
+    refs.lessonFeedback.textContent = '';
+    refs.lessonFeedback.className = 'lesson-feedback';
+    refs.lessonNext.hidden = true;
+    refs.lessonNext.textContent = state.taskIndex === lesson.tasks.length - 1
+      ? 'Завершить урок'
+      : 'Далее';
+
+    task.options.forEach(function (option, index) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'lesson-option';
+      button.textContent = option;
+      button.setAttribute('data-lesson-option', String(index));
+      refs.lessonOptions.appendChild(button);
+    });
+
+    updateProgress(
+      refs.lessonProgress,
+      refs.lessonProgressWrap,
+      state.taskIndex,
+      lesson.tasks.length,
+      state.answered
+    );
+  }
+
+  function selectLessonOption(index) {
+    if (state.answered || !state.lesson) {
+      return;
+    }
+    var task = state.lesson.tasks[state.taskIndex];
+    var correct = index === task.answer;
+
+    state.answered = true;
+    if (correct) {
+      state.correct += 1;
+    }
+
+    markOptions(refs.lessonOptions, index, task.answer);
+    refs.lessonFeedback.textContent = correct
+      ? 'Верно!'
+      : 'Не совсем. Правильный ответ: ' + task.options[task.answer];
+    refs.lessonFeedback.classList.toggle('is-success', correct);
+    refs.lessonFeedback.classList.toggle('is-error', !correct);
+    refs.lessonNext.hidden = false;
+    updateProgress(
+      refs.lessonProgress,
+      refs.lessonProgressWrap,
+      state.taskIndex,
+      state.lesson.tasks.length,
+      true
+    );
+    playSound(correct);
+  }
+
+  function finishLesson() {
+    var lesson = state.lesson;
+    if (!isCompleted(lesson.id)) {
+      progress.completed.push(lesson.id);
+    }
+    var next = nextAvailableLesson(lesson.id);
+    progress.currentLessonId = next ? next.id : lesson.id;
+    saveProgress();
+    renderResult(lesson, next);
+    showScreen('result');
+  }
+
+  function renderResult(lesson, next) {
+    var total = lesson.tasks.length;
+    refs.resultTitle.textContent = state.correct === total ? 'Идеально!' : 'Урок пройден!';
+    refs.resultScore.textContent = 'Правильно ' + state.correct + ' из ' + total;
+    refs.resultText.textContent = next
+      ? 'Следующий урок: ' + next.title
+      : 'Вы прошли все доступные уроки. Новые появятся скоро.';
+    refs.resultNext.textContent = next
+      ? 'Следующий урок'
+      : 'Пройти ещё раз';
+    refs.resultNext.setAttribute('data-next-id', String(next ? next.id : lesson.id));
+  }
+
+  function startTest() {
+    state.testIndex = 0;
+    state.testCorrect = 0;
+    state.testAnswered = false;
+    renderTest();
+    showScreen('test');
+  }
+
+  function renderTest() {
+    var task = levelTest[state.testIndex];
+
+    refs.testCount.textContent = 'Вопрос ' + (state.testIndex + 1) + ' из ' + levelTest.length;
+    refs.testQuestion.textContent = task.question;
+    refs.testOptions.innerHTML = '';
+    refs.testFeedback.textContent = '';
+    refs.testFeedback.className = 'lesson-feedback';
+    refs.testNext.hidden = true;
+    refs.testNext.textContent = state.testIndex === levelTest.length - 1
+      ? 'Завершить тест'
+      : 'Далее';
+
+    task.options.forEach(function (option, index) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'lesson-option';
+      button.textContent = option;
+      button.setAttribute('data-test-option', String(index));
+      refs.testOptions.appendChild(button);
+    });
+
+    updateProgress(
+      refs.testProgress,
+      refs.testProgressWrap,
+      state.testIndex,
+      levelTest.length,
+      state.testAnswered
+    );
+  }
+
+  function selectTestOption(index) {
+    if (state.testAnswered) {
+      return;
+    }
+    var task = levelTest[state.testIndex];
+    var correct = index === task.answer;
+
+    state.testAnswered = true;
+    if (correct) {
+      state.testCorrect += 1;
+    }
+
+    markOptions(refs.testOptions, index, task.answer);
+    refs.testFeedback.textContent = correct
+      ? 'Верно!'
+      : 'Правильный ответ: ' + task.options[task.answer];
+    refs.testFeedback.classList.toggle('is-success', correct);
+    refs.testFeedback.classList.toggle('is-error', !correct);
+    refs.testNext.hidden = false;
+    updateProgress(
+      refs.testProgress,
+      refs.testProgressWrap,
+      state.testIndex,
+      levelTest.length,
+      true
+    );
+    playSound(correct);
+  }
+
+  function resetProgress() {
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      /* localStorage may be unavailable */
+    }
+    progress = {
+      currentLessonId: null,
+      completed: []
+    };
+    showScreen('onboarding');
+  }
+
+  document.addEventListener('click', function (event) {
+    var actionElement = event.target.closest('[data-action]');
+    if (actionElement) {
+      var action = actionElement.getAttribute('data-action');
+      if (action === 'start-zero') {
+        startLesson(1);
+      } else if (action === 'start-test') {
+        startTest();
+      } else if (action === 'continue') {
+        var id = Number(actionElement.getAttribute('data-continue-id'));
+        startLesson(id || resumeLessonId());
+      } else if (action === 'reset') {
+        resetProgress();
+      } else if (action === 'exit') {
+        renderContinue();
+        showScreen('continue');
+      }
+      return;
+    }
+
+    var testOption = event.target.closest('[data-test-option]');
+    if (testOption) {
+      selectTestOption(Number(testOption.getAttribute('data-test-option')));
+      return;
+    }
+
+    var lessonOption = event.target.closest('[data-lesson-option]');
+    if (lessonOption) {
+      selectLessonOption(Number(lessonOption.getAttribute('data-lesson-option')));
+    }
+  });
+
+  refs.testNext.addEventListener('click', function () {
+    if (!state.testAnswered) {
+      return;
+    }
+    if (state.testIndex < levelTest.length - 1) {
+      state.testIndex += 1;
+      state.testAnswered = false;
+      renderTest();
+    } else {
+      startLesson(state.testCorrect === levelTest.length ? 3 : 1);
+    }
+  });
+
+  refs.lessonNext.addEventListener('click', function () {
+    if (!state.answered || !state.lesson) {
+      return;
+    }
+    if (state.taskIndex < state.lesson.tasks.length - 1) {
+      state.taskIndex += 1;
+      state.answered = false;
+      renderLesson();
+    } else {
+      finishLesson();
+    }
+  });
+
+  refs.resultNext.addEventListener('click', function () {
+    var id = Number(refs.resultNext.getAttribute('data-next-id'));
+    if (id) {
+      startLesson(id);
+    }
+  });
+
+  if (progress.currentLessonId || progress.completed.length) {
+    renderContinue();
+    showScreen('continue');
+  } else {
+    showScreen('onboarding');
+  }
+})();
