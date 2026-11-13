@@ -73,13 +73,39 @@
             <span class="eyebrow" data-theory-type>Теория</span>
             <span class="lesson-counter" data-theory-count></span>
           </div>
-          <h1 class="lesson-title" data-theory-title></h1>
-          <div class="lesson-theory-content" data-theory-content></div>
           <div class="lesson-progress" role="progressbar" aria-label="Прогресс теории" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-theory-progress-wrap>
             <div class="lesson-progress__bar" data-theory-progress></div>
           </div>
+          <h1 class="lesson-title" data-theory-title></h1>
+          <div class="lesson-lead lesson-theory-content" data-theory-content></div>
           <div class="lesson-actions">
+            <button class="btn btn--secondary" type="button" data-theory-back>Назад</button>
             <button class="btn btn--primary" type="button" data-theory-next>Далее</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-screen" data-screen="alphabet" hidden>
+        <div class="lesson-card">
+          <div class="lesson-topline">
+            <span class="eyebrow">Алфавит</span>
+            <span class="lesson-counter">26 букв</span>
+          </div>
+
+          <h1 class="lesson-title">Английский алфавит</h1>
+          <p class="lesson-lead">
+            Нажмите на букву, чтобы услышать её произношение.
+            Под каждой буквой — русская транскрипция названия.
+          </p>
+
+          <div class="alphabet-grid" data-alphabet-grid role="list"
+               aria-label="Английский алфавит: 26 букв с русской транскрипцией"></div>
+
+          <p class="alphabet-status" data-alphabet-status aria-live="polite"></p>
+
+          <div class="lesson-actions">
+            <button class="btn btn--secondary" type="button" data-alphabet-back>К теории</button>
+            <button class="btn btn--primary" type="button" data-alphabet-start-tasks>Перейти к заданиям</button>
           </div>
         </div>
       </section>
@@ -144,6 +170,7 @@
   </main>
 
   <script src="js/app/course-loader.js?v=3" defer></script>
+  <script src="js/app/speech.js?v=3" defer></script>
   <script src="js/lessons.js?v=3" defer></script>
 </body>
 </html>

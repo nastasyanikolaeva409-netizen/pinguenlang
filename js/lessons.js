@@ -114,6 +114,7 @@
     continue: 'Продолжить обучение — пингвинёнок',
     test: 'Мини-тест — пингвинёнок',
     theory: 'Теория — пингвинёнок',
+    alphabet: 'Алфавит — пингвинёнок',
     lesson: 'Урок — пингвинёнок',
     loading: 'Загрузка — пингвинёнок',
     error: 'Ошибка — пингвинёнок',
@@ -138,9 +139,14 @@
     theoryTitle: document.querySelector('[data-theory-title]'),
     theoryContent: document.querySelector('[data-theory-content]'),
     theoryCount: document.querySelector('[data-theory-count]'),
+    theoryBack: document.querySelector('[data-theory-back]'),
     theoryNext: document.querySelector('[data-theory-next]'),
     theoryProgress: document.querySelector('[data-theory-progress]'),
     theoryProgressWrap: document.querySelector('[data-theory-progress-wrap]'),
+    alphabetGrid: document.querySelector('[data-alphabet-grid]'),
+    alphabetStatus: document.querySelector('[data-alphabet-status]'),
+    alphabetBack: document.querySelector('[data-alphabet-back]'),
+    alphabetStartTasks: document.querySelector('[data-alphabet-start-tasks]'),
     lessonType: document.querySelector('[data-lesson-type]'),
     lessonTitle: document.querySelector('[data-lesson-title]'),
     lessonTheory: document.querySelector('[data-lesson-theory]'),
@@ -162,6 +168,7 @@
   var state = {
     lesson: null,
     theoryIndex: 0,
+    alphabetShown: false,
     taskIndex: 0,
     selected: [],
     correct: 0,
@@ -177,6 +184,7 @@
   };
 
   var audioContext = null;
+  var speechToken = 0;
   var catalog = null;
   var catalogPromise = null;
   var lessonCache = {};
@@ -276,6 +284,19 @@
       });
     }
 
+    var rawAlphabet = Array.isArray(raw.alphabet) ? raw.alphabet : [];
+    var alphabet = rawAlphabet.map(function (item) {
+      var letter = String(item.letter || '').toUpperCase();
+      return {
+        letter: letter,
+        lower: String(item.lower || letter.toLowerCase()),
+        transcriptionRu: String(item.transcriptionRu || ''),
+        speech: String(item.speech || letter)
+      };
+    }).filter(function (item) {
+      return item.letter;
+    });
+
     var rawTasks = Array.isArray(raw.tasks) ? raw.tasks : [];
     var tasks = rawTasks.map(function (task) {
       var options = Array.isArray(task.options) ? task.options.map(String) : [];
@@ -308,8 +329,10 @@
       id: Number(raw.id) || fallbackId,
       title: String(raw.title || ''),
       type: raw.type || 'vocabulary',
+      uiType: raw.uiType || (raw.type === 'alphabet' ? 'alphabet' : ''),
       theory: theory,
       theorySteps: theorySteps,
+      alphabet: alphabet,
       tasks: tasks
     };
   }
@@ -419,8 +442,9 @@
       screen.hidden = screen.getAttribute('data-screen') !== name;
     });
 
-    if ((name === 'lesson' || name === 'theory') && state.lesson) {
-      document.title = state.lesson.title + (name === 'theory' ? ' — теория' : '') + ' — пингвинёнок';
+    if ((name === 'lesson' || name === 'theory' || name === 'alphabet') && state.lesson) {
+      var suffix = name === 'theory' ? ' — теория' : name === 'alphabet' ? ' — алфавит' : '';
+      document.title = state.lesson.title + suffix + ' — пингвинёнок';
     } else {
       document.title = SCREEN_TITLES[name] || SCREEN_TITLES.onboarding;
     }
@@ -547,6 +571,7 @@
       }
       state.lesson = lesson;
       state.theoryIndex = 0;
+      state.alphabetShown = false;
       state.taskIndex = 0;
       state.selected = [];
       state.correct = 0;
@@ -558,8 +583,8 @@
         renderTheory();
         showScreen('theory');
       } else {
-        renderLesson();
-        showScreen('lesson');
+        var tasksReady = renderLesson();
+        showScreen(tasksReady ? 'lesson' : 'alphabet');
       }
     }).catch(function (error) {
       if (window.console && typeof window.console.error === 'function') {
@@ -642,9 +667,10 @@
     } else {
       refs.theoryContent.textContent = step.text;
     }
-    refs.theoryCount.textContent = 'Экран ' + (state.theoryIndex + 1) + ' из ' + lesson.theorySteps.length;
+    refs.theoryCount.textContent = 'Страница ' + (state.theoryIndex + 1) + ' из ' + lesson.theorySteps.length;
+    refs.theoryBack.disabled = state.theoryIndex === 0;
     refs.theoryNext.textContent = state.theoryIndex === lesson.theorySteps.length - 1
-      ? 'К практике'
+      ? (lesson.uiType === 'alphabet' ? 'К алфавиту' : 'К практике')
       : 'Далее';
 
     updateProgress(
@@ -656,8 +682,97 @@
     );
   }
 
+  function clearAlphabetSpeaking() {
+    if (!refs.alphabetGrid) {
+      return;
+    }
+    Array.prototype.forEach.call(
+      refs.alphabetGrid.querySelectorAll('.alphabet-letter.is-speaking'),
+      function (button) {
+        button.classList.remove('is-speaking');
+      }
+    );
+  }
+
+  function speakLetterItem(item, button) {
+    if (!window.Speech || typeof window.Speech.speakLetter !== 'function' || !window.Speech.isSupported()) {
+      refs.alphabetStatus.textContent = 'Озвучивание не поддерживается этим браузером. Попробуйте Chrome, Edge или Safari.';
+      refs.alphabetStatus.className = 'alphabet-status is-warning';
+      return;
+    }
+
+    speechToken += 1;
+    var token = speechToken;
+    clearAlphabetSpeaking();
+    button.classList.add('is-speaking');
+    refs.alphabetStatus.textContent = 'Звучит: ' + item.letter + ' — «' + item.transcriptionRu + '»';
+    refs.alphabetStatus.className = 'alphabet-status is-success';
+
+    window.Speech.speakLetter(item, {
+      onEnd: function () {
+        if (token === speechToken) {
+          button.classList.remove('is-speaking');
+        }
+      },
+      onError: function () {
+        if (token !== speechToken) {
+          return;
+        }
+        button.classList.remove('is-speaking');
+        refs.alphabetStatus.textContent = 'Не удалось озвучить букву. Попробуйте Chrome, Edge или Safari.';
+        refs.alphabetStatus.className = 'alphabet-status is-warning';
+      }
+    });
+  }
+
+  function renderAlphabetLesson() {
+    var lesson = state.lesson;
+    var letters = Array.isArray(lesson.alphabet) ? lesson.alphabet : [];
+
+    refs.alphabetGrid.innerHTML = '';
+    refs.alphabetStatus.textContent = '';
+    refs.alphabetStatus.className = 'alphabet-status';
+
+    if (!letters.length) {
+      refs.alphabetStatus.textContent = 'В уроке пока нет букв для озвучки.';
+      refs.alphabetStatus.className = 'alphabet-status is-warning';
+      return;
+    }
+
+    letters.forEach(function (item) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'alphabet-letter';
+      button.setAttribute('role', 'listitem');
+      button.setAttribute('data-alphabet-letter', item.letter);
+      button.setAttribute('aria-label', 'Буква ' + item.letter + ', произносится «' + item.transcriptionRu + '»');
+
+      var char = document.createElement('span');
+      char.className = 'alphabet-letter__char';
+      char.textContent = item.letter + ' ' + item.lower;
+
+      var transcription = document.createElement('span');
+      transcription.className = 'alphabet-letter__transcription';
+      transcription.textContent = item.transcriptionRu;
+
+      button.appendChild(char);
+      button.appendChild(transcription);
+      refs.alphabetGrid.appendChild(button);
+
+      button.addEventListener('click', function () {
+        speakLetterItem(item, button);
+      });
+    });
+  }
+
   function renderLesson() {
     var lesson = state.lesson;
+
+    if (lesson.uiType === 'alphabet' && !state.alphabetShown) {
+      renderAlphabetLesson();
+      return false;
+    }
+
     var task = lesson.tasks[state.taskIndex];
 
     refs.lessonType.textContent = TYPE_LABELS[lesson.type] || lesson.type;
@@ -701,6 +816,7 @@
       lesson.tasks.length,
       state.answered
     );
+    return true;
   }
 
   function selectLessonOption(index) {
@@ -977,7 +1093,50 @@
       state.theoryIndex += 1;
       renderTheory();
     } else {
-      renderLesson();
+      var tasksReady = renderLesson();
+      showScreen(tasksReady ? 'lesson' : 'alphabet');
+    }
+  });
+
+  refs.theoryBack.addEventListener('click', function () {
+    if (!state.lesson || state.theoryIndex <= 0) {
+      return;
+    }
+    state.theoryIndex -= 1;
+    renderTheory();
+  });
+
+  refs.alphabetBack.addEventListener('click', function () {
+    if (!state.lesson) {
+      return;
+    }
+    if (window.Speech && typeof window.Speech.cancel === 'function') {
+      window.Speech.cancel();
+    }
+    clearAlphabetSpeaking();
+    state.alphabetShown = false;
+    if (state.lesson.theorySteps.length) {
+      state.theoryIndex = state.lesson.theorySteps.length - 1;
+      renderTheory();
+      showScreen('theory');
+    }
+  });
+
+  refs.alphabetStartTasks.addEventListener('click', function () {
+    if (!state.lesson || state.lesson.uiType !== 'alphabet') {
+      return;
+    }
+    if (window.Speech && typeof window.Speech.cancel === 'function') {
+      window.Speech.cancel();
+    }
+    clearAlphabetSpeaking();
+    state.alphabetShown = true;
+    state.taskIndex = 0;
+    state.selected = [];
+    state.correct = 0;
+    state.answered = false;
+    var tasksReady = renderLesson();
+    if (tasksReady) {
       showScreen('lesson');
     }
   });
